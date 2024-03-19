@@ -59,6 +59,11 @@ const menu_data:IMenuDataType[] = [
     title:'Game',
     link:'/game',
   },
+  {
+    id:7,
+    title:'Bonus',
+    link:'/bonus',
+  },
 ]
 
 export default menu_data;
