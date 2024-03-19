@@ -26,7 +26,7 @@ onMounted(async () => {
     try {
         const response = await axios.get("https://localhost:7048/api/Games");
         games.value = response.data;
-        console.log(response.data);
+        console.log(games.value);
     } catch (error) {
         console.log(error);
     }
