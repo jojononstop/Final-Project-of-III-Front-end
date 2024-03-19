@@ -1,21 +1,16 @@
 <template>
     <div>
         <div v-for="game in gameData" :key="game.id">
-            <nuxt-link :to="`/game-detail/${game.id}`">
+            <nuxt-link :to="`/game-details/${game.id}`">
                 <div class="row mb-2">
                     <div class="col-3">
-                        <img
-                            :src="
-                                'images/games/cover/' +
-                                game.developerId +
-                                '/' +
-                                game.id +
-                                '/' +
-                                game.cover
-                            "
-                            width="200"
-                            class=""
-                        />
+                        <img :src="'images/games/cover/' +
+            game.developerId +
+            '/' +
+            game.id +
+            '/' +
+            game.cover
+            " />
                     </div>
                     <div class="col-7 d-flex align-items-center">
                         <h3 class="">{{ game.name }}</h3>
