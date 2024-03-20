@@ -1,15 +1,45 @@
 <template>
-    <section class="gallery__area fix section-pb-130">
+    <section class="gallery__area fix section-pb-80">
         <div class="gallery__slider">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-9 col-lg-10 col-md-11">
                         <swiper v-bind="slider_setting" :modules="[Navigation, Scrollbar]"
                             class="swiper-container gallery-active" :centeredSlides="true" :observer="true"
-                            :observeParents="true" :autoplay="{
-                            delay: 2500,
-                            disableOnInteraction: false
-                        }">
+                            :observeParents="true">
+                            <swiper-slide v-for="(item, index) in mediaItems" :key="item.id">
+                                <div class="gallery__item">
+                                    <div class="gallery__thumb">
+                                        <a data-cursor="-theme" data-cursor-text="View <br> Image"
+                                            class="popup-image cursor-pointer" @click.prevent="handleShowImage(index)"
+                                            @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+                                            <s v-if="item.type === 'video'">
+                                                <video controls class="swiper-item">
+                                                    <source :src="item.src" type="video/webm">
+                                                </video>
+                                            </s>
+                                            <s v-else>
+                                                <img :src="item.src" alt="img" class="swiper-item">
+                                            </s>
+                                        </a>
+                                    </div>
+                                </div>
+                            </swiper-slide>
+                            <!-- <swiper-slide>
+                                <div class="gallery__item">
+                                    <div class="gallery__thumb">
+                                        <a data-cursor="-theme" data-cursor-text="View <br> Image"
+                                            class="popup-image cursor-pointer" @click.prevent="handleShowImage(index)"
+                                            @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+                                            <video controls class="swiper-item">
+                                                <source
+                                                    :src="`/images/games/video/${gameData.developerId}/${gameData.id}/${gameData.video}`"
+                                                    type="video/webm">
+                                            </video>
+                                        </a>
+                                    </div>
+                                </div>
+                            </swiper-slide>
                             <swiper-slide v-for="(item, index) in gameData.displayImages" :key="item.id">
                                 <div class="gallery__item">
                                     <div class="gallery__thumb">
@@ -17,15 +47,11 @@
                                             class="popup-image cursor-pointer" @click.prevent="handleShowImage(index)"
                                             @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
                                             <img :src="`/images/games/image/${gameData.developerId}/${gameData.id}/${item}`"
-                                                alt="img" />
+                                                alt="img" class="swiper-item" />
                                         </a>
                                     </div>
-                                    <!-- <div class="gallery__content">
-                                        <h3 class="title">{{ item.title }}</h3>
-                                        <span class="rate">rate {{ item.rate }}</span>
-                                    </div> -->
                                 </div>
-                            </swiper-slide>
+                            </swiper-slide> -->
                             <div class="swiper-scrollbar"></div>
                         </swiper>
                     </div>
@@ -35,19 +61,37 @@
     </section>
 
     <!-- image lightbox start -->
-    <popup-image-lightbox
-        :images="gameData.displayImages.map((p) => `/images/games/image/${gameData.developerId}/${gameData.id}/${p}`)"
-        :indexVal="index" :visible="visible" @handleHide="handleHide"></popup-image-lightbox>
+    <popup-image-lightbox :images="mediaItems" :indexVal="index" :visible="visible"
+        @handleHide="handleHide"></popup-image-lightbox>
     <!-- image lightbox end -->
 </template>
 
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Navigation, Scrollbar } from "swiper/modules";
-import { defineProps } from "vue";
+import { Navigation, Scrollbar, Autoplay } from "swiper/modules";
+import { defineProps, ref, onMounted } from "vue";
 
 const props = defineProps({
     gameData: Object,
+});
+
+const mediaItems = ref([]);
+onMounted(() => {
+    // 添加视频
+    mediaItems.value.push({
+        type: 'video',
+        src: `/images/games/video/${props.gameData.developerId}/${props.gameData.id}/${props.gameData.video}`,
+    });
+
+    // 添加图片
+    props.gameData.displayImages.forEach(image => {
+        mediaItems.value.push({
+            type: 'image',
+            src: `/images/games/image/${props.gameData.developerId}/${props.gameData.id}/${image}`,
+        });
+    });
+
+    console.log(mediaItems)
 });
 
 
@@ -98,3 +142,12 @@ const slider_setting = {
     },
 };
 </script>
+
+<style scoped>
+.swiper-item {
+    width: 100%;
+    /* 设置宽度为100% */
+    height: auto;
+    /* 高度自适应 */
+}
+</style>
