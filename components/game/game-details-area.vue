@@ -16,8 +16,7 @@
                                     <li>{{ gameData.rating }}</li>
                                 </ul>
                             </div>
-                            <h1 class="title text-capitalize">{{ gameData.name }}</h1>
-                            <h2>Description</h2>
+                            <h1 class="title text-capitalize">Description</h1>
                             <p>{{ gameData.description }}</p>
                         </div>
                     </div>
@@ -36,7 +35,7 @@
                 </div>
                 <div class="blog-post-sidebar">
                     <!-- blog sidebar start -->
-                    <game-sidebar />
+                    <game-sidebar :gameData="gameData" />
                     <!-- blog sidebar end -->
                 </div>
             </div>
@@ -48,7 +47,7 @@
 import { defineProps } from "vue";
 
 const props = defineProps({
-    gameData: Object, // 这里假设 gameData 是一个数组，你可以根据实际情况修改类型
+    gameData: Object,
 });
 // function show(gameData) { console.log(gameData.displayImages) };
 </script>

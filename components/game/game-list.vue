@@ -32,6 +32,12 @@
 import { defineProps } from "vue";
 
 const props = defineProps({
-    gameData: Array, // 这里假设 gameData 是一个数组，你可以根据实际情况修改类型
+    gameData: Object,
 });
+
+if (this.$route.query.search != null) {
+    // 执行根据搜索参数的操作
+    this.searchInput = this.$route.query.search;
+    this.search();
+}
 </script>

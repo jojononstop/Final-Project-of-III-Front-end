@@ -1,11 +1,34 @@
 <template>
-    123456798
+    <aside class="blog-sidebar">
+        <div class="blog-widget">
+            <div class="sidebar__author">
+                <div class="sidebar__author-thumb">
+                    <img :src="`/images/games/cover/${gameData.developerId}/${gameData.id}/${gameData.cover}`"
+                        alt="img" />
+                </div>
+                <div class="sidebar__author-content">
+                    <h4 class="name">{{ gameData.name }}</h4>
+                    <p>{{ gameData.introduction }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="blog-widget">
+        </div>
+        <div class="blog-widget">
+            <h4 class="fw-title">Tags</h4>
+            <div class="tagcloud">
+                <nuxt-link v-for="(tag, index) in gameData.tags" :key="index" :to="`/game?search=tag_${tag.id}`">{{
+                        tag.name
+                    }}</nuxt-link>
+            </div>
+        </div>
+    </aside>
 </template>
 
 <script setup>
 import { defineProps } from "vue";
 
 const props = defineProps({
-    gameData: Array, // 这里假设 gameData 是一个数组，你可以根据实际情况修改类型
+    gameData: Object,
 });
 </script>

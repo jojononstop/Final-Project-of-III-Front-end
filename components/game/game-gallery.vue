@@ -6,7 +6,10 @@
                     <div class="col-xl-9 col-lg-10 col-md-11">
                         <swiper v-bind="slider_setting" :modules="[Navigation, Scrollbar]"
                             class="swiper-container gallery-active" :centeredSlides="true" :observer="true"
-                            :observeParents="true">
+                            :observeParents="true" :autoplay="{
+                            delay: 2500,
+                            disableOnInteraction: false
+                        }">
                             <swiper-slide v-for="(item, index) in gameData.displayImages" :key="item.id">
                                 <div class="gallery__item">
                                     <div class="gallery__thumb">
@@ -44,7 +47,7 @@ import { Navigation, Scrollbar } from "swiper/modules";
 import { defineProps } from "vue";
 
 const props = defineProps({
-    gameData: Array, // 这里假设 gameData 是一个数组，你可以根据实际情况修改类型
+    gameData: Object,
 });
 
 
