@@ -50,7 +50,7 @@
                     <li class="header-btn">
                       <nuxt-link to="/Login" :class="`${style_2?'tg-btn-3 tg-svg':'tg-border-btn'}`">
                        <svg-animate-icon v-if="style_2" icon='/images/icons/shape02.svg' id="svg-2" />
-                        <i class="flaticon-edit"></i> ~sing in
+                        <i class="flaticon-edit"></i> ~sign in
                       </nuxt-link>
                     </li>
                     <li class="side-toggle-icon" @click="handleOpenOffCanvas('/audio/click.wav')">
