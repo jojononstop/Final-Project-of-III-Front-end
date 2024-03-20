@@ -26,18 +26,23 @@
             </nuxt-link>
         </div>
     </div>
+    <button class="btn btn-second">test</button>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
 
 const props = defineProps({
     gameData: Object,
 });
 
-if (this.$route.query.search != null) {
-    // 执行根据搜索参数的操作
-    this.searchInput = this.$route.query.search;
-    this.search();
-}
+onMounted(async () => {
+    try {
+        console.log(route.query);
+    } catch (error) {
+        console.log(error);
+    }
+});
 </script>
