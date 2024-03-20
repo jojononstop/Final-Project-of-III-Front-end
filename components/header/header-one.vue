@@ -48,7 +48,7 @@
                       </a>
                     </li>
                     <li class="header-btn">
-                      <nuxt-link to="/contact" :class="`${style_2?'tg-btn-3 tg-svg':'tg-border-btn'}`">
+                      <nuxt-link to="/Login" :class="`${style_2?'tg-btn-3 tg-svg':'tg-border-btn'}`">
                        <svg-animate-icon v-if="style_2" icon='/images/icons/shape02.svg' id="svg-2" />
                         <i class="flaticon-edit"></i> ~sing in
                       </nuxt-link>

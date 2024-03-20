@@ -12,7 +12,7 @@ type IMenuDataType = {
 const menu_data:IMenuDataType[] = [
   {
     id:1,
-    title:'Home',
+    title:'主頁',
     link:'#',
     sub_menu:[
       {title:'Home One',link:'/'},
@@ -21,7 +21,7 @@ const menu_data:IMenuDataType[] = [
   },
   {
     id:2,
-    title:'ABOUT US',
+    title:'關於',
     link:'/about',
   },
   {
@@ -64,6 +64,11 @@ const menu_data:IMenuDataType[] = [
     title:'Bonus',
     link:'/bonus',
   },
+  // {
+  //   id:8,
+  //   title:'Login',
+  //   link:'/Login',
+  // },
 ]
 
 export default menu_data;

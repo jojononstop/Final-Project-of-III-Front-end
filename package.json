@@ -28,6 +28,7 @@
     "swiper": "^11.0.5",
     "vee-validate": "^4.12.2",
     "vivus": "^0.4.6",
+    "vue-cookies": "^1.8.3",
     "vue-easy-lightbox": "^1.16.0",
     "vue-timer-hook": "^1.0.84",
     "wow.js": "^1.2.2",
