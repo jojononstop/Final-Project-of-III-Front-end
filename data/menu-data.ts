@@ -26,7 +26,7 @@ const menu_data:IMenuDataType[] = [
   },
   {
     id:3,
-    title:'TOURNAMENT',
+    title:'商店',
     link:'#',
     sub_menu:[
       {title:'TOURNAMENT',link:'/tournament'},
@@ -35,7 +35,7 @@ const menu_data:IMenuDataType[] = [
   },
   {
     id:4,
-    title:'PAGES',
+    title:'點數商店',
     link:'#',
     sub_menu:[
       {title:'Gaming Shop',link:'/shop'},
@@ -45,26 +45,26 @@ const menu_data:IMenuDataType[] = [
       {title:'Player Details',link:'/team-details'},
     ]
   },
-  {
-    id:5,
-    title:'News',
-    link:'#',
-    sub_menu:[
-      {title:'Our Blog',link:'/blog'},
-      {title:'Blog Details',link:'/blog-details'}
-    ]
-  },
-  {
-    id:6,
-    title:'Game',
-    link:'/game',
-  },
-  {
-    id:7,
-    title:'Bonus',
-    link:'/bonus',
-  },
   // {
+  //   id:5,
+  //   title:'News',
+  //   link:'#',
+  //   sub_menu:[
+  //     {title:'Our Blog',link:'/blog'},
+  //     {title:'Blog Details',link:'/blog-details'}
+  //   ]
+  // },
+  // {
+  //   id:6,
+  //   title:'Game',
+  //   link:'/game',
+  // },
+  // {
+  //   id:7,
+  //   title:'Bonus',
+  //   link:'/bonus',
+  // },
+  // // {
   //   id:8,
   //   title:'Login',
   //   link:'/Login',

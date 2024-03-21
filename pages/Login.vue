@@ -28,6 +28,8 @@
           <!--             class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" -->
             <span class="text-slate-500 group-hover:text-slate-600">使用 Google 進行登入</span>
           </button>
+
+          <popup-googlelogin :isActive="isActive" @closeLogin="handleCloseLogin"></popup-googlelogin>
         <!-- </GoogleLogin> -->
       </ClientOnly>
     </div>
@@ -45,6 +47,10 @@ import { useRouter } from 'vue-router';
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
   import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
+
+  const isActive = ref<boolean>(false);
+
+  // import { ElMessageBox } from 'element-plus';
   var id ="";
   useSeoMeta({ title: "Login" });
 
@@ -57,6 +63,18 @@ import { useRouter } from 'vue-router';
   const callback = (response:any) => {
   console.log(response)
 }
+// 開彈窗
+const handleOpenLogin = (audioPath: string) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isActive.value = !isActive.value;
+};
+// 關彈窗
+const handleCloseLogin = (audioPath: string) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isActive.value = !isActive.value;
+};
 
   // 创建响应式数据对象用于存储帐号和密码
 const postData = ref({
@@ -73,7 +91,8 @@ const login = () => {
       id= response.data[1]
       $cookie.setCookie('accountId', response.data[1]); // 3600000 毫秒 = 1 小時
       console.log(response.data[0]);
-      router.push('home-2');
+      router.push('/');
+      // router.push('home-2');
       //從cookies中拿Id
       axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
          .then(response => {
@@ -94,7 +113,7 @@ const login = () => {
   });
 };
 
-const handleGoogleLogin = async () => {
+  const handleGoogleLogin = async () => {
     const accessToken = await googleTokenLogin({
       clientId: GOOGLE_CLIENT_ID
     }).then((response) => response?.access_token)
@@ -114,13 +133,21 @@ const handleGoogleLogin = async () => {
          .then(response => {
 
           if(response.data[0]=="登入成功")
+          {
             console.log(response.data[1]);
             $cookie.setCookie('accountId', response.data[1]);
+          }
+          else 
+          {
+            
+          };
+
             })
          .catch(error => {
             console.log(error);
           });
     
-
   }
+    
+
 </script>

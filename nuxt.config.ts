@@ -26,7 +26,10 @@ export default defineNuxtConfig({
     "@/assets/css/tg-cursor.css",
     "@/assets/css/animate.min.css",
     "@/assets/scss/main.scss",
-  ],  
+  ],
+  plugins: [
+    '~/plugins/bootstrap-vue'
+  ],
   runtimeConfig: {
     public: {
       // '這邊放上你的 Google Client ID'
