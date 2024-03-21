@@ -18,10 +18,12 @@
             bonusProduct.name
           }}</nuxt-link>
         </h4>
-        <div class="shop__item-price">${{ bonusProduct.price }}</div>
+        
       </div>
-      <div class="shop__item-cat">
+      <div class="shop__item-content-top">
         <nuxt-link to="/shop">{{ getProductTypeName(bonusProduct.productTypeId) }}</nuxt-link>
+        <!-- 價格 -->
+        <div class="shop__item-price">${{ bonusProduct.price }}</div>
       </div>
     </div>
   </div>

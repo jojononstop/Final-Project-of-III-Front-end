@@ -3,8 +3,8 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-xl-3 col-lg-4 col-md-11 order-2 order-lg-0">
-          <!-- 測邊功能列 -->
-          <bonus-sidebar />
+          <!-- 搜尋功能列 -->
+          <bonus-sidebar-test @search="handleSearch"/>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-11">
           <div class="bonus__top-wrap">
@@ -28,10 +28,11 @@
               </div>
             </div>
           </div>
+          <!-- <div class="row justify-content-center row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1"> -->
           <div class="row justify-content-center row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1">
+            <!--物品清單-->
+            <!-- 把接到的請求資料丟到bonusProducts -->
             <div v-for="bonusProduct in bonusProducts" :key="bonusProduct.id" class="col">
-              <!--物品清單-->
-              <!-- 把接到的請求資料丟到bonusProducts -->
               <bonus-item :bonusProduct="bonusProduct" :bonusProductTypes="bonusProductTypes" />
             </div>
           </div>
@@ -57,13 +58,18 @@
 
 <script setup>
 import product_data from "@/data/product-data";
-
 import { defineProps } from "vue";
 
 const props = defineProps({
   bonusProducts: Object,
   bonusProductTypes: Object
 });
-
 const product_items = [...product_data];
+
+let searchKeyword = '';
+
+function handleSearch(keyword)
+{
+  console.log("Search keyword",keyword)
+}
 </script>

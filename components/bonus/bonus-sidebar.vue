@@ -1,5 +1,6 @@
 <template>
 <aside class="shop-sidebar">
+    <!-- 關鍵字查詢 -->
     <div class="shop__widget">
         <h4 class="shop__widget-title">search</h4>
         <div class="shop__widget-inner">
@@ -9,6 +10,8 @@
             </div>
         </div>
     </div>
+
+    <!-- 價格bar -->
     <div class="shop__widget">
         <h4 class="shop__widget-title">filter by price</h4>
         <div class="shop__widget-inner">
@@ -33,6 +36,8 @@
             </div>
         </div>
     </div>
+
+    <!-- 側邊導覽列 -->
     <div class="shop__widget">
         <h4 class="shop__widget-title">Related products</h4>
         <div class="shop__widget-inner">
@@ -51,6 +56,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Type查詢 -->
     <div class="shop__widget">
         <h4 class="shop__widget-title">Categories</h4>
         <div class="shop__widget-inner">

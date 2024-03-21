@@ -1,12 +1,8 @@
 <template>
   <div>
-    
     <!-- breadcrumb area start -->
     <breadcrumb-three title="BONUS" subtitle="BONUS LIST"> </breadcrumb-three>
     <!-- breadcrumb area end -->
-    
-    <bonus-area-test :bonusProducts="bonusProducts"></bonus-area-test>
-    
     <!-- item -->
     <bonus-area :bonusProducts="bonusProducts" :bonusProductTypes="bonusProductTypes"></bonus-area>
     
@@ -21,6 +17,7 @@ import axios from "axios";
 
 const bonusProducts = ref(null);
 const bonusProductTypes = ref(null);
+const bonusSearchName =ref(null);
 
 onMounted(async () => {
   try {
@@ -28,15 +25,16 @@ onMounted(async () => {
     // 把接到的請求資料丟到bonusProducts
     bonusProducts.value = response.data;
 
-    const responseTypes = await axios.get("https://localhost:7048/api/BonusProducts/Type");
+    const responseTypes = await axios.get(`https://localhost:7048/api/BonusProducts/Type/${producttypeid}`);
     // 把接到的請求資料丟到bonusProductTypes
     bonusProductTypes.value = responseTypes.data;
 
+    const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${productName}`);
+    // 把接到的請求資料丟到bonusSearchName
+    bonusSearchName.value = responseSearchName.data;
 
   } catch (error) {
     console.error("未正確找到紅利商品", error);
   }
-  console.log(bonusProducts.value) //GET Array test 渲染成功找一次
-  console.log(bonusProductTypes.value)
 });
 </script>
