@@ -73,9 +73,8 @@
                         <i class="flaticon-search-1"></i>
                       </a>
                     </li>
-                  <!-- 購物車 -->
 
-                    <!-- 登入按鈕 -->
+                  <!-- 登入按鈕 -->
                     <li class="header-btn" v-if="isAccountIdExists === false">
                       <nuxt-link to="/Login" :class="`${style_2?'tg-btn-3 tg-svg':'tg-border-btn'}`">
                        <svg-animate-icon v-if="style_2" icon='/images/icons/shape02.svg' id="svg-2" />
@@ -83,6 +82,15 @@
                       </nuxt-link>
                     </li>
                     
+                  <!-- 購物車 -->
+                  
+                  
+                  <li class="search" v-if="isAccountIdExists">
+                      <nuxt-link to="/">
+                        <!-- <img src="/images/icons/shopping-cart.png"> -->
+                        <img src="/images/icons/shopping-cart.png">
+                      </nuxt-link>
+                    </li>
                     <li class="header-btn"  v-if="isAccountIdExists">
                     <!-- @click="handleSignOut" -->
                       <nuxt-link :class="`${style_2?'tg-btn-3 tg-svg':'tg-border-btn'}`" @click="handleSignOut">
@@ -180,5 +188,9 @@ const handleSignOut = () => {
   $cookie.removeCookie('accountId');
   location.reload();
 };
+
+
+
+
 
 </script>

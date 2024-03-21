@@ -22,16 +22,15 @@
       <ClientOnly>
         <!-- <GoogleLogin :callback="callback" popup-type="TOKEN" > -->
           <button 
-          class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" style="margin-left:20vh;margin-top:20vh;"
+          class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" style="margin-left:12vh;margin-top:8vh;"
           @click="handleGoogleLogin"
           >
           <!--             class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" -->
             <span class="text-slate-500 group-hover:text-slate-600">使用 Google 進行登入</span>
           </button>
-
-          <popup-googlelogin :isActive="isActive" @closeLogin="handleCloseLogin"></popup-googlelogin>
         <!-- </GoogleLogin> -->
       </ClientOnly>
+      <!-- <popup-googlelogin :isActive="isActive" @closeLogin="handleCloseLogin"></popup-googlelogin> -->
     </div>
   </div>
 <!--  -->
@@ -91,8 +90,9 @@ const login = () => {
       id= response.data[1]
       $cookie.setCookie('accountId', response.data[1]); // 3600000 毫秒 = 1 小時
       console.log(response.data[0]);
+      //router.go('index');
       router.push('/');
-      // router.push('home-2');
+      
       //從cookies中拿Id
       axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
          .then(response => {
@@ -136,10 +136,13 @@ const login = () => {
           {
             console.log(response.data[1]);
             $cookie.setCookie('accountId', response.data[1]);
+            router.push('/');
           }
           else 
           {
-            
+            const audio = new Audio('/audio/click.wav');
+            audio.play();
+            isActive.value = !isActive.value;
           };
 
             })
