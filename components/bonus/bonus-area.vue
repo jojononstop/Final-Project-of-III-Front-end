@@ -7,37 +7,13 @@
           <bonus-sidebar-test @search="handleSearch"/>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-11">
-          <div class="bonus__top-wrap">
-            <div class="row align-items-center">
-              <div class="col-lg-8 col-sm-6">
-                <div class="bonus__showing-result">
-                  <p>Showing 1 - 9 of 15 results</p>
-                </div>
-              </div>
-              <div class="col-lg-4 col-sm-6">
-                <!-- 下拉篩選 -->
-                <div class="shop__ordering">
-                  <select name="orderby" class="orderby">
-                    <option value="Default sorting">Default sorting</option>
-                    <option value="Sort by popularity">Sort by popularity</option>
-                    <option value="Sort by average rating">Sort by average rating</option>
-                    <option value="Sort by latest">Sort by latest</option>
-                    <option value="Sort by latest">Sort by latest</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="row justify-content-center row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1"> -->
-          <div class="row justify-content-center row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1">
-            <!--物品清單-->
+          <div class="row justify-content-center row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1"><!--物品清單-->
             <!-- 把接到的請求資料丟到bonusProducts -->
             <div v-for="bonusProduct in bonusProducts" :key="bonusProduct.id" class="col">
               <bonus-item :bonusProduct="bonusProduct" :bonusProductTypes="bonusProductTypes" />
             </div>
           </div>
-          <div class="pagination__wrap">
-            <!-- 換頁按鈕 -->
+          <div class="pagination__wrap"><!-- 換頁按鈕 -->
             <ul class="list-wrap d-flex flex-wrap justify-content-center">
               <li><nuxt-link to="#" class="page-numbers">01</nuxt-link></li>
               <li><span class="page-numbers current">02</span></li>
@@ -58,18 +34,18 @@
 
 <script setup>
 import product_data from "@/data/product-data";
-import { defineProps } from "vue";
+import { defineProps ,defineEmits} from "vue";
 
 const props = defineProps({
   bonusProducts: Object,
   bonusProductTypes: Object
 });
-const product_items = [...product_data];
 
-let searchKeyword = '';
+const emits = defineEmits(['data-from-bonus'])
 
 function handleSearch(keyword)
 {
-  console.log("Search keyword",keyword)
+  // console.log("Search keyword",keyword);
+  emits('data-from-bonus',keyword);
 }
 </script>

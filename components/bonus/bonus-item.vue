@@ -1,8 +1,8 @@
 <template>
-  <div class="shop__item">
-    <div class="shop__item-thumb">
+  <div class="shop__bonus__item">
+    <div class="shop__bonus__item-thumb">
       <nuxt-link :to="`/shop-details/${bonusProduct.id}`">
-        <img :src="`/images/bonus/${bonusProduct.productTypeId}/${bonusProduct.url}`" />
+        <img :src="`/images/bonus/${bonusProduct.productTypeId}/${bonusProduct.url}`" typeof="btn" />
       </nuxt-link>
       <!-- 最愛按鈕 -->
       <nuxt-link to="#" class="wishlist-button">
