@@ -41,11 +41,12 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router';
   import { googleTokenLogin } from 'vue3-google-login'
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
   import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
+  import header from '@/components/header/header-one.vue';
 
   const isActive = ref<boolean>(false);
 
@@ -91,7 +92,11 @@ const login = () => {
       $cookie.setCookie('accountId', response.data[1]); // 3600000 毫秒 = 1 小時
       console.log(response.data[0]);
       id= $cookie.getCookie("accountId")
-      console.log( id); 
+      console.log( id);
+//
+      console.log( header.isAccountIdExists);
+      header.isAccountIdExists = true;
+//
       router.push('/');
       
       //從cookies中拿Id
@@ -152,6 +157,5 @@ const login = () => {
           });
     
   }
-    
 
 </script>

@@ -129,6 +129,7 @@
 <script setup lang="ts">
 import menu_data from '@/data/menu-data';
 import menu_data_cookie from '@/data/menu-data-cookie';
+import { ref, onBeforeMount} from 'vue'; // 引入 ref 和 onBeforeMount
 
 defineProps<{style_2?:boolean}>();
 
@@ -187,6 +188,7 @@ const handleCloseMobileOffCanvas = (audioPath: string) => {
 const handleSignOut = () => {
   $cookie.removeCookie('accountId');
   location.reload();
+
 };
 
 
