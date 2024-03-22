@@ -65,7 +65,7 @@ const menu_data:IMenuDataType[] = [
     link:'/bonus',
   },
   {
-    id:7,
+    id:8,
     title:'Cart',
     link:'/checkout/cart',
   },

@@ -5,7 +5,7 @@
     <div class="total">
       <p>總價:</p>
     </div>
-    <button @click="checkout">LinePay結帳</button>
+    <CartLinepay/>
   </div>
 </template>
 
@@ -32,21 +32,14 @@ function checkout() {
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  margin-top: 200px;
 }
 
 .total {
   margin-top: 20px;
 }
 
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+
 
 button:hover {
   background-color: #0056b3;

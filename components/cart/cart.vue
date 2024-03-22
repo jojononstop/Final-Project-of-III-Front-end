@@ -14,7 +14,6 @@
     <div v-else>
       <p>購物車為空</p>
     </div>
-    <button class="btn btn-info" @click="getItem">獲取購物車項目</button>
   </div>
 </template>
 
