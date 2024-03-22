@@ -2,7 +2,6 @@
   <section class="shop-area shop-details-area">
       <div class="container">
           <div class="row">
-          <h1>哈哈是我啦</h1>
               <!-- shop details images -->
               <shop-details-images/>
               <!-- shop details images -->

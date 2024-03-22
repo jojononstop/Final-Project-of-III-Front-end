@@ -1,86 +1,44 @@
 <template>
-    <div>
-        <!-- breadcrumb area start -->
-        <breadcrumb-three title="BONUS" subtitle="BONUS LIST">
-        </breadcrumb-three>
-        <!-- breadcrumb area end -->
-
-        <!-- blog area start -->
-        <bonus-area>
-            <section class="shop-area">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-3 col-lg-4 col-md-11 order-2 order-lg-0">
-                <!-- sidebar start  -->
-                <shop-sidebar/>
-                <!-- sidebar end  -->
-            </div>
-            <div class="col-xl-9 col-lg-8 col-md-11">
-                <div class="shop__top-wrap">
-                    <div class="row align-items-center">
-                        <div class="col-lg-8 col-sm-6">
-                            <div class="shop__showing-result">
-                                <p>Showing 1 - 9 of 15 results</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="shop__ordering">
-                                <select name="orderby" class="orderby">
-                                    <option value="Default sorting">Default sorting</option>
-                                    <option value="Sort by popularity">Sort by popularity</option>
-                                    <option value="Sort by average rating">Sort by average rating</option>
-                                    <option value="Sort by latest">Sort by latest</option>
-                                    <option value="Sort by latest">Sort by latest</option>
-                                </select>
-                            </div>
-                        </div> 
-                    </div>
-                </div>
-                <div class="row justify-content-center row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1">
-                    <div v-for="item in product_items" :key="item.id" class="col">
-                        <shop-item :item="item" />
-                    </div>
-                </div>
-                <div class="pagination__wrap">
-                    <ul class="list-wrap d-flex flex-wrap justify-content-center">
-                        <li><nuxt-link to="#" class="page-numbers">01</nuxt-link></li>
-                        <li><span class="page-numbers current">02</span></li>
-                        <li><nuxt-link to="#" class="page-numbers">03</nuxt-link></li>
-                        <li><nuxt-link to="#" class="page-numbers">....</nuxt-link></li>
-                        <li>
-                            <nuxt-link to="#" class="next page-numbers">
-                                <i class="fas fa-angle-double-right"></i>
-                            </nuxt-link>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-  </section>
-        </bonus-area>
-        <!-- blog area end -->
-    </div>
+  <div>
+    <!-- breadcrumb area start -->
+    <breadcrumb-three title="BONUS" subtitle="BONUS LIST"> </breadcrumb-three>
+    <!-- breadcrumb area end -->
+    <!-- item -->
+    <bonus-area :bonusProducts="bonusProducts" :bonusProductTypes="bonusProductTypes" @data-from-bonus="handleDataFromBonus"></bonus-area>
+    
+  </div>
 </template>
 
-<script setup lang="ts">
+<script setup >
 useSeoMeta({ title: "BONUS - MYKD" });
+import { ref ,onMounted, defineEmits } from "vue";
+// 透過axios GET & POST請求
+import axios from "axios";
 
-import type { IProduct } from "@/types/product-type";
+const bonusProducts = ref(null);
+const bonusProductTypes = ref(null);
+const bonusSearchName =ref(null);
 
-defineProps<{product:IProduct}>();
-const model = ref<string>('Gat');
-const incValue = ref<number>(1);
+onMounted(async () => {
+  try {
+    const response = await axios.get("https://localhost:7048/api/BonusProducts");
+    // 把接到的請求資料丟到bonusProducts
+    bonusProducts.value = response.data;
 
-//hanle increment 
-const handleIncrement = (value:string) => {
-    if(value === 'inc'){
-      incValue.value += 1
-    }
-    else {
-        if(incValue.value > 1){
-          incValue.value -= 1
-        }
-    }
+    
+    const responseTypes = await axios.get(`https://localhost:7048/api/BonusProducts/Type/${producttypeid}`);
+    // 把接到的請求資料丟到bonusProductTypes
+    bonusProductTypes.value = responseTypes.data;
+
+    const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${productName}`);
+    // 把接到的請求資料丟到bonusSearchName
+    bonusSearchName.value = responseSearchName.data;
+
+  } catch (error) {
+    console.error("未正確找到紅利商品", error);
+  }
+});
+function handleDataFromBonus(keyword){
+  console.log("Data from bonus-area:",keyword)
 }
 </script>
