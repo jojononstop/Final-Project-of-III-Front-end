@@ -64,6 +64,11 @@ const menu_data:IMenuDataType[] = [
     title:'Bonus',
     link:'/bonus',
   },
+  {
+    id:7,
+    title:'Cart',
+    link:'/checkout/cart',
+  },
 ]
 
 export default menu_data;
