@@ -12,7 +12,7 @@ type IMenuDataType = {
 const menu_data:IMenuDataType[] = [
   {
     id:1,
-    title:'Home',
+    title:'首頁',
     link:'#',
     sub_menu:[
       {title:'Home One',link:'/'},
@@ -21,13 +21,13 @@ const menu_data:IMenuDataType[] = [
   },
   {
     id:2,
-    title:'ABOUT US',
+    title:'關於我們',
     link:'/about',
   },
   {
     id:3,
-    title:'TOURNAMENT',
-    link:'#',
+    title:'商店',
+    link:'/game',
     sub_menu:[
       {title:'TOURNAMENT',link:'/tournament'},
       {title:'TOURNAMENT Single',link:'/tournament-details'},
@@ -35,8 +35,8 @@ const menu_data:IMenuDataType[] = [
   },
   {
     id:4,
-    title:'PAGES',
-    link:'#',
+    title:'點數商店',
+    link:'/bonus',
     sub_menu:[
       {title:'Gaming Shop',link:'/shop'},
       {title:'Shop Details',link:'/shop-details'},
@@ -47,7 +47,7 @@ const menu_data:IMenuDataType[] = [
   },
   {
     id:5,
-    title:'News',
+    title:'個人資訊',
     link:'#',
     sub_menu:[
       {title:'Our Blog',link:'/blog'},
@@ -56,8 +56,8 @@ const menu_data:IMenuDataType[] = [
   },
   {
     id:6,
-    title:'Game',
-    link:'/game',
+    title:'測試',
+    link:'/chattest',
   },
   {
     id:7,
