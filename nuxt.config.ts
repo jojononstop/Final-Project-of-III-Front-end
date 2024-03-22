@@ -25,4 +25,7 @@ export default defineNuxtConfig({
     "@/assets/css/animate.min.css",
     "@/assets/scss/main.scss",
   ],
+  plugins: [
+    { src: '~/plugins/signalr.js', ssr: false, mode: 'client' }
+  ]
 })

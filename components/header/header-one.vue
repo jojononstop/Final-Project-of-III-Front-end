@@ -1,11 +1,11 @@
 <template>
   <header>
-    <div id="sticky-header" :class="`tg-header__area transparent-header ${isSticky?'tg-sticky-menu':''} ${isStickyVisible?'sticky-menu__show':''}`">
+    <div id="sticky-header"
+      :class="`tg-header__area transparent-header ${isSticky ? 'tg-sticky-menu' : ''} ${isStickyVisible ? 'sticky-menu__show' : ''}`">
       <div class="container custom-container">
         <div class="row">
           <div class="col-12">
-            <div class="mobile-nav-toggler" 
-             @click="handleOpenMobileOffCanvas('/audio/click.wav')">
+            <div class="mobile-nav-toggler" @click="handleOpenMobileOffCanvas('/audio/click.wav')">
               <i class="fas fa-bars"></i>
             </div>
             <div class="tgmenu__wrap">
@@ -18,10 +18,8 @@
                 <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                   <ul class="navigation">
                     <template v-for="menu in menu_data" :key="menu.id">
-                      <li 
-                        v-if="menu.sub_menu"
-                        :class="{'menu-item-has-children active': menu.sub_menu && menu.sub_menu.some(sub => route.path === sub.link) }"
-                      >
+                      <li v-if="menu.sub_menu"
+                        :class="{ 'menu-item-has-children active': menu.sub_menu && menu.sub_menu.some(sub => route.path === sub.link) }">
                         <nuxt-link to="#">
                           {{ menu.title }}
                         </nuxt-link>
@@ -30,7 +28,7 @@
                             <nuxt-link :to="sub.link">{{ sub.title }}</nuxt-link>
                           </li>
                         </ul>
-                      </li> 
+                      </li>
                       <li v-else :class="{ active: route.path === menu.link }">
                         <nuxt-link :to="menu.link">
                           {{ menu.title }}
@@ -38,7 +36,6 @@
                       </li>
                     </template>
                   </ul>
-                
                 </div>
                 <div class="tgmenu__action d-none d-md-block">
                   <ul class="list-wrap">
@@ -48,8 +45,8 @@
                       </a>
                     </li>
                     <li class="header-btn">
-                      <nuxt-link to="/contact" :class="`${style_2?'tg-btn-3 tg-svg':'tg-border-btn'}`">
-                       <svg-animate-icon v-if="style_2" icon='/images/icons/shape02.svg' id="svg-2" />
+                      <nuxt-link to="/contact" :class="`${style_2 ? 'tg-btn-3 tg-svg' : 'tg-border-btn'}`">
+                        <svg-animate-icon v-if="style_2" icon='/images/icons/shape02.svg' id="svg-2" />
                         <i class="flaticon-edit"></i> ~sing in
                       </nuxt-link>
                     </li>
@@ -67,24 +64,26 @@
       </div>
     </div>
 
-     <!-- header-search --> 
+    <!-- header-search -->
     <popup-search :isActive="isActive" @closeSearch="handleCloseSearch"></popup-search>
-     <!-- header-search-end -->
+    <!-- header-search-end -->
 
     <!--  off canvas start -->
     <off-canvas :isOffCanvasOpen="isOffCanvasOpen" @closeOffcanvas="handleCloseOffCanvas" />
     <!--  off canvas end -->
 
     <!-- mobile off canvas start -->
-    <mobile-offcanvas :isMobileOffCanvasOpen="isMobileOffCanvasOpen" @closeMobileOffcanvas="handleCloseMobileOffCanvas" />
+    <mobile-offcanvas :isMobileOffCanvasOpen="isMobileOffCanvasOpen"
+      @closeMobileOffcanvas="handleCloseMobileOffCanvas" />
     <!-- mobile off canvas end -->
   </header>
 </template>
 
 <script setup lang="ts">
 import menu_data from '@/data/menu-data';
-defineProps<{style_2?:boolean}>();
-const {isSticky,isStickyVisible} = useSticky();
+import chatroomVue from '../Chatroom/chatroom.vue';
+defineProps<{ style_2?: boolean }>();
+const { isSticky, isStickyVisible } = useSticky();
 const route = useRoute();
 const isActive = ref<boolean>(false);
 const isOffCanvasOpen = ref<boolean>(false);
