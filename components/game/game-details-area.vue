@@ -11,7 +11,7 @@
                         <div class="blog-post-content blog-details-content">
                             <div class="blog-post-meta">
                                 <ul class="list-wrap">
-                                    <li>發行商 : <nuxt-link to="#">{{ gameData.developerId }}</nuxt-link></li>
+                                    <li>發行商 : <nuxt-link to="#">{{ developerName }}</nuxt-link></li>
                                     <li><i class="far fa-calendar-alt"></i>發行日期 : {{ formatDate(gameData.releaseDate)
                                         }}</li>
                                     <li>評分 : {{ gameData.rating }}</li>
@@ -54,10 +54,8 @@
                         </div>
                     </div>
                     <div class="comments-wrap">
-                        <h4 class="comments-wrap-title">3 Comments</h4>
-                        <!-- blog comments start -->
-                        <!-- <blog-details-comments /> -->
-                        <!-- blog comments end -->
+                        <h4 class="comments-wrap-title">Comments</h4>
+                        <game-detail-comments :comments="comments" />
                     </div>
                     <div class="comment-respond">
                         <h3 class="comment-reply-title">Leave a Reply</h3>
@@ -85,16 +83,22 @@ const props = defineProps({
 });
 
 let games = ref(null);
+let developerName = ref(null);
+let comments = ref(null);
 
 onMounted(async () => {
     try {
         const response = await axios.get(`https://localhost:7048/api/Games/dlc/${props.gameData.id}`);
         games.value = response.data;
-        console.log(games.value);
+        const response2 = await axios.get(`https://localhost:7048/api/Games/developerName/${props.gameData.developerId}`);
+        developerName.value = response2.data;
+        const response3 = await axios.get(`https://localhost:7048/api/Comments/${props.gameData.id}`);
+        comments.value = response3.data;
+
     } catch (error) {
         console.log(error);
     }
-    console.log(games.value.name)
+    console.log(comments.value)
 });
 
 // 格式化日期的方法

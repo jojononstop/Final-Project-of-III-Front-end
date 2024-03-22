@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="blog-post-wrapper">
-                    <gameList :gameData="games" />
+                    <game-list :gameData="games" />
                     <div class="pagination__wrap">
                         <!-- pagination start -->
                         <ui-pagination></ui-pagination>
@@ -16,9 +16,8 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import { ref, onMounted } from "vue";
-import gameList from "./game-list.vue";
+import axios from "axios";
 
 let games = ref(null);
 
@@ -26,7 +25,6 @@ onMounted(async () => {
     try {
         const response = await axios.get("https://localhost:7048/api/Games");
         games.value = response.data;
-        console.log(games.value);
     } catch (error) {
         console.log(error);
     }

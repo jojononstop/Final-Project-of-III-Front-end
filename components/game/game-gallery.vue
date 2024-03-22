@@ -14,7 +14,7 @@
                                             class="popup-image cursor-pointer" @click.prevent="handleShowImage(index)"
                                             @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
                                             <s v-if="item.type === 'video'">
-                                                <video controls class="swiper-item">
+                                                <video controls class="swiper-item" :autoplay="true" :muted="true">
                                                     <source :src="item.src" type="video/webm">
                                                 </video>
                                             </s>

@@ -13,14 +13,21 @@
             </div>
         </div>
         <div class="blog-widget">
-        </div>
-        <div class="blog-widget">
             <h4 class="fw-title">Tags</h4>
             <div class="tagcloud">
                 <nuxt-link v-for="(tag, index) in gameData.tags" :key="index" :to="`/game?search=tag_${tag.id}`">{{
                         tag.name
                     }}</nuxt-link>
             </div>
+        </div>
+        <div class="blog-widget">
+            <nuxt-link to="#" class="tg-btn-2 -secondary mb-2">
+                加入願望清單
+            </nuxt-link>
+            <nuxt-link to="#" class="tg-btn-2">
+                加入購物車
+            </nuxt-link>
+
         </div>
     </aside>
 </template>
@@ -31,4 +38,5 @@ import { defineProps } from "vue";
 const props = defineProps({
     gameData: Object,
 });
+
 </script>
