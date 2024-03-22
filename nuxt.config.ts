@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
+  
   devtools: { enabled: true },
   app: {
     head: {
@@ -26,6 +28,16 @@ export default defineNuxtConfig({
     "@/assets/scss/main.scss",
   ],
   plugins: [
+    '~/plugins/bootstrap-vue',
     { src: '~/plugins/signalr.js', ssr: false, mode: 'client' }
-  ]
+  ],
+  runtimeConfig: {
+    public: {
+      // '這邊放上你的 Google Client ID'
+      googleClientId: process.env.GOOGLE_CLIENT_ID
+    },
+    //'這邊放上你的 Google Client Secret'
+    googleClientSecret: process.env.GOOGLE_CLIENT_SECRET
+  }
 })
+

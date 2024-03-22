@@ -17,7 +17,9 @@
                 </div>
                 <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
                   <ul class="navigation">
-                    <template v-for="menu in menu_data" :key="menu.id">
+                    <!-- 驗證抓不抓得到cookie -->
+                    <!-- v-if="isAccountIdExists === false" -->
+                    <template v-if="isAccountIdExists === false" v-for="menu in menu_data" :key="menu.id">
                       <li v-if="menu.sub_menu"
                         :class="{ 'menu-item-has-children active': menu.sub_menu && menu.sub_menu.some(sub => route.path === sub.link) }">
                         <nuxt-link to="#">
@@ -35,19 +37,60 @@
                         </nuxt-link>
                       </li>
                     </template>
+                    <!-- 抓到時 -->
+                    <template v-if="isAccountIdExists" v-for="menu in menu_data_cookie" :key="menu.id">
+                      <li v-if="menu.sub_menu"
+                        :class="{ 'menu-item-has-children active': menu.sub_menu && menu.sub_menu.some(sub => route.path === sub.link) }">
+                        <nuxt-link to="#">
+                          {{ menu.title }}
+                        </nuxt-link>
+                        <ul v-if="menu.sub_menu" class="sub-menu">
+                          <li v-for="(sub, i) in menu.sub_menu" :key="i" :class="{ active: route.path === sub.link }">
+                            <nuxt-link :to="sub.link">{{ sub.title }}</nuxt-link>
+                          </li>
+                        </ul>
+                      </li>
+                      <li v-else :class="{ active: route.path === menu.link }">
+                        <nuxt-link :to="menu.link">
+                          {{ menu.title }}
+                        </nuxt-link>
+                      </li>
+                    </template>
+
+
                   </ul>
                 </div>
                 <div class="tgmenu__action d-none d-md-block">
                   <ul class="list-wrap">
+                    <!-- 搜尋 -->
                     <li class="search">
                       <a class="cursor-pointer" @click="handleOpenSearch('/audio/click.wav')">
                         <i class="flaticon-search-1"></i>
                       </a>
                     </li>
-                    <li class="header-btn">
-                      <nuxt-link to="/contact" :class="`${style_2 ? 'tg-btn-3 tg-svg' : 'tg-border-btn'}`">
+
+                    <!-- 登入按鈕 -->
+                    <li class="header-btn" v-if="isAccountIdExists === false">
+                      <nuxt-link to="/Login" :class="`${style_2 ? 'tg-btn-3 tg-svg' : 'tg-border-btn'}`">
                         <svg-animate-icon v-if="style_2" icon='/images/icons/shape02.svg' id="svg-2" />
-                        <i class="flaticon-edit"></i> ~sing in
+                        <i class="flaticon-edit"></i> ~sign in
+                      </nuxt-link>
+                    </li>
+
+                    <!-- 購物車 -->
+
+
+                    <li class="search" v-if="isAccountIdExists">
+                      <nuxt-link to="/">
+                        <!-- <img src="/images/icons/shopping-cart.png"> -->
+                        <img src="/images/icons/shopping-cart.png">
+                      </nuxt-link>
+                    </li>
+                    <li class="header-btn" v-if="isAccountIdExists">
+                      <!-- @click="handleSignOut" -->
+                      <nuxt-link :class="`${style_2 ? 'tg-btn-3 tg-svg' : 'tg-border-btn'}`" @click="handleSignOut">
+                        <svg-animate-icon v-if="style_2" icon='/images/icons/shape02.svg' id="svg-2" />
+                        <i class="flaticon-edit"></i> ~sign out
                       </nuxt-link>
                     </li>
                     <li class="side-toggle-icon" @click="handleOpenOffCanvas('/audio/click.wav')">
@@ -81,8 +124,21 @@
 
 <script setup lang="ts">
 import menu_data from '@/data/menu-data';
-import chatroomVue from '../Chatroom/chatroom.vue';
+import menu_data_cookie from '@/data/menu-data-cookie';
+import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
+
 defineProps<{ style_2?: boolean }>();
+
+
+import { VueCookieNext as $cookie } from 'vue-cookie-next'
+let isAccountIdExists: boolean;
+
+// onMounted
+onBeforeMount(() => {
+  isAccountIdExists = $cookie.isCookieAvailable('accountId');
+});
+
+
 const { isSticky, isStickyVisible } = useSticky();
 const route = useRoute();
 const isActive = ref<boolean>(false);
@@ -124,4 +180,15 @@ const handleCloseMobileOffCanvas = (audioPath: string) => {
   audio.play();
   isMobileOffCanvasOpen.value = !isMobileOffCanvasOpen.value;
 };
+
+const handleSignOut = () => {
+  $cookie.removeCookie('accountId');
+  location.reload();
+
+};
+
+
+
+
+
 </script>
