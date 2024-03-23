@@ -28,7 +28,6 @@ export default defineNuxtConfig({
     "@/assets/scss/main.scss",
   ],
   plugins: [
-    '~/plugins/bootstrap-vue',
     { src: '~/plugins/signalr.js', ssr: false, mode: 'client' }
   ],
   runtimeConfig: {
