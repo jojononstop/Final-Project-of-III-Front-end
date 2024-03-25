@@ -20,6 +20,9 @@
                     }}</nuxt-link>
             </div>
         </div>
+
+        
+
         <div class="blog-widget">
             <nuxt-link to="#" class="tg-btn-2 -secondary mb-2">
                 加入願望清單
@@ -27,8 +30,8 @@
             <nuxt-link to="#" class="tg-btn-2">
                 加入購物車
             </nuxt-link>
-
         </div>
+
     </aside>
 </template>
 

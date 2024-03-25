@@ -61,8 +61,8 @@ const menu_data:IMenuDataType[] = [
   },
   {
     id:7,
-    title:'Game Details',
-    link:'/game-details/:id',
+    title:'Game',
+    link:'/game',
   },
   {
     id:8,

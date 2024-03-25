@@ -32,10 +32,8 @@ onMounted(async () => {
             console.error('缺少必要的参数');
             return;
         }
-
         const response = await axios.get(`https://localhost:7048/api/Games/${route.params.id}`);
         game.value = response.data;
-        console.log(game.value);
     } catch (error) {
         console.log(error);
     }
