@@ -89,7 +89,11 @@ const login = () => {
     if(response.data[0]=="登入成功"){
       // 設置 'account' Cookie，過期時間為一小時後
       
-      $cookie.setCookie('accountId', response.data[1]); // 3600000 毫秒 = 1 小時
+      $cookie.setCookie('accountId', response.data[1]);
+      $cookie.setCookie('avatarUrl', response.data[2]);
+      $cookie.setCookie('bouns', response.data[3]);
+      $cookie.setCookie('name', response.data[4]);
+
       console.log(response.data[0]);
       id= $cookie.getCookie("accountId")
       console.log( id);
