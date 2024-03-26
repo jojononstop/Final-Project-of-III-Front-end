@@ -1,5 +1,15 @@
 <template>
+
+
+
   <section class="slider__area slider__bg" style="background-image: url(/images/slider/slider_bg.jpg);height:750px" data-background="/images/slider/slider_bg.jpg" >
+  <div>
+    <modal v-model="isActive">
+      <div class="p-4">
+        <placeholder class="h-48" />
+      </div>
+    </modal>
+  </div>
     <div style="display: flex;justify-content: center;align-items: center;height: 50vh; ">
         <div style="display: grip; justify-content: center;align-items: center;">
           <!-- height: 30vh;width:50vh; -->
@@ -19,7 +29,7 @@
       <!-- <h1 class="my-8 flex text-center text-3xl font-bold tracking-tight text-emerald-500">
         Nuxt App
       </h1> -->
-      <ClientOnly>
+      <!-- <ClientOnly> -->
         <!-- <GoogleLogin :callback="callback" popup-type="TOKEN" > -->
           <button 
           class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" style="margin-left:12vh;margin-top:8vh;"
@@ -28,8 +38,9 @@
           <!--             class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" -->
             <span class="text-slate-500 group-hover:text-slate-600">使用 Google 進行登入</span>
           </button>
+          <!-- <button @click="test">test</button> -->
         <!-- </GoogleLogin> -->
-      </ClientOnly>
+      <!-- </ClientOnly> -->
       <!-- <popup-googlelogin :isActive="isActive" @closeLogin="handleCloseLogin"></popup-googlelogin> -->
     </div>
   </div>
@@ -46,12 +57,15 @@
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
   import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
-  import header from '@/components/header/header-one.vue';
+  
 
   const isActive = ref<boolean>(false);
 
+
   // import { ElMessageBox } from 'element-plus';
+  
   var id ="";
+  let globalId;
   useSeoMeta({ title: "Login" });
 
   const runtimeConfig = useRuntimeConfig()
@@ -64,11 +78,11 @@
   console.log(response)
 }
 // 開彈窗
-const handleOpenLogin = (audioPath: string) => {
-  const audio = new Audio(audioPath);
-  audio.play();
-  isActive.value = !isActive.value;
-};
+// const handleOpenLogin = (audioPath: string) => {
+//   const audio = new Audio(audioPath);
+//   audio.play();
+//   isActive.value = !isActive.value;
+// };
 // 關彈窗
 const handleCloseLogin = (audioPath: string) => {
   const audio = new Audio(audioPath);
@@ -98,15 +112,17 @@ const login = () => {
       id= $cookie.getCookie("accountId")
       console.log( id);
 //
-      console.log( header.isAccountIdExists);
-      header.isAccountIdExists = true;
+      // console.log( header.isAccountIdExists);
+      // header.isAccountIdExists = true;
 //
       router.push('/');
       
       //從cookies中拿Id
       axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
          .then(response => {
-            console.log(response.data);
+          console.log(response.data);
+          globalId =response.data;
+          console.log(globalId);
             console.log( $cookie.getCookie("accountId")); 
             })
          .catch(error => {
@@ -122,6 +138,10 @@ const login = () => {
     console.log(error);
   });
 };
+  const test = async() =>{
+    let name= $cookie.getCookie("name")
+    console.log(name);
+  };
 
   const handleGoogleLogin = async () => {
     const accessToken = await googleTokenLogin({
@@ -146,6 +166,9 @@ const login = () => {
           {
             console.log(response.data[1]);
             $cookie.setCookie('accountId', response.data[1]);
+            $cookie.setCookie('avatarUrl', response.data[2]);
+            $cookie.setCookie('bouns', response.data[3]);
+            $cookie.setCookie('name', response.data[4]);
             router.push('/');
           }
           else 
