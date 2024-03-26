@@ -1,15 +1,5 @@
 <template>
-
-
-
   <section class="slider__area slider__bg" style="background-image: url(/images/slider/slider_bg.jpg);height:750px" data-background="/images/slider/slider_bg.jpg" >
-  <div>
-    <modal v-model="isActive">
-      <div class="p-4">
-        <placeholder class="h-48" />
-      </div>
-    </modal>
-  </div>
     <div style="display: flex;justify-content: center;align-items: center;height: 50vh; ">
         <div style="display: grip; justify-content: center;align-items: center;">
           <!-- height: 30vh;width:50vh; -->
@@ -42,6 +32,7 @@
         <!-- </GoogleLogin> -->
       <!-- </ClientOnly> -->
       <!-- <popup-googlelogin :isActive="isActive" @closeLogin="handleCloseLogin"></popup-googlelogin> -->
+      <LoginModal2 v-show="isActive"/>
     </div>
   </div>
 <!--  -->
@@ -57,7 +48,6 @@
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
   import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
-  
 
   const isActive = ref<boolean>(false);
 
@@ -176,6 +166,7 @@ const login = () => {
             const audio = new Audio('/audio/click.wav');
             audio.play();
             isActive.value = !isActive.value;
+            console.log(isActive.value);
           };
 
             })

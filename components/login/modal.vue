@@ -1,13 +1,10 @@
 <template>
   <div class="modal-overlay">
     <div class="modal">
-      <img class="check" src="~/assets/check-icon.png" alt="" />
+      <!-- <img class="check" src="~/assets/check-icon.png" alt="" /> -->
       <p>您的google帳號並沒有綁定帳號是否要註冊帳號</p>
       <button>是</button>
       <button>否</button>
-    </div>
-    <div class="close">
-      <img class="close-img" src="~/assets/close-icon.svg" alt="" />
     </div>
   </div>
 </template>
@@ -28,6 +25,7 @@
   display: flex;
   justify-content: center;
   background-color: #000000da;
+
 }
 
 .modal {
@@ -35,9 +33,12 @@
   background-color: white;
   height: 500px;
   width: 500px;
-  margin-top: 10%;
-  padding: 60px 0;
   border-radius: 20px;
+  padding: 60px 0;
+  position: fixed;
+  top: 50%; /* 将顶部定位到视口中心 */
+  left: 50%; /* 将左侧定位到视口中心 */
+  transform: translate(-50%, -50%); /* 使用 transform 来实现水平和垂直居中 */
 }
 .close {
   margin: 10% 0 0 16px;
