@@ -29,8 +29,7 @@
                                             <h4>{{ dlc.name }}</h4>
                                         </div>
                                         <div class="col-4 image-container">
-                                            <img :src="`/images/games/cover/${dlc.developerId}/${dlc.id}/${dlc.cover}`"
-                                                height="100%" weight="auto">
+                                            <img :src="`/images/games/cover/${dlc.developerId}/${dlc.id}/${dlc.cover}`">
                                         </div>
                                     </div>
                                 </nuxt-link>
@@ -45,8 +44,8 @@
                                             <h4>{{ games.name }}</h4>
                                         </div>
                                         <div class="col-4 image-container">
-                                            <img :src="`/images/games/cover/${games.developerId}/${games.id}/${games.cover}`"
-                                                height="100%" weight="auto">
+                                            <img
+                                                :src="`/images/games/cover/${games.developerId}/${games.id}/${games.cover}`">
                                         </div>
                                     </div>
                                 </nuxt-link>
@@ -55,12 +54,12 @@
                     </div>
                     <div class="comment-respond mb-3">
                         <h1 class="fw-title">留下評分與評價</h1>
-                        <game-detail-comment-form :gameId="gameId"/>
+                        <game-detail-comment-form :gameId="gameId" />
                     </div>
                     <div class="comments-wrap">
                         <h4 class="comments-wrap-title">Comments</h4>
                         <game-detail-comments :gameId="gameId" />
-                    </div>                   
+                    </div>
                 </div>
                 <div class="blog-post-sidebar">
                     <!-- blog sidebar start -->
@@ -82,10 +81,9 @@ const props = defineProps({
 
 let games = ref(null);
 let developerName = ref(null);
-let comments = ref(null);
 const gameId = props.gameData.id;
 
-(async () => {
+onMounted(async () => {
     try {
         const response = await axios.get(`https://localhost:7048/api/Games/dlc/${props.gameData.id}`);
         games.value = response.data;
