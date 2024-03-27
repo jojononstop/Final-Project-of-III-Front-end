@@ -44,7 +44,7 @@
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
   import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
-  // import connection from '@'
+  import connection from '@/data/signalR';
  
 
   const isActive = ref<boolean>(false);
@@ -96,6 +96,23 @@ const login = () => {
       $cookie.setCookie('bouns', response.data[3]);
       $cookie.setCookie('name', response.data[4]);
       $cookie.setCookie('Id', response.data[5]);
+
+      connection.start().then(() => {
+    console.log('SignalR 成功連線');
+}).catch(err => {
+    console.error('SignalR connection failed:', err.toString());
+});
+
+connection.on('userconnected', (ConnectionId) => {
+    // 在這裡處理從伺服器端接收到的通知
+    console.log('新使用者已連接：', ConnectionId);
+    console.log('新使用者ID：', ConnectionId.ConnectionId);
+});
+connection.on('userdisconnected', (ConnectionId) => {
+    // 在這裡處理從伺服器端接收到的通知
+    console.log('使用者已離線：', ConnectionId);
+    console.log('離線使用者ID：', ConnectionId.ConnectionId);
+});
 
       console.log(response.data[0]);
       id= $cookie.getCookie("accountId")
@@ -167,6 +184,25 @@ const login = () => {
             $cookie.setCookie('name', response.data[4]);
             $cookie.setCookie('Id', response.data[5]);
             $cookie.setCookie('google', google);
+
+
+            connection.start().then(() => {
+    console.log('SignalR 成功連線');
+}).catch(err => {
+    console.error('SignalR connection failed:', err.toString());
+});
+
+connection.on('userconnected', (ConnectionId) => {
+    // 在這裡處理從伺服器端接收到的通知
+    console.log('新使用者已連接：', ConnectionId);
+    console.log('新使用者ID：', ConnectionId.ConnectionId);
+});
+connection.on('userdisconnected', (ConnectionId) => {
+    // 在這裡處理從伺服器端接收到的通知
+    console.log('使用者已離線：', ConnectionId);
+    console.log('離線使用者ID：', ConnectionId.ConnectionId);
+});
+
             router.push('/');
           }
           else 
