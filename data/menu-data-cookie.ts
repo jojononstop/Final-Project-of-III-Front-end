@@ -54,6 +54,11 @@ type IMenuDataType = {
         {title:'Blog Details',link:'/blog-details'}
       ]
     },
+    {
+      id:6,
+      title:'測試',
+      link:'/chattest',
+    },
     // {
     //   id:6,
     //   title:'Game',
