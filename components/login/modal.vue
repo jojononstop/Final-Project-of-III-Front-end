@@ -1,17 +1,40 @@
 <template>
+  <!-- class="modal-overlay"
+  class="modal" -->
   <div class="modal-overlay">
     <div class="modal">
       <!-- <img class="check" src="~/assets/check-icon.png" alt="" /> -->
-      <p>您的google帳號並沒有綁定帳號是否要註冊帳號</p>
-      <button>是</button>
-      <button>否</button>
+      <div>
+        <h2 style="color:black" >您的google帳號並沒有綁定帳號</h2>
+        <h2 style="color:black">是否要註冊帳號?</h2>
+      </div>
+      <div>
+        <button @click="register" style="margin-right: 2px;">是</button>
+        <button @click="close" style="margin-left: 2px;">否</button>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-  export default {
-}
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+import { useRouter } from 'vue-router';
+
+const props = defineProps({
+  // 在这里可以定义props
+});
+
+const emits = defineEmits(['closeModal']); // 定义 close modal 事件
+
+const router = useRouter();
+
+const close = async () => {
+  emits('closeModal'); // 触发 close modal 事件
+};
+
+const register = async () => {
+  router.push('/register');
+};
 </script>
 
 <style scoped>
@@ -22,23 +45,36 @@
   bottom: 0;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: center;
-  background-color: #000000da;
+  /* display: flex; */
+  /* justify-content: center; */
 
+  background-color: #000000da;
+  /* #000000da */
 }
 
 .modal {
-  text-align: center;
+  /* text-align: center;
   background-color: white;
   height: 500px;
   width: 500px;
-  border-radius: 20px;
-  padding: 60px 0;
-  position: fixed;
-  top: 50%; /* 将顶部定位到视口中心 */
-  left: 50%; /* 将左侧定位到视口中心 */
-  transform: translate(-50%, -50%); /* 使用 transform 来实现水平和垂直居中 */
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  padding: 60px 0; */
+  text-align: center;
+  border-radius: 20px; 
+  background-color: white;
+  display: flex;
+  height: 500px;
+  width: 500px;
+  justify-content: center; 
+  align-items: center; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  flex-direction: column;
 }
 .close {
   margin: 10% 0 0 16px;
