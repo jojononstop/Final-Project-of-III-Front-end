@@ -22,7 +22,7 @@
                 <p style="display: inline-block; ">郵箱</p><br>
                 <input v-model="postData.email"  id="email" type="email"  style="display: inline-block; ">
             </div>
-            <div style="margin-left: 35%;margin-top:3vh;">
+            <div style="margin-left: 33%;margin-top:3vh;">
                 <button  @click="register" style="justify-content: center;">註冊帳號</button>
             </div>
         </div>
