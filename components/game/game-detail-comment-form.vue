@@ -1,4 +1,6 @@
 <template>
+	<!-- <game-detail-comments v-if="memberComment"/> -->
+
 	<div class="latest-comments">
 		<ul class="list-wrap">
 			<li>
@@ -6,7 +8,8 @@
 					<li>
 						<div class="comments-box">
 							<div class="comments-avatar">
-								<img src="/images/blog/comment02.png" alt="img">
+								<img :src="avatar.value" alt="img">
+
 								<div class="container-wrapper">
 									<div class="container d-flex align-items-center justify-content-center">
 										<div class="row justify-content-center">
@@ -54,6 +57,7 @@
 										</div>
 									</div>
 								</div>
+
 							</div>
 							<div class="comments-text">
 								<form class="comment-form" @submit.prevent="submitComment()"
@@ -74,43 +78,6 @@
 			</li>
 		</ul>
 	</div>
-
-	<!-- <div class="container-wrapper">
-		<div class="container d-flex align-items-center justify-content-center">
-			<div class="row justify-content-center">
-
-				<div class="rating-wrapper">
-
-					<input type="radio" id="5-star-rating" name="star-rating" value="5" @click="getRating">
-					<label for="5-star-rating" class="star-rating">
-						<i class="fas fa-star d-inline-block"></i>
-					</label>
-
-					<input type="radio" id="4-star-rating" name="star-rating" value="4" @click="getRating">
-					<label for="4-star-rating" class="star-rating star">
-						<i class="fas fa-star d-inline-block"></i>
-					</label>
-
-					<input type="radio" id="3-star-rating" name="star-rating" value="3" @click="getRating">
-					<label for="3-star-rating" class="star-rating star">
-						<i class="fas fa-star d-inline-block"></i>
-					</label>
-
-					<input type="radio" id="2-star-rating" name="star-rating" value="2" @click="getRating">
-					<label for="2-star-rating" class="star-rating star">
-						<i class="fas fa-star d-inline-block"></i>
-					</label>
-
-					<input type="radio" id="1-star-rating" name="star-rating" value="1" @click="getRating">
-					<label for="1-star-rating" class="star-rating star">
-						<i class="fas fa-star d-inline-block"></i>
-					</label>
-
-				</div>
-
-			</div>
-		</div>
-	</div> -->
 
 </template>
 
@@ -146,6 +113,7 @@ function getRating() {
 
 let id = $cookie.getCookie("accountId");
 let memberId;
+
 axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
 	.then(response => {
 		memberId = response.data
@@ -153,6 +121,25 @@ axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
 	.catch(error => {
 		console.log(error);
 	});
+console.log(memberId)
+
+let avatar = ref('');
+
+onMounted(
+
+	async function getMemberAvatar(memberId) {
+		try {
+			const response = await axios.get(`https://localhost:7048/api/Comments/memberAvatar/${memberId}`);
+			const avatarUrl = response.data;
+			return avatarUrl;
+		} catch (error) {
+			console.error(error);
+		}
+	},
+	avatar = getMemberAvatar(memberId)
+)
+
+
 
 
 const submitComment = () => {

@@ -6,37 +6,41 @@
                     <div class="comments-avatar">
                         <img :src="comment.avatarUrl" alt="img">
 
-
                         <div class="container-wrapper">
                             <div class="container d-flex align-items-center justify-content-center">
                                 <div class="row justify-content-center">
                                     <div class="rating-wrapper">
 
-                                        <input type="radio" id="5-star-rating" name="star-rating" value="5">
+                                        <input type="radio" id="5-star-rating" name="star-rating" value="5"
+                                            @click="getRating">
                                         <label for="5-star-rating" class="star-rating"
                                             :style="highlight(comment.rating, 5)">
                                             <i class="fas fa-star d-inline-block"></i>
                                         </label>
 
-                                        <input type="radio" id="4-star-rating" name="star-rating" value="4">
+                                        <input type="radio" id="4-star-rating" name="star-rating" value="4"
+                                            @click="getRating">
                                         <label for="4-star-rating" class="star-rating star"
                                             :style="highlight(comment.rating, 4)">
                                             <i class="fas fa-star d-inline-block"></i>
                                         </label>
 
-                                        <input type="radio" id="3-star-rating" name="star-rating" value="3">
+                                        <input type="radio" id="3-star-rating" name="star-rating" value="3"
+                                            @click="getRating">
                                         <label for="3-star-rating" class="star-rating star"
                                             :style="highlight(comment.rating, 3)">
                                             <i class="fas fa-star d-inline-block"></i>
                                         </label>
 
-                                        <input type="radio" id="2-star-rating" name="star-rating" value="2">
+                                        <input type="radio" id="2-star-rating" name="star-rating" value="2"
+                                            @click="getRating">
                                         <label for="2-star-rating" class="star-rating star"
                                             :style="highlight(comment.rating, 2)">
                                             <i class="fas fa-star d-inline-block"></i>
                                         </label>
 
-                                        <input type="radio" id="1-star-rating" name="star-rating" value="1">
+                                        <input type="radio" id="1-star-rating" name="star-rating" value="1"
+                                            @click="getRating">
                                         <label for="1-star-rating" class="star-rating star"
                                             :style="highlight(comment.rating, 1)">
                                             <i class="fas fa-star d-inline-block"></i>
@@ -47,11 +51,10 @@
                             </div>
                         </div>
 
-
                     </div>
                     <div class="comments-text">
                         <div class="avatar-name">
-                            <h6 class="name">{{ comment.name }}<a href="" class="comment-reply-link"
+                            <h6 class="name">{{ comment.name }} <a href="" class="comment-reply-link"
                                     @click.prevent="toggleVisibility(comment.id)"><i class="fas fa-reply"></i> 查看回復</a>
                             </h6>
                             <span class="date">{{ formatDate(comment.date) }}</span>
@@ -112,13 +115,23 @@ const props = defineProps({
     gameId: Number,
 });
 
+let id = $cookie.getCookie("accountId");
+let memberId;
+axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
+    .then(response => {
+        memberId = response.data
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
 let comments = ref([]);
 
 
 async function fetchComments(gameId) {
     try {
         const response = await axios.get(`https://localhost:7048/api/Comments/${gameId}`);
-        comments.value = response.data.filter(comment => comment.memberId !== memberId);
+        comments.value = response.data.filter(comment => comment.memberId === memberId);
         for (const comment of comments.value) {
             comment.avatarUrl = await getMemberAvatar(comment.memberId);
             comment.name = await getMemberName(comment.memberId)
@@ -127,6 +140,7 @@ async function fetchComments(gameId) {
                 attachedComment.name = await getMemberName(attachedComment.memberId)
             }
         }
+
     } catch (error) {
         console.error(error);
         throw new Error('Failed to fetch comments'); // 如果出现错误，抛出一个错误
@@ -156,6 +170,7 @@ async function getMemberName(memberId) {
 (async () => {
     try {
         fetchComments(props.gameId);
+
     } catch (error) {
         console.log(error);
     }
@@ -188,15 +203,7 @@ const { errors, handleSubmit, resetForm } = useForm({
     validationSchema: schema
 });
 
-let id = $cookie.getCookie("accountId");
-let memberId;
-axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
-    .then(response => {
-        memberId = response.data
-    })
-    .catch(error => {
-        console.log(error);
-    });
+
 
 const submitAttachedComment = (commentId) => {
     handleSubmit((values) => {
@@ -228,6 +235,7 @@ const highlight = (rating, num) => {
         return { color: '#E1E6F6' }
     }
 }
+
 
 </script>
 
@@ -291,3 +299,46 @@ const highlight = (rating, num) => {
     }
 }
 </style>
+
+<!-- <div class="container-wrapper">
+    <div class="container d-flex align-items-center justify-content-center">
+        <div class="row justify-content-center">
+
+
+            <div class="rating-wrapper">
+
+                <input type="radio" id="5-star-rating" name="star-rating" value="5"
+                    @click="getRating">
+                <label for="5-star-rating" class="star-rating">
+                    <i class="fas fa-star d-inline-block"></i>
+                </label>
+   
+                <input type="radio" id="4-star-rating" name="star-rating" value="4"
+                    @click="getRating">
+                <label for="4-star-rating" class="star-rating star">
+                    <i class="fas fa-star d-inline-block"></i>
+                </label>
+
+                <input type="radio" id="3-star-rating" name="star-rating" value="3"
+                    @click="getRating">
+                <label for="3-star-rating" class="star-rating star">
+                    <i class="fas fa-star d-inline-block"></i>
+                </label>
+
+                <input type="radio" id="2-star-rating" name="star-rating" value="2"
+                    @click="getRating">
+                <label for="2-star-rating" class="star-rating star">
+                    <i class="fas fa-star d-inline-block"></i>
+                </label>
+
+                <input type="radio" id="1-star-rating" name="star-rating" value="1"
+                    @click="getRating">
+                <label for="1-star-rating" class="star-rating star">
+                    <i class="fas fa-star d-inline-block"></i>
+                </label>
+
+            </div>
+
+        </div>
+    </div>
+</div> -->
