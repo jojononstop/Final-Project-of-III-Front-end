@@ -38,9 +38,14 @@
           <div class="modal-body">
             內容
           </div>
+          <div>
+            <button type="button" class="btn btn-primary" @click="switchBtn">切換</button>
+          </div>
+
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">1</button>
-            <button type="button" class="btn btn-primary">2</button>
+            <button v-if="isApplyMode" type="button" class="btn btn-primary" @click="applyBonusProduct">套用</button>
+            <button v-else type="button" class="btn btn-primary" @click="buyBonusProduct">購買</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
           </div>
         </div>
       </div>
@@ -55,12 +60,14 @@ import { VueCookieNext as $cookie } from 'vue-cookie-next'
 
 let id = ref('');
 id = $cookie.getCookie("Id");
+let isModalOpen= ref(false);
+let isApplyMode = ref(true);
+
 
 const props = defineProps({
   bonusProduct: Object,
   bonusProductTypes: Object
 });
-let isModalOpen= ref(false);
 
 function getProductTypeName(productTypeId) 
 {
@@ -81,6 +88,22 @@ function imgclickEvent(id)
   openModal();
   console.log(id);
 }
+
+function switchBtn()
+{
+  console.log("切換按鈕")
+  isApplyMode.value = !isApplyMode.value;
+}
+
+function buyBonusProduct()
+{
+  console.log("購買按鈕")
+}
+
+function applyBonusProduct() {
+  console.log("套用按鈕");
+}
+
 
 const openModal = () => {
   // 點擊圖片時打開模態框
