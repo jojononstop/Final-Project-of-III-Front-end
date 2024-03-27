@@ -7,14 +7,18 @@
 [] 側面欄位完成
     [V] 關鍵字篩選
         [V] Bonus.vue可以接到輸入文字
+
     [] 類別篩選
         [] 可以透過type篩選
         [] 製作一個checkbox的sass樣式
         [] mixin
+
     [V] 進階搜尋手風琴
         [V] 修改Nuxt and bootstrap 樣式
     
-    [] 資料連接到模態框
+    [] 模態框
+        [] 資料連接到模態框
+        
     [] BonusProduct輪播
 
 [] 商品收藏庫

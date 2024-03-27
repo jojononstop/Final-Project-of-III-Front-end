@@ -38,35 +38,35 @@
             <h4>類別篩選</h4>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="Static_Avatar" />
-              <label class="form-check-label" for=""> 靜態頭像 </label>
+              <label class="form-check-label" for="Static_Avatar"> 靜態頭像 </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="Dynamic_Avatar" />
-              <label class="form-check-label" for=""> 動態頭像 </label>
+              <label class="form-check-label" for="Dynamic_Avatar"> 動態頭像 </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="Static_Frame" />
-              <label class="form-check-label" for=""> 靜態外框 </label>
+              <label class="form-check-label" for="Static_Frame"> 靜態外框 </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="Dynamic_Frame" />
-              <label class="form-check-label" for=""> 動態外框 </label>
+              <label class="form-check-label" for="Dynamic_Frame"> 動態外框 </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="Static_Sticker" />
-              <label class="form-check-label" for=""> 靜態貼圖 </label>
+              <label class="form-check-label" for="Static_Sticker"> 靜態貼圖 </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="Dynamic_Sticker" />
-              <label class="form-check-label" for=""> 動態貼圖 </label>
+              <label class="form-check-label" for="Dynamic_Sticker"> 動態貼圖 </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="Static_Themes" />
-              <label class="form-check-label" for=""> 靜態主題 </label>
+              <label class="form-check-label" for="Static_Themes"> 靜態主題 </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="Dynamic_Themes" />
-              <label class="form-check-label" for=""> 動態主題 </label>
+              <label class="form-check-label" for="Dynamic_Themes"> 動態主題 </label>
             </div>
           </div>
         </div>
