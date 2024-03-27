@@ -12,7 +12,7 @@ type IMenuDataType = {
 const menu_data:IMenuDataType[] = [
   {
     id:1,
-    title:'主頁',
+    title:'首頁',
     link:'#',
     sub_menu:[
       {title:'Home One',link:'/'},
@@ -21,13 +21,13 @@ const menu_data:IMenuDataType[] = [
   },
   {
     id:2,
-    title:'關於',
+    title:'關於我們',
     link:'/about',
   },
   {
     id:3,
     title:'商店',
-    link:'#',
+    link:'/game',
     sub_menu:[
       {title:'TOURNAMENT',link:'/tournament'},
       {title:'TOURNAMENT Single',link:'/tournament-details'},
@@ -36,7 +36,7 @@ const menu_data:IMenuDataType[] = [
   {
     id:4,
     title:'點數商店',
-    link:'#',
+    link:'/bonus',
     sub_menu:[
       {title:'Gaming Shop',link:'/shop'},
       {title:'Shop Details',link:'/shop-details'},
@@ -45,30 +45,25 @@ const menu_data:IMenuDataType[] = [
       {title:'Player Details',link:'/team-details'},
     ]
   },
-  // {
-  //   id:5,
-  //   title:'News',
-  //   link:'#',
-  //   sub_menu:[
-  //     {title:'Our Blog',link:'/blog'},
-  //     {title:'Blog Details',link:'/blog-details'}
-  //   ]
-  // },
-  // {
-  //   id:6,
-  //   title:'Game',
-  //   link:'/game',
-  // },
-  // {
-  //   id:7,
-  //   title:'Bonus',
-  //   link:'/bonus',
-  // },
-  // // {
-  //   id:8,
-  //   title:'Login',
-  //   link:'/Login',
-  // },
+  {
+    id:5,
+    title:'個人資訊',
+    link:'#',
+    sub_menu:[
+      {title:'Our Blog',link:'/blog'},
+      {title:'Blog Details',link:'/blog-details'}
+    ]
+  },
+  {
+    id:7,
+    title:'Game',
+    link:'/game',
+  },
+  {
+    id:8,
+    title:'Cart',
+    link:'/checkout/cart',
+  },
 ]
 
 export default menu_data;

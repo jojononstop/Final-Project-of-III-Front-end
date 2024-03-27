@@ -15,6 +15,7 @@ export default defineNuxtConfig({
       ],
     }
   },
+  // modules: ['@nuxt/ui'],
   css: [
     "bootstrap/scss/bootstrap.scss",
     "swiper/css/bundle",
@@ -27,9 +28,6 @@ export default defineNuxtConfig({
     "@/assets/css/animate.min.css",
     "@/assets/scss/main.scss",
   ],
-  plugins: [
-    '~/plugins/bootstrap-vue'
-  ],
   runtimeConfig: {
     public: {
       // '這邊放上你的 Google Client ID'
@@ -39,5 +37,4 @@ export default defineNuxtConfig({
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET
   }
 })
-
 

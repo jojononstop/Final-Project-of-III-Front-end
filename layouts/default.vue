@@ -2,7 +2,7 @@
   <div>
     <header-one></header-one>
     <main class="main--area">
-      <slot/>
+      <slot />
     </main>
     <footer-one></footer-one>
     <back-to-top></back-to-top>

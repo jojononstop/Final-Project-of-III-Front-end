@@ -1,21 +1,16 @@
 <template>
     <div>
         <div v-for="game in gameData" :key="game.id">
-            <nuxt-link :to="`/game-detail/${game.id}`">
+            <nuxt-link :to="`/game-details/${game.id}`">
                 <div class="row mb-2">
                     <div class="col-3">
-                        <img
-                            :src="
-                                'images/games/cover/' +
-                                game.developerId +
-                                '/' +
-                                game.id +
-                                '/' +
-                                game.cover
-                            "
-                            width="200"
-                            class=""
-                        />
+                        <img :src="'images/games/cover/' +
+            game.developerId +
+            '/' +
+            game.id +
+            '/' +
+            game.cover
+            " />
                     </div>
                     <div class="col-7 d-flex align-items-center">
                         <h3 class="">{{ game.name }}</h3>
@@ -31,12 +26,23 @@
             </nuxt-link>
         </div>
     </div>
+    <button class="btn btn-second">test</button>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
 
 const props = defineProps({
-    gameData: Array, // 这里假设 gameData 是一个数组，你可以根据实际情况修改类型
+    gameData: Object,
+});
+
+(async () => {
+    try {
+        console.log(route.query);
+    } catch (error) {
+        console.log(error);
+    }
 });
 </script>
