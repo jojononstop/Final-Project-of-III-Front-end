@@ -86,6 +86,16 @@
                         <img src="/images/icons/shopping-cart.png">
                       </nuxt-link>
                     </li>
+
+                    <!-- 會員名稱 -->
+                    <li class="search" v-if="isAccountIdExists">
+                      <nuxt-link to="/">
+                        {{ name }}
+                      </nuxt-link>
+                    </li>
+
+
+
                     <li class="header-btn" v-if="isAccountIdExists">
                       <!-- @click="handleSignOut" -->
                       <nuxt-link :class="`${style_2 ? 'tg-btn-3 tg-svg' : 'tg-border-btn'}`" @click="handleSignOut">
@@ -127,6 +137,8 @@ import menu_data from '@/data/menu-data';
 import menu_data_cookie from '@/data/menu-data-cookie';
 import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
 
+let name ="";
+
 defineProps<{ style_2?: boolean }>();
 
 
@@ -136,6 +148,9 @@ let isAccountIdExists: boolean;
 // onMounted
 onBeforeMount(() => {
   isAccountIdExists = $cookie.isCookieAvailable('accountId');
+  if($cookie.getCookie("name")){
+  name =$cookie.getCookie("name");
+ }
 });
 
 
@@ -183,6 +198,10 @@ const handleCloseMobileOffCanvas = (audioPath: string) => {
 
 const handleSignOut = () => {
   $cookie.removeCookie('accountId');
+  $cookie.removeCookie('avatarUrl');
+  $cookie.removeCookie('bouns');
+  $cookie.removeCookie('name');
+  $cookie.removeCookie('google');
   location.reload();
 
 };

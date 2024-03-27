@@ -15,26 +15,22 @@
             <button v-on:click="login" style="display: flex; justify-content: center; align-items: center; margin-left: 20vh; margin-top: 2vh; width: 10vh; text-align: center;">登入</button>
             <!-- Google Sign-In 按钮 -->
             <div class="flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-    <div class="flex w-full max-w-md flex-col items-center justify-center">
-      <!-- <h1 class="my-8 flex text-center text-3xl font-bold tracking-tight text-emerald-500">
-        Nuxt App
-      </h1> -->
-      <ClientOnly>
-        <!-- <GoogleLogin :callback="callback" popup-type="TOKEN" > -->
-          <button 
-          class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" style="margin-left:12vh;margin-top:8vh;"
+              <div class="flex w-full max-w-md flex-col items-center justify-center" style="margin-left:12vh;margin-top:2vh;">
+                <img src="../public/images/login/googleSign.png" alt="">
+          <!-- <button 
+          class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" style="margin-left:12vh;margin-top:8vh;background-image:url(../public/images/login/googleSign.png)"
           @click="handleGoogleLogin"
           >
-          <!--             class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" -->
-            <span class="text-slate-500 group-hover:text-slate-600">使用 Google 進行登入</span>
-          </button>
-        <!-- </GoogleLogin> -->
-      </ClientOnly>
-      <!-- <popup-googlelogin :isActive="isActive" @closeLogin="handleCloseLogin"></popup-googlelogin> -->
+
+             <span class="text-slate-500 group-hover:text-slate-600">使用 Google 進行登入</span>
+          </button> -->
+      <LoginModal v-if="isActive" @closeModal="handleGoogleCloseLogin"/>
     </div>
   </div>
 <!--  -->
-
+    <div  class="flex w-full max-w-md flex-col items-center justify-center">
+      <button  @click="register">註冊帳號</button>
+    </div>
         </div>
     </div>
   </section>
@@ -46,12 +42,15 @@
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
   import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
-  import header from '@/components/header/header-one.vue';
+ 
 
   const isActive = ref<boolean>(false);
 
+
   // import { ElMessageBox } from 'element-plus';
+  
   var id ="";
+  let globalId;
   useSeoMeta({ title: "Login" });
 
   const runtimeConfig = useRuntimeConfig()
@@ -64,13 +63,13 @@
   console.log(response)
 }
 // 開彈窗
-const handleOpenLogin = (audioPath: string) => {
-  const audio = new Audio(audioPath);
-  audio.play();
-  isActive.value = !isActive.value;
-};
+// const handleOpenLogin = (audioPath: string) => {
+//   const audio = new Audio(audioPath);
+//   audio.play();
+//   isActive.value = !isActive.value;
+// };
 // 關彈窗
-const handleCloseLogin = (audioPath: string) => {
+const handleGoogleCloseLogin = (audioPath: string) => {
   const audio = new Audio(audioPath);
   audio.play();
   isActive.value = !isActive.value;
@@ -89,20 +88,26 @@ const login = () => {
     if(response.data[0]=="登入成功"){
       // 設置 'account' Cookie，過期時間為一小時後
       
-      $cookie.setCookie('accountId', response.data[1]); // 3600000 毫秒 = 1 小時
+      $cookie.setCookie('accountId', response.data[1]);
+      $cookie.setCookie('avatarUrl', response.data[2]);
+      $cookie.setCookie('bouns', response.data[3]);
+      $cookie.setCookie('name', response.data[4]);
+
       console.log(response.data[0]);
       id= $cookie.getCookie("accountId")
       console.log( id);
 //
-      console.log( header.isAccountIdExists);
-      header.isAccountIdExists = true;
+      // console.log( header.isAccountIdExists);
+      // header.isAccountIdExists = true;
 //
       router.push('/');
       
       //從cookies中拿Id
       axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
          .then(response => {
-            console.log(response.data);
+          console.log(response.data);
+          globalId =response.data;
+          console.log(globalId);
             console.log( $cookie.getCookie("accountId")); 
             })
          .catch(error => {
@@ -118,6 +123,14 @@ const login = () => {
     console.log(error);
   });
 };
+  const test = async() =>{
+    let name= $cookie.getCookie("name")
+    console.log(name);
+  };
+
+  const register = async() =>{
+    router.push('/register');
+  };
 
   const handleGoogleLogin = async () => {
     const accessToken = await googleTokenLogin({
@@ -135,6 +148,9 @@ const login = () => {
       }
     })
     console.log(data.value.id);
+
+    let google = data.value.id;
+    console.log(google);
     axios.post(`https://localhost:7048/api/Members/GoogleId?googleId=${data.value.id}`, data.value.id)
          .then(response => {
 
@@ -142,13 +158,20 @@ const login = () => {
           {
             console.log(response.data[1]);
             $cookie.setCookie('accountId', response.data[1]);
+            $cookie.setCookie('avatarUrl', response.data[2]);
+            $cookie.setCookie('bouns', response.data[3]);
+            $cookie.setCookie('name', response.data[4]);
+            $cookie.setCookie('google', google);
             router.push('/');
           }
           else 
           {
             const audio = new Audio('/audio/click.wav');
             audio.play();
+            console.log(isActive.value);
             isActive.value = !isActive.value;
+            console.log(isActive.value);
+            // router.push('/register');
           };
 
             })
