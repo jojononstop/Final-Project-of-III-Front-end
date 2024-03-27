@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted } from 'vue';
+import { defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 
@@ -38,11 +38,4 @@ const props = defineProps({
     gameData: Object,
 });
 
-(async () => {
-    try {
-        console.log(route.query);
-    } catch (error) {
-        console.log(error);
-    }
-});
 </script>

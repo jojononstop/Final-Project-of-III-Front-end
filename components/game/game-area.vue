@@ -17,16 +17,29 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRoute } from 'vue-router';
 import axios from "axios";
+
+const route = useRoute();
 
 let games = ref(null);
 
-onMounted(async () => {
-    try {
+(async () => {
+
+    if (route.query.search != null) {
+        const queryString = route.query.search.split('_');
+
+        if (queryString[0] == "tag") {
+            const tags = Array.from(String(queryString[1]), Number);
+            const response = await axios.post("https://localhost:7048/api/Games/FilterByTags", tags);
+            games.value = response.data;
+            console.log(games.value)
+        }
+
+    } else {
         const response = await axios.get("https://localhost:7048/api/Games");
         games.value = response.data;
-    } catch (error) {
-        console.log(error);
     }
-});
+
+})();
 </script>
