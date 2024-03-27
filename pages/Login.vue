@@ -44,6 +44,7 @@
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
   import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
+  // import connection from '@'
  
 
   const isActive = ref<boolean>(false);
@@ -95,7 +96,7 @@ const login = () => {
       $cookie.setCookie('bouns', response.data[3]);
       $cookie.setCookie('name', response.data[4]);
       $cookie.setCookie('Id', response.data[5]);
-      
+
       console.log(response.data[0]);
       id= $cookie.getCookie("accountId")
       console.log( id);
