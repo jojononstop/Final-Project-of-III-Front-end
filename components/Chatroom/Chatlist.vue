@@ -58,14 +58,6 @@ let onlinefriends = ref([]);
 let friends = ref([]);
 const selectedFriend = ref([]);
 
-let id = $cookie.get('accountId');
-let userid = axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
-    .then(response => {
-        memberId = response.data
-    })
-    .catch(error => {
-        console.log(error);
-    });
 
 async function getUserFriends(id) {
     try {
@@ -90,22 +82,6 @@ const selectFriend = (friend) => {
 };
 provide('selectedFriend', selectedFriend);
 
-connection.start().then(() => {
-    console.log('SignalR 成功連線');
-}).catch(err => {
-    console.error('SignalR connection failed:', err.toString());
-});
-
-connection.on('userconnected', (ConnectionId) => {
-    // 在這裡處理從伺服器端接收到的通知
-    console.log('新使用者已連接：', ConnectionId);
-    console.log('新使用者ID：', ConnectionId.ConnectionId);
-});
-connection.on('userdisconnected', (ConnectionId) => {
-    // 在這裡處理從伺服器端接收到的通知
-    console.log('使用者已離線：', ConnectionId);
-    console.log('離線使用者ID：', ConnectionId.ConnectionId);
-});
 
 onMounted(() => {
     getUserFriends(1);
