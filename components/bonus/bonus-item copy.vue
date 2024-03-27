@@ -1,7 +1,7 @@
 <template>
   <div class="shop__bonus__item">
-    <div class="shop__bonus__item-thumb" >
-      <img :src="`/images/bonus/${bonusProduct.productTypeId}/${bonusProduct.url}`" typeof="btn" @click="imgclickEvent( bonusProduct.id)" style="cursor: pointer;"/>
+    <div class="shop__bonus__item-thumb">
+      <img :src="`/images/bonus/${bonusProduct.productTypeId}/${bonusProduct.url}`" typeof="btn"/>
       <!-- <nuxt-link :to="`/shop-details/${bonusProduct.id}`">
         <img :src="`/images/bonus/${bonusProduct.productTypeId}/${bonusProduct.url}`" typeof="btn" />
       </nuxt-link> -->
@@ -70,9 +70,9 @@ function getProductTypeName(productTypeId)
   }
 }
 
-function imgclickEvent(id)
-{
-   console.log(id)
+// 新增模態框相關程式碼
+function openModal() {
+  // 在此處觸發模態框的顯示
+  // 可以使用 Vue 或其他 JavaScript 框架/函式庫來實現模態框的顯示
 }
-
 </script>

@@ -1,86 +1,123 @@
 <template>
-<aside class="shop-sidebar">
+  <aside class="shop-sidebar">
     <!-- 關鍵字查詢 -->
     <div class="shop__widget">
-        <h4 class="shop__widget-title">search</h4>
-        <div class="shop__widget-inner">
-            <div class="shop__search">
-                <input type="text" placeholder="Search here"/>
-                <button class="p-0 border-0"><i class="flaticon-search"></i></button>
-            </div>
+      <h4 class="shop__widget-title">search</h4>
+      <div class="shop__widget-inner">
+        <div class="shop__search">
+          <input type="text" placeholder="Search" v-model="keyword" />
+          <button class="p-0 border-0" @click="handleSearch">
+            <i class="flaticon-search"></i>
+          </button>
         </div>
+      </div>
     </div>
 
-    <!-- 價格bar -->
+    <!-- 類型篩選 -->
     <div class="shop__widget">
-        <h4 class="shop__widget-title">filter by price</h4>
-        <div class="shop__widget-inner">
-            <div class="shop__price-filter">
-                <div id="slider-range">
-                  <!-- <Slider
-                    :value="priceStore"
-                    :tooltips="false"
-                    @change="handlePriceChange"
-                    :max="getMaxPrice"
-                  /> -->
-                  <Slider
-                    v-model="priceStore"
-                    :tooltips="false"
-                    @change="handlePriceChange"
-                  />
-                </div>
-                <div class="shop__price-slider-amount">
-                    <input type="submit" class="p-0 border-0" value="Filter"/>
-                    <span class=''>${{priceStore[0]}} - ${{priceStore[1]}}</span>
-                </div>
+      <h4 class="shop__widget-title">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#flush_collapse_Type"
+          aria-expanded="false"
+          aria-controls="flush_collapse_Type"
+        >
+          依類型搜尋
+        </button>
+      </h4>
+      <div class="shop__widget-myinner">
+        <div
+          id="flush_collapse_Type"
+          class="accordion-collapse collapse show"
+          aria-labelledby="flush_collapse_Type"
+          data-bs-parent="#accordionFlushExample"
+        >
+          <div class="accordion-body">
+            <h4>類別篩選</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="Static_Avatar" />
+              <label class="form-check-label" for=""> 靜態頭像 </label>
             </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="Dynamic_Avatar" />
+              <label class="form-check-label" for=""> 動態頭像 </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="Static_Frame" />
+              <label class="form-check-label" for=""> 靜態外框 </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="Dynamic_Frame" />
+              <label class="form-check-label" for=""> 動態外框 </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="Static_Sticker" />
+              <label class="form-check-label" for=""> 靜態貼圖 </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="Dynamic_Sticker" />
+              <label class="form-check-label" for=""> 動態貼圖 </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="Static_Themes" />
+              <label class="form-check-label" for=""> 靜態主題 </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="Dynamic_Themes" />
+              <label class="form-check-label" for=""> 動態主題 </label>
+            </div>
+          </div>
         </div>
+      </div>
+      <h4 class="shop__widget-title">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#flush-collapse_price"
+          aria-expanded="false"
+          aria-controls="flush-collapse_price"
+        >
+          依價格搜尋
+        </button>
+      </h4>
+      <div class="shop__widget-myinner">
+        <div 
+          id="flush-collapse_price"
+          class="accordion-collapse collapse"
+          aria-labelledby="flush-collapse_price"
+          data-bs-parent="#accordionFlushExample"
+        >
+          <div class="accordion-body">
+            <h4>價格搜尋內容</h4>
+          </div>
+      </div>
+
+      </div>
     </div>
 
-    <!-- 側邊導覽列 -->
+    <!-- 驅動測試單元 -->
     <div class="shop__widget">
-        <h4 class="shop__widget-title">Related products</h4>
-        <div class="shop__widget-inner">
-            <div v-for="item in related__products" :key="item.id" class="related__products-item">
-                <div class="related__products-thumb">
-                    <nuxt-link :to="`/shop-details/${item.id}`">
-                        <img :src="item.img" alt="img"/>
-                    </nuxt-link>
-                </div>
-                <div class="related__products-content">
-                    <h4 class="product-name">
-                        <nuxt-link :to="`/shop-details/${item.id}`">{{item.title}}</nuxt-link>
-                    </h4>
-                    <span class="amount">${{item.price}}</span>
-                </div>
-            </div>
-        </div>
+      <h4 class="shop__widget-title">驅動測試單元</h4>
+      <div class="shop__widget-inner">
+        <div class="shop__search"></div>
+      </div>
     </div>
-
-    <!-- Type查詢 -->
-    <div class="shop__widget">
-        <h4 class="shop__widget-title">Categories</h4>
-        <div class="shop__widget-inner">
-            <ul class="product-categories list-wrap">
-                <li><nuxt-link to="/shop">controller</nuxt-link><span class="float-right">12</span></li>
-                <li><nuxt-link to="/shop">Headphone</nuxt-link><span class="float-right">03</span></li>
-                <li><nuxt-link to="/shop">TOURNAMENTS</nuxt-link><span class="float-right">18</span></li>
-                <li><nuxt-link to="/shop">E-SPORTS</nuxt-link><span class="float-right">05</span></li>
-            </ul>
-        </div>
-    </div>
-</aside>
+  </aside>
 </template>
 
-<script setup lang="ts">
-import product_data from "@/data/product-data";
-import Slider from "@vueform/slider";
+<script setup>
 import "@vueform/slider/themes/default.css";
-import { getMaxPrice } from "../../utils/utils";
-const priceStore = useProductPrice();
-const related__products = [...product_data].slice(0,3);
-console.log(priceStore.value)
-function handlePriceChange (value: number[]) {
-  priceStore.value = value;
+import { defineEmits } from "vue";
+
+const emits = defineEmits(["search"]);
+let keyword = "";
+
+function handleSearch() {
+  //toLower
+  const lowercaseKeyword = keyword.toLowerCase();
+  emits("search", lowercaseKeyword);
 }
 </script>
