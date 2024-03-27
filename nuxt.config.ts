@@ -28,9 +28,6 @@ export default defineNuxtConfig({
     "@/assets/css/animate.min.css",
     "@/assets/scss/main.scss",
   ],
-  plugins: [
-    { src: '~/plugins/signalr.js', ssr: false, mode: 'client' }
-  ],
   runtimeConfig: {
     public: {
       // '這邊放上你的 Google Client ID'

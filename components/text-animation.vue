@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{title:string;style_2?:boolean}>();
+defineProps<{ title: string; style_2?: boolean }>();
 import { useIntersectionObserver } from '@vueuse/core';
 
 const isView = ref(false)
@@ -18,11 +18,11 @@ const targetIsVisible = ref(false)
 const { stop } = useIntersectionObserver(
   target,
   ([{ isIntersecting }], observerElement) => {
-      targetIsVisible.value = isIntersecting;
-      console.log(isIntersecting)
-      if (isIntersecting) {
-        isView.value = true;
-      }
+    targetIsVisible.value = isIntersecting;
+    console.log(isIntersecting)
+    if (isIntersecting) {
+      isView.value = true;
+    }
   },
 )
 

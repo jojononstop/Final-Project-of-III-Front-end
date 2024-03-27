@@ -38,7 +38,7 @@ const props = defineProps({
     gameData: Object,
 });
 
-onMounted(async () => {
+(async () => {
     try {
         console.log(route.query);
     } catch (error) {

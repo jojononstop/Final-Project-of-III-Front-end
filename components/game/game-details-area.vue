@@ -53,16 +53,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="comment-respond mb-3">
+                        <h1 class="fw-title">留下評分與評價</h1>
+                        <game-detail-comment-form :gameId="gameId"/>
+                    </div>
                     <div class="comments-wrap">
                         <h4 class="comments-wrap-title">Comments</h4>
-                        <game-detail-comments :comments="comments" />
-                    </div>
-                    <div class="comment-respond">
-                        <h3 class="comment-reply-title">Leave a Reply</h3>
-                        <!-- form start -->
-                        <!-- <form-blog-details-reply /> -->
-                        <!-- form end -->
-                    </div>
+                        <game-detail-comments :gameId="gameId" />
+                    </div>                   
                 </div>
                 <div class="blog-post-sidebar">
                     <!-- blog sidebar start -->
@@ -85,20 +83,21 @@ const props = defineProps({
 let games = ref(null);
 let developerName = ref(null);
 let comments = ref(null);
+const gameId = props.gameData.id;
 
-onMounted(async () => {
+(async () => {
     try {
         const response = await axios.get(`https://localhost:7048/api/Games/dlc/${props.gameData.id}`);
         games.value = response.data;
         const response2 = await axios.get(`https://localhost:7048/api/Games/developerName/${props.gameData.developerId}`);
         developerName.value = response2.data;
-        const response3 = await axios.get(`https://localhost:7048/api/Comments/${props.gameData.id}`);
-        comments.value = response3.data;
+        // const response3 = await axios.get(`https://localhost:7048/api/Comments/${props.gameData.id}`);
+        // comments.value = response3.data;
 
     } catch (error) {
         console.log(error);
     }
-    console.log(comments.value)
+    console.log()
 });
 
 // 格式化日期的方法

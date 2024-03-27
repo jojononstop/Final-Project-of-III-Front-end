@@ -90,8 +90,6 @@ onMounted(() => {
             src: `/images/games/image/${props.gameData.developerId}/${props.gameData.id}/${image}`,
         });
     });
-
-    console.log(mediaItems)
 });
 
 

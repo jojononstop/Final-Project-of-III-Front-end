@@ -1,7 +1,7 @@
 <template>
     <div class="latest-comments">
         <ul class="list-wrap">
-            <li v-for="comment in comments">
+            <li v-for="comment in comments" :key="comment.id">
                 <div class="comments-box">
                     <div class="comments-avatar">
                         <img src="/images/blog/comment01.png" alt="img">
@@ -9,7 +9,7 @@
                     <div class="comments-text">
                         <div class="avatar-name">
                             <h6 class="name">{{ comment.memberId }} <a href="" class="comment-reply-link"
-                                    @click.prevent="toggleVisibility"><i class="fas fa-reply"></i> Reply</a></h6>
+                                    @click.prevent="toggleVisibility"><i class="fas fa-reply"></i> 查看回復</a></h6>
                             <span class="date">{{ formatDate(comment.date) }}</span>
                         </div>
                         <p>{{ comment.comment1 }}"</p>
@@ -31,66 +31,28 @@
                         </div>
                     </li>
                 </ul>
-                <ul class="children">
+                <ul class="children" v-show="showComments">
                     <!-- v-show="replyComments" -->
                     <li>
-                        <div class="comments-box">
-                            <div class="comments-avatar">
-                                <img src="/images/blog/comment02.png" alt="img">
-                            </div>
+                        <div class="comments-box">                          
                             <div class="comments-text">
                                 <div class="avatar-name">
-                                    <h6 class="name">memberName </h6>
-                                    <span class="date"> {{ formatDate(currentDate) }} </span>
+                                    <h6 class="name">leave a comment </h6>                                 
                                 </div>
-                                <form class="comment-form" @submit.prevent="onSubmit" :validation-schema="schema">
+                                <form class="comment-form" @submit.prevent="submitAttachedComment(comment.id)" :validation-schema="schema">
                                     <div class="form-grp">
                                         <err-message :msg="errors.comment" />
                                         <Field name="comment" v-slot="{ field }">
-                                            <textarea v-bind="field" name="comment" placeholder="Comment *"></textarea>
+                                            <textarea v-bind="field" name="comment" placeholder="Reply The Comment *"></textarea>
                                         </Field>
                                     </div>
-                                    <!-- <Field name="id" v-slot="{ field }">
-                                        <input type="hidden" v-bind="field" value="0" />
-                                    </Field>
-                                    <Field name="mainCommentId" v-slot="{ field }">
-                                        <input type="hidden" v-bind="field" :value="comment.id" />
-                                    </Field>
-                                    <Field name="memberId" v-slot="{ field }">
-                                        <input type="hidden" v-bind="field" :value="2" />
-                                    </Field>
-                                    <Field name="dateTime" v-slot="{ field }">
-                                        <input type="hidden" v-bind="field" :value="formatDate(currentDate)" />
-                                    </Field>
-                                    <Field name="mainComment" v-slot="{ field }">
-                                        <input type="hidden" v-bind="field" value="null" />
-                                    </Field>
-                                    <Field name="member" v-slot="{ field }">
-                                        <input type="hidden" v-bind="field" value="null" />
-                                    </Field> -->
-                                    <button type="submit">Post Comment</button>
+                                    <button type="submit">Post Reply</button>
                                 </form>
                             </div>
                         </div>
                     </li>
                 </ul>
             </li>
-            <!-- <li>
-                <div class="comments-box">
-                    <div class="comments-avatar">
-                        <img src="/images/blog/comment03.png" alt="img">
-                    </div>
-                    <div class="comments-text">
-                        <div class="avatar-name">
-                            <h6 class="name">Luna Rose <a href="#" class="comment-reply-link"><i
-                                        class="fas fa-reply"></i> Reply</a></h6>
-                            <span class="date">September 6, 2023</span>
-                        </div>
-                        <p>Axcepteur sint occaecat atat non proident, sunt culpa officia deserunt mollit anim id est
-                            labor umLor emdolor eam enim ad minim veniam quis nostrud today.</p>
-                    </div>
-                </div>
-            </li> -->
         </ul>
     </div>
 </template>
@@ -98,10 +60,31 @@
 <script setup>
 import { useForm, Field } from 'vee-validate';
 import * as yup from 'yup';
+import axios from 'axios';
 
 const props = defineProps({
-    comments: Object,
+    gameId: Number,
 });
+
+let comments = ref(null);
+
+async function fetchComments(gameId) {
+    try {
+        const response = await axios.get(`https://localhost:7048/api/Comments/${gameId}`);
+        comments.value = response.data; // 返回获取到的评论数据
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to fetch comments'); // 如果出现错误，抛出一个错误
+    }
+}
+
+(async () => {
+    try {
+        fetchComments(props.gameId);
+    } catch (error) {
+        console.log(error);
+    }
+})();
 
 const currentDate = new Date();
 
@@ -120,17 +103,33 @@ function toggleVisibility() {
     showComments.value = !showComments.value;
 }
 
-// 定义验证规则
 const schema = yup.object({
-    comment: yup.string().required().label('Comment'),
+  comment: yup.string().required().label("Comment")
 });
 
-const { handleSubmit, errors } = useForm({
-    validationSchema: schema,
+const { errors, handleSubmit , resetForm} = useForm({
+  validationSchema: schema
 });
 
-const onSubmit = handleSubmit(async (values) => {
-    console.log('Form Values:', values);
+const submitAttachedComment = (commentId) => {
+  handleSubmit((values) => {
+    values.mainCommentId = commentId; // 将评论ID添加到表单数据中
+    values.memberId = 2;
+    values.dateTime = new Date();
+
+    axios.post('https://localhost:7048/api/Comments/attachedComment', values)
+      .then(response => {
+        fetchComments(props.gameId);
+        alert('提交成功');
+        
+      })
+      .catch(error => {
+        alert('提交失败');
+        console.error(error);
+      });
+
     alert(JSON.stringify(values, null, 2));
-});
+    resetForm()
+  })();
+};
 </script>
