@@ -37,14 +37,6 @@ const menu_data:IMenuDataType[] = [
     id:4,
     title:'點數商店',
     link:'/bonus',
-    sub_menu:[
-      {title:'Gaming Shop',link:'/shop'},
-      {title:'Shop Details',link:'/shop-details'},
-      {title:'Our Services',link:'/services'},
-      {title:'Services Details',link:'/service-details'},
-      {title:'Player Details',link:'/team-details'},
-      {title:'Bonus',link:'/bonus'},
-    ]
   },
   {
     id:5,
