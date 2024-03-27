@@ -43,6 +43,7 @@ const menu_data:IMenuDataType[] = [
       {title:'Our Services',link:'/services'},
       {title:'Services Details',link:'/service-details'},
       {title:'Player Details',link:'/team-details'},
+      {title:'Bonus',link:'/bonus'},
     ]
   },
   {

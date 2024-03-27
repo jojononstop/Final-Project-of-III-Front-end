@@ -12,8 +12,13 @@
 <script setup >
 useSeoMeta({ title: "BONUS - MYKD" });
 import { ref ,onMounted } from "vue";
+import { VueCookieNext as $cookie } from 'vue-cookie-next'
+
 // 透過axios GET & POST請求
 import axios from "axios";
+
+let id = $cookie.getCookie("Id");
+console.log(id)
 
 const bonusProducts = ref(null);
 const bonusProductTypes = ref(null);
