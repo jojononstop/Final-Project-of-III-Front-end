@@ -14,9 +14,9 @@
             </div>
             <button v-on:click="login" style="display: flex; justify-content: center; align-items: center; margin-left: 20vh; margin-top: 2vh; width: 10vh; text-align: center;">登入</button>
             <!-- Google Sign-In 按钮 -->
-            <div class="flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8" style="margin-top:6vh;">
               <div class="flex w-full max-w-md flex-col items-center justify-center" style="margin-left:12vh;margin-top:2vh;">
-                <img src="../public/images/login/googleSign.png" alt="">
+                <img src="../public/images/login/googleSign.png" alt="" @click="handleGoogleLogin">
           <!-- <button 
           class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" style="margin-left:12vh;margin-top:8vh;background-image:url(../public/images/login/googleSign.png)"
           @click="handleGoogleLogin"
@@ -27,10 +27,12 @@
       <LoginModal v-if="isActive" @closeModal="handleGoogleCloseLogin"/>
     </div>
   </div>
-<!--  -->
-    <div  class="flex w-full max-w-md flex-col items-center justify-center">
-      <button  @click="register">註冊帳號</button>
+  <div  class="flex w-full max-w-md flex-col items-center justify-center" style="margin-left:15vh;margin-top:2vh;">
+      <p style="font-size: 14px;">沒有帳號嗎?點擊此處<router-link to="/register">註冊新帳號</router-link></p>
+      <!-- <button  @click="register">註冊帳號</button> -->
     </div>
+<!--  -->
+
         </div>
     </div>
   </section>
@@ -42,6 +44,7 @@
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
   import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
+  // import connection from '@'
  
 
   const isActive = ref<boolean>(false);
@@ -92,6 +95,7 @@ const login = () => {
       $cookie.setCookie('avatarUrl', response.data[2]);
       $cookie.setCookie('bouns', response.data[3]);
       $cookie.setCookie('name', response.data[4]);
+      $cookie.setCookie('Id', response.data[5]);
 
       console.log(response.data[0]);
       id= $cookie.getCookie("accountId")
@@ -161,6 +165,7 @@ const login = () => {
             $cookie.setCookie('avatarUrl', response.data[2]);
             $cookie.setCookie('bouns', response.data[3]);
             $cookie.setCookie('name', response.data[4]);
+            $cookie.setCookie('Id', response.data[5]);
             $cookie.setCookie('google', google);
             router.push('/');
           }

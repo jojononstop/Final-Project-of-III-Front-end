@@ -202,6 +202,7 @@ const handleSignOut = () => {
   $cookie.removeCookie('bouns');
   $cookie.removeCookie('name');
   $cookie.removeCookie('google');
+  $cookie.removeCookie('Id');
   location.reload();
 
 };
