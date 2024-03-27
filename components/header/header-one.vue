@@ -136,6 +136,7 @@
 import menu_data from '@/data/menu-data';
 import menu_data_cookie from '@/data/menu-data-cookie';
 import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
+import connection from '@/data/signalR';
 
 let name ="";
 
@@ -203,6 +204,14 @@ const handleSignOut = () => {
   $cookie.removeCookie('name');
   $cookie.removeCookie('google');
   $cookie.removeCookie('Id');
+
+  connection.stop().then(() => {
+    console.log('SignalR 斷開連線');
+}).catch(err => {
+    console.error('SignalR connection failed:', err.toString());
+});
+
+
   location.reload();
 
 };

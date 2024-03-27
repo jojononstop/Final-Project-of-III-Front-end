@@ -83,6 +83,7 @@ const selectFriend = (friend) => {
 provide('selectedFriend', selectedFriend);
 
 
+
 onMounted(() => {
     getUserFriends(1);
     getOnlineUsers();
