@@ -6,7 +6,7 @@
                     <game-list :gameData="games" />
                     <div class="pagination__wrap">
                         <!-- pagination start -->
-                        <ui-pagination></ui-pagination>
+                        <!-- <ui-pagination></ui-pagination> -->
                         <!-- pagination end -->
                     </div>
                 </div>
@@ -16,7 +16,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { useRoute } from 'vue-router';
 import axios from "axios";
 
@@ -24,15 +23,17 @@ const route = useRoute();
 
 let games = ref(null);
 
-(async () => {
+
+onBeforeMount(async () => {
 
     if (route.query.search != null) {
         const queryString = route.query.search.split('_');
 
         if (queryString[0] == "tag") {
-            const tags = Array.from(String(queryString[1]), Number);
+            const tags = [Number(queryString[1])];
             const response = await axios.post("https://localhost:7048/api/Games/FilterByTags", tags);
             games.value = response.data;
+            console.log(tags)
             console.log(games.value)
         }
 
@@ -41,5 +42,5 @@ let games = ref(null);
         games.value = response.data;
     }
 
-})();
+});
 </script>

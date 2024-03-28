@@ -295,9 +295,10 @@ const handleCloseMobileOffCanvas = (audioPath) => {
 const handleSignOut = () => {
   $cookie.removeCookie('accountId');
   $cookie.removeCookie('avatarUrl');
-  $cookie.removeCookie('bouns');
+  $cookie.removeCookie('bonus');
   $cookie.removeCookie('name');
   $cookie.removeCookie('google');
+  $cookie.removeCookie('Id');
   location.reload();
 };
 </script>
