@@ -29,7 +29,8 @@
                                             <h4>{{ dlc.name }}</h4>
                                         </div>
                                         <div class="col-4 image-container">
-                                            <img :src="`/images/games/cover/${dlc.developerId}/${dlc.id}/${dlc.cover}`">
+                                            <img
+                                                :src="`/images/games/cover/${dlc.developerId}/${dlc.id}/${dlc.cover}.jpg`">
                                         </div>
                                     </div>
                                 </nuxt-link>
@@ -45,7 +46,7 @@
                                         </div>
                                         <div class="col-4 image-container">
                                             <img
-                                                :src="`/images/games/cover/${games.developerId}/${games.id}/${games.cover}`">
+                                                :src="`/images/games/cover/${games.developerId}/${games.id}/${games.cover}.jpg`">
                                         </div>
                                     </div>
                                 </nuxt-link>
@@ -56,7 +57,7 @@
 
                         <div v-if="memberComment.length <= 0" class="comment-respond mb-3">
                             <h1 class="fw-title">留下評分與評價</h1>
-                            <game-detail-comment-form :gameId="gameId" />
+                            <game-detail-comment-form :gameId="gameId" @refreshComment="loadComment" />
                         </div>
 
                         <div v-else class="comment-respond mb-3">
@@ -131,6 +132,11 @@ const formatDate = (dateString) => {
     // 返回格式化后的日期字符串
     return `${year}-${month}-${day}`;
 };
+
+async function loadComment() {
+    const response = await axios.get(`https://localhost:7048/api/Comments/${gameId}`);
+    memberComment.value = response.data.filter(comment => comment.memberId === memberId)
+}
 
 // function show(gameData) { console.log(gameData.displayImages) };
 </script>
