@@ -138,7 +138,7 @@ import menu_data_cookie from '@/data/menu-data-cookie';
 import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
 import connection from '@/data/signalR';
 
-let name ="";
+let name = "";
 
 defineProps<{ style_2?: boolean }>();
 
@@ -146,12 +146,13 @@ defineProps<{ style_2?: boolean }>();
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
 let isAccountIdExists: boolean;
 
+
 // onMounted
 onBeforeMount(() => {
   isAccountIdExists = $cookie.isCookieAvailable('accountId');
-  if($cookie.getCookie("name")){
-  name =$cookie.getCookie("name");
- }
+  if ($cookie.getCookie("name")) {
+    name = $cookie.getCookie("name");
+  }
 });
 
 
@@ -207,9 +208,9 @@ const handleSignOut = () => {
 
   connection.stop().then(() => {
     console.log('SignalR 斷開連線');
-}).catch(err => {
+  }).catch(err => {
     console.error('SignalR connection failed:', err.toString());
-});
+  });
 
 
   location.reload();
