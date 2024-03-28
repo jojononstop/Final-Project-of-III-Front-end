@@ -93,7 +93,7 @@ const login = () => {
       
       $cookie.setCookie('accountId', response.data[1]);
       $cookie.setCookie('avatarUrl', response.data[2]);
-      $cookie.setCookie('bouns', response.data[3]);
+      $cookie.setCookie('bonus', response.data[3]);
       $cookie.setCookie('name', response.data[4]);
       $cookie.setCookie('Id', response.data[5]);
 
@@ -180,7 +180,7 @@ connection.on('userdisconnected', (ConnectionId) => {
             console.log(response.data[1]);
             $cookie.setCookie('accountId', response.data[1]);
             $cookie.setCookie('avatarUrl', response.data[2]);
-            $cookie.setCookie('bouns', response.data[3]);
+            $cookie.setCookie('bonus', response.data[3]);
             $cookie.setCookie('name', response.data[4]);
             $cookie.setCookie('Id', response.data[5]);
             $cookie.setCookie('google', google);

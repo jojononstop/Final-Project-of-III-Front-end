@@ -146,12 +146,23 @@ defineProps<{ style_2?: boolean }>();
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
 let isAccountIdExists: boolean;
 
+
+
+
+   // 监听 accountId cookie 的变化
+   watch(() => $cookie.getCookie('accountId'), (newVal, oldVal) => {
+    // 如果 cookie 发生变化，更新 isAccountIdExists 的值
+    isAccountIdExists = $cookie.isCookieAvailable('accountId');
+    // 处理其他逻辑
+  });
+
 // onMounted
 onBeforeMount(() => {
   isAccountIdExists = $cookie.isCookieAvailable('accountId');
   if($cookie.getCookie("name")){
   name =$cookie.getCookie("name");
  }
+
 });
 
 
@@ -200,23 +211,22 @@ const handleCloseMobileOffCanvas = (audioPath: string) => {
 const handleSignOut = () => {
   $cookie.removeCookie('accountId');
   $cookie.removeCookie('avatarUrl');
-  $cookie.removeCookie('bouns');
+  $cookie.removeCookie('bonus');
   $cookie.removeCookie('name');
   $cookie.removeCookie('google');
   $cookie.removeCookie('Id');
 
+
   connection.stop().then(() => {
-    console.log('SignalR 斷開連線');
-}).catch(err => {
-    console.error('SignalR connection failed:', err.toString());
-});
+      console.log('SignalR 斷開連線');
+    }).catch(err => {
+      console.error('SignalR connection failed:', err.toString());
+    });
 
 
   location.reload();
 
 };
-
-
 
 
 
