@@ -76,14 +76,6 @@ memberBonusPoint = $cookie.getCookie("bouns");
 let isModalOpen= ref(false);
 let isApplyMode = ref(true);
 
-// V1
-// const props = defineProps({
-//   bonusProduct: Object,
-//   bonusProductTypes: Object,
-//   modalId: String
-// });
-
-// V2
 const props = defineProps({
   bonusProduct: Object,
   bonusProductTypes: Object,

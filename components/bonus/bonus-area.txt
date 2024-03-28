@@ -57,11 +57,21 @@
             class="row justify-content-start row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1"
           >
             <!-- 把接到的請求資料丟到bonusProducts -->
-            <div v-for="bonusProduct in bonusProducts" :key="bonusProduct.id" class="col">
+            <!-- V1 -->
+            <!-- <div v-for="bonusToItem_bonusProduct  in bonusProducts" :key="bonusToItem_bonusProduct.id" class="col">
               <bonus-item
-                :bonusProduct="bonusProduct"
-                :bonusProductTypes="bonusProductTypes"
-                :modalId="'exampleModal_' + bonusProduct.id"
+                :bonusProduct="bonusToArea_bonusProduct"
+                :bonusProductTypes="bonusToArea_bonusProductTypes"
+                :modalId="'exampleModal_' + bonusToItem_bonusProduct.id"
+              />
+            </div> -->
+            
+            <!-- V2 -->
+            <div v-for="AreaToitem_bonusProduct  in bonusProducts" :key="AreaToitem_bonusProduct.id" class="col">
+              <bonus-item
+                :bonusToArea_bonusProduct="AreaToitem_bonusProduct"
+                :bonusToArea_bonusProductTypes="AreaToitem_bonusProductTypes"
+                :areaToItem_modalId="'exampleModal_' + bonusToItem_bonusProduct.id"
               />
             </div>
           </div>
@@ -89,9 +99,16 @@
 // import product_data from "@/data/product-data";
 import { defineProps, defineEmits } from "vue";
 
+//V1
+// const props = defineProps({
+//   bonusProduct: Object,
+//   bonusProductTypes: Object,
+// });
+
+//V2
 const props = defineProps({
-  bonusProducts: Object,
-  bonusProductTypes: Object,
+  bonusToArea_bonusProduct: Object,
+  bonusToArea_bonusProductTypes: Object,
 });
 
 

@@ -4,7 +4,7 @@
     <breadcrumb-three title="BONUS" subtitle="BONUS LIST"> </breadcrumb-three>
     <!-- breadcrumb area end -->
     <!-- item -->
-    <bonus-area :bonusProducts="bonusProducts" :bonusProductTypes="bonusProductTypes" @data-from-bonus="handleDataFromBonus"></bonus-area>
+    <bonus-area :bonusProducts="bonusToArea_bonusProducts" :bonusProductTypes="bonusToArea_bonusProductTypes" @data-from-bonus="handleDataFromBonus"></bonus-area>
   </div>
 </template>
 
