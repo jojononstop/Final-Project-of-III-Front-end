@@ -40,13 +40,26 @@
 
 <script setup lang="ts">
 
+definePageMeta({
+  middleware: 'auth',
+});
+
+
   import { useRouter } from 'vue-router';
   import { googleTokenLogin } from 'vue3-google-login'
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
   import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
   import connection from '@/data/signalR';
- 
+
+  const router = useRouter();
+  import { useAuthStore } from '../store/logincookies'
+const authStore = useAuthStore()
+
+// 在页面组件的生命周期钩子中获取 Cookie 值并存储到 Pinia store 中
+// onMounted(() => {
+
+//     })
 
   const isActive = ref<boolean>(false);
 
@@ -63,7 +76,7 @@
 
   const userInfo = ref(null)
 
-  const router = useRouter();
+
   const callback = (response:any) => {
   console.log(response)
 }
@@ -98,6 +111,12 @@ const login = () => {
       $cookie.setCookie('bonus', response.data[3]);
       $cookie.setCookie('name', response.data[4]);
       $cookie.setCookie('Id', response.data[5]);
+
+      // const accountId=$cookie.getCookie('accountId');
+      // authStore.setCookieData({ accountId})
+
+
+
 
       connection.start().then(() => {
     console.log('SignalR 成功連線');
@@ -226,12 +245,3 @@ connection.on('userdisconnected', (ConnectionId) => {
 
 </script>
 
-<script lang="ts">
-import { onMounted } from 'vue';
-import middleware from '../middleware/auth';
-// 使用 middleware
-onMounted(() => {
-  middleware();
-});
-
-</script>

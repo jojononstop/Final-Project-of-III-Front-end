@@ -15,7 +15,9 @@ export default defineNuxtConfig({
       ],
     }
   },
-  // modules: ['@nuxt/ui'],
+  modules: [
+    '@pinia/nuxt',
+  ],
   css: [
     "bootstrap/scss/bootstrap.scss",
     "swiper/css/bundle",
