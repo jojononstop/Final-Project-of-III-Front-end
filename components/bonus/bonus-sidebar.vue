@@ -37,35 +37,75 @@
           <div class="accordion-body">
             <h4>類別篩選</h4>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="Static_Avatar" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="Static_Avatar"
+              />
               <label class="form-check-label" for="Static_Avatar"> 靜態頭像 </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="Dynamic_Avatar" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="Dynamic_Avatar"
+              />
               <label class="form-check-label" for="Dynamic_Avatar"> 動態頭像 </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="Static_Frame" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="Static_Frame"
+              />
               <label class="form-check-label" for="Static_Frame"> 靜態外框 </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="Dynamic_Frame" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="Dynamic_Frame"
+              />
               <label class="form-check-label" for="Dynamic_Frame"> 動態外框 </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="Static_Sticker" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="Static_Sticker"
+              />
               <label class="form-check-label" for="Static_Sticker"> 靜態貼圖 </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="Dynamic_Sticker" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="Dynamic_Sticker"
+              />
               <label class="form-check-label" for="Dynamic_Sticker"> 動態貼圖 </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="Static_Themes" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="Static_Themes"
+              />
               <label class="form-check-label" for="Static_Themes"> 靜態主題 </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="Dynamic_Themes" />
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="Dynamic_Themes"
+              />
               <label class="form-check-label" for="Dynamic_Themes"> 動態主題 </label>
             </div>
           </div>
@@ -84,7 +124,7 @@
         </button>
       </h4>
       <div class="shop__widget-myinner">
-        <div 
+        <div
           id="flush-collapse_price"
           class="accordion-collapse collapse"
           aria-labelledby="flush-collapse_price"
@@ -93,8 +133,7 @@
           <div class="accordion-body">
             <h4>價格搜尋內容</h4>
           </div>
-      </div>
-
+        </div>
       </div>
     </div>
 

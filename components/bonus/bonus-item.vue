@@ -1,6 +1,6 @@
 <template>
   <div class="shop__bonus__item">
-    <div class="shop__bonus__item-thumb" >
+    <div class="shop__bonus__item-thumb" ><p>{{ memberBonusPoint }}</p>
       <img :src="`/images/bonus/${bonusProduct.productTypeId}/${bonusProduct.url}`" typeof="btn" @click="imgclickEvent( bonusProduct.id)" style="cursor: pointer;"data-bs-toggle="modal" data-bs-target="#exampleModal"/>
       <!-- <nuxt-link :to="`/shop-details/${bonusProduct.id}`">
         <img :src="`/images/bonus/${bonusProduct.productTypeId}/${bonusProduct.url}`" typeof="btn" />
@@ -30,7 +30,7 @@
     <!-- 定義模態框 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: #182029;">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -58,10 +58,16 @@
 import { ref,defineProps } from "vue";
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
 
-let id = ref('');
-id = $cookie.getCookie("Id");
+//cookie
+let memberId = ref('');
+memberId = $cookie.getCookie("Id");
+
+let memberBonusPoint = ref('');
+memberBonusPoint = $cookie.getCookie("bouns");
+
 let isModalOpen= ref(false);
 let isApplyMode = ref(true);
+
 
 
 const props = defineProps({
