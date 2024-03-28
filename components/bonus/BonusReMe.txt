@@ -18,6 +18,7 @@
     
     [] 模態框
         [V] 可以正常操作模態框
+            img 的 @click="imgclickEvent( bonusProduct.id)" 似乎是多餘的?
         [] 資料連接到模態框
 
     [] BonusProduct輪播
