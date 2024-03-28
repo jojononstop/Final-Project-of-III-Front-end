@@ -53,8 +53,8 @@ definePageMeta({
   import connection from '@/data/signalR';
 
   const router = useRouter();
-  import { useAuthStore } from '../store/logincookies'
-const authStore = useAuthStore()
+//   import { useAuthStore } from '../store/logincookies'
+// const authStore = useAuthStore()
 
 // 在页面组件的生命周期钩子中获取 Cookie 值并存储到 Pinia store 中
 // onMounted(() => {
