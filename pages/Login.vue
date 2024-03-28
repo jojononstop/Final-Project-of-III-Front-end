@@ -39,6 +39,7 @@
 </template>
 
 <script setup lang="ts">
+
   import { useRouter } from 'vue-router';
   import { googleTokenLogin } from 'vue3-google-login'
   import axios from 'axios';
@@ -50,8 +51,9 @@
   const isActive = ref<boolean>(false);
 
 
+
   // import { ElMessageBox } from 'element-plus';
-  
+
   var id ="";
   let globalId;
   useSeoMeta({ title: "Login" });
@@ -221,5 +223,15 @@ connection.on('userdisconnected', (ConnectionId) => {
           });
     
   }
+
+</script>
+
+<script lang="ts">
+import { onMounted } from 'vue';
+import middleware from '../middleware/auth';
+// 使用 middleware
+onMounted(() => {
+  middleware();
+});
 
 </script>

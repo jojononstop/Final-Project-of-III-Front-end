@@ -14,6 +14,7 @@ import { VueCookieNext as $cookie } from 'vue-cookie-next'
 let isAccountIdExists: boolean;
 
 
+
 onBeforeMount(() => {
   isAccountIdExists = $cookie.isCookieAvailable('accountId');
  }
