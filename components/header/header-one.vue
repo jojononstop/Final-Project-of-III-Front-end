@@ -132,7 +132,7 @@
   </header>
 </template>
 
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import menu_data from '@/data/menu-data';
 import menu_data_cookie from '@/data/menu-data-cookie';
 import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
@@ -144,16 +144,24 @@ defineProps<{ style_2?: boolean }>();
 
 
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
-let isAccountIdExists: boolean;
-
+let isAccountIdExists = ref<boolean>(false);
 
 // onMounted
 onBeforeMount(() => {
-  isAccountIdExists = $cookie.isCookieAvailable('accountId');
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
   if ($cookie.getCookie("name")) {
     name = $cookie.getCookie("name");
   }
 });
+
+function checkLogin() {
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+  console.log(isAccountIdExists)
+  if ($cookie.getCookie("name")) {
+    name = $cookie.getCookie("name");
+
+  }
+}
 
 
 const { isSticky, isStickyVisible } = useSticky();
@@ -221,4 +229,85 @@ const handleSignOut = () => {
 
 
 
+</script> -->
+<script setup>
+import menu_data from '@/data/menu-data';
+import menu_data_cookie from '@/data/menu-data-cookie';
+import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+router.beforeEach((to, from) => {
+  checkLogin()
+})
+
+let name = "";
+
+defineProps({ style_2: Boolean });
+
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
+let isAccountIdExists = ref(false);
+
+// onMounted
+onBeforeMount(() => {
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+  if ($cookie.getCookie("name")) {
+    name = $cookie.getCookie("name");
+  }
+});
+
+function checkLogin() {
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+}
+
+const { isSticky, isStickyVisible } = useSticky();
+const route = useRoute();
+const isActive = ref(false);
+const isOffCanvasOpen = ref(false);
+const isMobileOffCanvasOpen = ref(false);
+
+const handleOpenSearch = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isActive.value = !isActive.value;
+};
+
+const handleCloseSearch = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isActive.value = !isActive.value;
+};
+// off canvas
+const handleOpenOffCanvas = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isOffCanvasOpen.value = !isOffCanvasOpen.value;
+};
+
+const handleCloseOffCanvas = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isOffCanvasOpen.value = !isOffCanvasOpen.value;
+};
+// mobile off canvas
+const handleOpenMobileOffCanvas = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isMobileOffCanvasOpen.value = !isMobileOffCanvasOpen.value;
+};
+
+const handleCloseMobileOffCanvas = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isMobileOffCanvasOpen.value = !isMobileOffCanvasOpen.value;
+};
+
+const handleSignOut = () => {
+  $cookie.removeCookie('accountId');
+  $cookie.removeCookie('avatarUrl');
+  $cookie.removeCookie('bouns');
+  $cookie.removeCookie('name');
+  $cookie.removeCookie('google');
+  location.reload();
+};
 </script>

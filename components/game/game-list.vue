@@ -4,13 +4,8 @@
             <nuxt-link :to="`/game-details/${game.id}`">
                 <div class="row mb-2">
                     <div class="col-3">
-                        <img :src="'images/games/cover/' +
-            game.developerId +
-            '/' +
-            game.id +
-            '/' +
-            game.cover
-            " />
+                        <img
+                            :src="'images/games/cover/' + game.developerId + '/' + game.id + '/' + game.cover + '.jpg'" />
                     </div>
                     <div class="col-7 d-flex align-items-center">
                         <h3 class="">{{ game.name }}</h3>
@@ -30,7 +25,7 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted } from 'vue';
+import { defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 
@@ -38,11 +33,5 @@ const props = defineProps({
     gameData: Object,
 });
 
-(async () => {
-    try {
-        console.log(route.query);
-    } catch (error) {
-        console.log(error);
-    }
-});
+
 </script>
