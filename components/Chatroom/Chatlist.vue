@@ -94,8 +94,6 @@ onMounted(() => {
     getUserFriends();
     getOnlineUsers();
 });
-
-
 // 斷開事件處理程序
 connection.onclose(async () => {
     console.log('連線中斷,嘗試重連...');
@@ -118,10 +116,12 @@ connection.onclose(async () => {
     // 開始重新連接
     await start();
 });
+
 // 開始 SignalR 連接
 connection.start().then(() => {
     console.log('SignalR 連線成功.');
 }).catch(err => console.error('Error while establishing SignalR connection:', err));
+
 
 connection.on('userConnected', (userId) => {
     console.log('使用者ID已上線', userId);

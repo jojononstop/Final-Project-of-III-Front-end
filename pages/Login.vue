@@ -187,6 +187,7 @@ const handleGoogleLogin = async () => {
 <script setup>
 import { useRouter } from 'vue-router';
 import { googleTokenLogin } from 'vue3-google-login';
+import connection from '@/data/signalR';
 import axios from 'axios';
 import { VueCookieNext as $cookie } from 'vue-cookie-next';
 import { ref } from 'vue';
