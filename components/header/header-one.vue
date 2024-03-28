@@ -135,7 +135,6 @@
 <script setup lang="ts">
 import menu_data from '@/data/menu-data';
 import menu_data_cookie from '@/data/menu-data-cookie';
-import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
 import connection from '@/data/signalR';
 
 let name ="";
@@ -149,12 +148,12 @@ let isAccountIdExists: boolean;
 
 
 
-   // 监听 accountId cookie 的变化
-   watch(() => $cookie.getCookie('accountId'), (newVal, oldVal) => {
-    // 如果 cookie 发生变化，更新 isAccountIdExists 的值
-    isAccountIdExists = $cookie.isCookieAvailable('accountId');
-    // 处理其他逻辑
-  });
+  //  // 监听 accountId cookie 的变化
+  //  watch(() => $cookie.getCookie('accountId'), (newVal, oldVal) => {
+  //   // 如果 cookie 发生变化，更新 isAccountIdExists 的值
+  //   isAccountIdExists = $cookie.isCookieAvailable('accountId');
+  //   // 处理其他逻辑
+  // });
 
 // onMounted
 onBeforeMount(() => {
@@ -223,7 +222,7 @@ const handleSignOut = () => {
       console.error('SignalR connection failed:', err.toString());
     });
 
-
+  
   location.reload();
 
 };

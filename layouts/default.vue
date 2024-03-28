@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header-one></header-one>
+    <header-one ></header-one>
     <main class="main--area">
       <slot />
     </main>
@@ -10,5 +10,13 @@
 </template>
 
 <script setup lang="ts">
+import { VueCookieNext as $cookie } from 'vue-cookie-next'
+let isAccountIdExists: boolean;
 
+
+onBeforeMount(() => {
+  isAccountIdExists = $cookie.isCookieAvailable('accountId');
+ }
+
+);
 </script>
