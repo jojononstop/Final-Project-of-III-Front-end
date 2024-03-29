@@ -56,15 +56,14 @@ type IMenuDataType = {
     },
     {
       id:6,
+      title:'測試',
+      link:'/chattest',
+    },
+    {
+      id:7,
       title:'Game',
       link:'/game',
     },
-    // {
-    //   id:7,
-    //   title:'Bonus',
-    //   link:'/bonus',
-    // },
-
   ]
   
   export default menu_data;

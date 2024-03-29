@@ -55,11 +55,6 @@ const menu_data:IMenuDataType[] = [
     ]
   },
   {
-    id:6,
-    title:'測試',
-    link:'/chattest',
-  },
-  {
     id:7,
     title:'Game',
     link:'/game',

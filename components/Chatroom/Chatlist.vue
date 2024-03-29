@@ -11,9 +11,9 @@
         </div>
         <div class="offcanvas-body">
             <div class="row">
-                <img src="\images\avatar\152.png" height="100px" class="col-4">
+                <img :src="avatarUrl" height="100px" class="col-4">
                 <div class="col-4">
-                    <h5 class="p-1">Bllen Kuo</h5>
+                    <h5 class="p-1">{{ userName }}</h5>
                     <div class="status"> <i class="fa fa-circle online"></i> online </div>
                 </div>
                 <div class="col-2"></div>
@@ -50,19 +50,27 @@
 </template>
 
 <script setup>
+import connection from '@/data/signalR';
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
 import axios from 'axios';
 
 let onlinefriends = ref([]);
 let friends = ref([]);
 const selectedFriend = ref([]);
+let avatarUrl = ref('');
+let userName = ref('');
 
-const signalrConnection = inject('signalr');
 
-async function getUserFriends(id) {
+avatarUrl.value = $cookie.getCookie('avatarUrl');
+userName.value = $cookie.getCookie('name');
+
+let id;
+async function getUserFriends() {
+    id = $cookie.getCookie('Id');
     try {
         const response = await axios.get(`https://localhost:7048/Chat/GetUserFriends?id=${id}`);
-        console.log(response.data);
         friends.value = response.data;
+        console.log(friends.value);
     } catch (error) {
         console.error('Error fetching user friends:', error);
         return [];
@@ -76,17 +84,51 @@ async function getOnlineUsers() {
 };
 
 const selectFriend = (friend) => {
-    console.log(friend);
     selectedFriend.value = friend;
+
 };
 provide('selectedFriend', selectedFriend);
 
+
 onMounted(() => {
-    getUserFriends(1);
+    getUserFriends();
     getOnlineUsers();
-    console.log(signalrConnection)
+});
+// 斷開事件處理程序
+connection.onclose(async () => {
+    console.log('連線中斷,嘗試重連...');
+
+    // 重新連接函數
+    async function start() {
+        try {
+            // 重新連接
+            await connection.start();
+            console.log('重新連線成功.');
+        } catch (err) {
+            console.error('Error while reconnecting:', err);
+            // 設置重連延遲時間，這裡可以根據需求調整
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            // 再次嘗試重新連接
+            await start();
+        }
+    }
+
+    // 開始重新連接
+    await start();
 });
 
+// 開始 SignalR 連接
+connection.start().then(() => {
+    console.log('SignalR 連線成功.');
+}).catch(err => console.error('Error while establishing SignalR connection:', err));
+
+
+connection.on('userConnected', (userId) => {
+    console.log('使用者ID已上線', userId);
+});
+connection.on('userDisconnected', (userId) => {
+    console.log('使用者ID已離線', userId);
+});
 </script>
 
 <style scoped>
@@ -354,4 +396,4 @@ body {
         overflow-x: auto
     }
 }
-</style>
+</style>../../data/signalR
