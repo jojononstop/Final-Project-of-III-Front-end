@@ -4,17 +4,9 @@
     <breadcrumb-three title="BONUS" subtitle="BONUS LIST"> </breadcrumb-three>
     <!-- breadcrumb area end -->
     <!-- item -->
-    <!-- V1 -->
-    <!-- <bonus-area 
-    :dbToArea_bonusProducts="dbData_bonusProducts" 
-    :dbToArea_bonusProductTypes="dbData_bonusProductTypes" 
-    @data-from-bonus="handleDataFromBonus"></bonus-area>  -->
-
-
-    <!-- V2 加入V-if確保值-->
     <bonus-area v-if="dbData_bonusProducts && dbData_bonusProductTypes"
-    :dbToArea_bonusProducts="dbData_bonusProducts" 
-    :dbToArea_bonusProductTypes="dbData_bonusProductTypes" 
+    :bonusProductsInArea="dbData_bonusProducts" 
+    :bonusProductTypesInArea="dbData_bonusProductTypes" 
     @data-from-bonus="handleDataFromBonus"></bonus-area>
 
   </div>
