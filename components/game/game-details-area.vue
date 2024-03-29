@@ -1,5 +1,4 @@
 <template>
-    <!-- <button @click="show(gameData)"></button> -->
     <section class="blog-area blog-details-area">
         <div class="container">
             <div class="row justify-content-center">
@@ -73,11 +72,11 @@
                         <game-detail-comments :gameId="gameId" />
                     </div>
                 </div>
+
                 <div class="blog-post-sidebar">
-                    <!-- blog sidebar start -->
                     <game-sidebar :gameData="gameData" />
-                    <!-- blog sidebar end -->
                 </div>
+
             </div>
         </div>
     </section>

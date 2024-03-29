@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div>
+            <p class="test">
+                123
+            </p>
+        </div>
         <div v-for="game in gameData" :key="game.id">
             <nuxt-link :to="`/game-details/${game.id}`">
                 <div class="row mb-2">
@@ -36,8 +41,14 @@
 
 <script setup>
 import { defineProps } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute , useRouter } from 'vue-router';
 const route = useRoute();
+
+const router = useRouter();
+
+router.beforeEach((to, from) => {
+  console.log(from)
+})
 
 const props = defineProps({
     gameData: Object,
@@ -79,5 +90,11 @@ const props = defineProps({
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.test{
+ font-size: 24px;
+ 
+
 }
 </style>

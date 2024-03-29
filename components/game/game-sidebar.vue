@@ -1,5 +1,7 @@
 <template>
     <aside class="blog-sidebar">
+
+
         <div class="blog-widget">
             <div class="sidebar__author">
                 <div class="sidebar__author-thumb">
@@ -12,6 +14,8 @@
                 </div>
             </div>
         </div>
+
+
         <div class="blog-widget">
             <h4 class="fw-title">Tags</h4>
             <div class="tagcloud">
@@ -21,19 +25,33 @@
             </div>
         </div>
 
+
         <div v-if="releaseDate < currentDate" class="blog-widget">
-            <div class="price"">
-                <p class=" price-text normal-container text-decoration-line-through">NT $ {{ gameData.price }}</p>
+            <div v-if="gameData.discountPrice > 0" class="price d-flex justify-content-around">
+                <span class="discount-text">
+                    NT $ {{ gameData.discountPrice }}
+                </span>
+                <span class="discount-text text">
+                    特價
+                </span>
+                <span class="discount-text text-decoration-line-through">
+                    NT $ {{ gameData.price }}
+                </span>
+                <span class="discount-text">
+                    原價
+                </span>
             </div>
-            <div v-if="gameData.discountPrice" class="normal-container">
-                <p class="discount-text">
-                    <span>NT $ {{ gameData.discountPrice }}</span>
-                    <!-- <span>&nbsp;&nbsp;&nbsp;</span>
-                    <span>{{ gameData.discountPercent }}</span> -->
-                </p>
+
+            <div v-else class="price d-flex justify-content-around">
+                <span class="discount-text">
+                    NT $ {{ gameData.price }}
+                </span>
+                <span class="discount-text">
+                    原價
+                </span>
             </div>
         </div>
-
+        
 
         <div class="blog-widget">
             <nuxt-link to="#" class="tg-btn-2 -secondary mb-2 d-flex">
@@ -71,13 +89,12 @@ const releaseDate = new Date(props.gameData.releaseDate);
     border-radius: 10px;
     direction: rtl !important;
     margin-left: auto;
-    font-size: 24px;
 }
 
 .discount-text {
-    color: #ffffff;
+    color: #383838;
     text-shadow: 0 0 10px rgba(73, 255, 225, 0.7), 0 0 10px rgba(73, 255, 225, 0.7), 0 0 10px rgba(73, 255, 225, 0.7), 0 0 10px rgba(73, 255, 225, 0.7);
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .price-text {
@@ -100,7 +117,7 @@ const releaseDate = new Date(props.gameData.releaseDate);
 
 .container {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
 }
 
 .normal-container {
@@ -108,7 +125,6 @@ const releaseDate = new Date(props.gameData.releaseDate);
     justify-content: center;
     align-items: center;
     height: 60px;
-
-
 }
+
 </style>
