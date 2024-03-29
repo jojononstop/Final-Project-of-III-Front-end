@@ -38,6 +38,7 @@
   </section>
 </template>
 
+
 <script setup lang="ts">
 
 definePageMeta({
@@ -244,4 +245,3 @@ connection.on('userdisconnected', (ConnectionId) => {
   }
 
 </script>
-
