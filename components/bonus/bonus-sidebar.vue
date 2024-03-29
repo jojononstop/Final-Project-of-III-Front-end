@@ -151,8 +151,12 @@
 import "@vueform/slider/themes/default.css";
 import { defineEmits } from "vue";
 
-const emits = defineEmits(["search"]);
 let keyword = "";
+
+const emits = defineEmits(["search"]);
+const props = defineProps({
+  
+})
 
 function handleSearch() {
   //toLower

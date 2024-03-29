@@ -57,6 +57,16 @@
             class="row justify-content-start row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1"
           >
             <!-- 把接到的請求資料丟到bonusProducts -->
+            <!-- V1 -->
+            <div v-for="bonusProductItem in dbToArea_bonusProducts" :key="bonusProductItem.id" class="col">
+              <bonus-item
+                :AreaToItem_bonusProduct="bonusProductItem"
+                :AreaToItem_bonusProductTypes="dbToArea_bonusProductTypes"
+                :modalId="'exampleModal_' + bonusProductItem.id"
+              />
+            </div>
+
+            <!-- V2 -->
             <div v-for="bonusProduct in bonusProducts" :key="bonusProduct.id" class="col">
               <bonus-item
                 :bonusProduct="bonusProduct"
@@ -87,11 +97,20 @@
 
 <script setup>
 // import product_data from "@/data/product-data";
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, onMounted } from "vue";
+
+// const props = defineProps({
+//   bonusProducts: Object,
+//   bonusProductTypes: Object,
+// });
 
 const props = defineProps({
-  bonusProducts: Object,
-  bonusProductTypes: Object,
+  dbToArea_bonusProducts: Object,
+  dbToArea_bonusProductTypes: Object,
+});
+
+onMounted(() => {
+  // console.log(props.dbToArea_bonusProducts, props.dbToArea_bonusProductTypes);
 });
 
 

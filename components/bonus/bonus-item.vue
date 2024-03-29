@@ -5,7 +5,7 @@
 <template>
   <div class="shop__bonus__item">
     <div class="shop__bonus__item-thumb">
-      <img :src="`/images/bonus/${bonusProduct.productTypeId}/${bonusProduct.url}`" typeof="btn" @click="imgclickEvent(bonusProduct.id)" style="cursor: pointer;" :data-bs-toggle="'modal'" :data-bs-target="'#exampleModal_' + bonusProduct.id" />
+      <img :src="`/images/bonus/${AreaToItem_bonusProduct.productTypeId}/${AreaToItem_bonusProduct.url}`" typeof="btn" @click="imgclickEvent(AreaToItem_bonusProduct.id)" style="cursor: pointer;" :data-bs-toggle="'modal'" :data-bs-target="'#exampleModal_' + AreaToItem_bonusProduct.id" />
       <!-- 最愛按鈕 -->
       <nuxt-link to="#" class="wishlist-button">
         <i class="far fa-heart"></i>
@@ -15,37 +15,37 @@
     <div class="shop__item-content">
       <div class="shop__item-content-top">
         <h4 class="title">
-          <nuxt-link :to="`/shop-details/${bonusProduct.id}`">
-            {{bonusProduct.name}}
+          <nuxt-link :to="`/shop-details/${AreaToItem_bonusProduct.id}`">
+            {{AreaToItem_bonusProduct.name}}
           </nuxt-link>
           <div v-if="isModalOpen">測試元件開關</div>
         </h4>
       </div>
       <div class="shop__item-content-top">
         <nuxt-link to="/shop">
-          {{ getProductTypeName(bonusProduct.productTypeId-1) }}
+          {{ getProductTypeName(AreaToItem_bonusProduct.productTypeId-1) }}
         </nuxt-link>
         <!-- 價格 -->
-        <div class="shop__item-price">
+        <!-- <div class="shop__item-price">
           ${{ bonusProduct.price }}
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- 定義模態框 -->
-    <div class="modal fade my-modal" :id="'exampleModal_' + bonusProduct.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade my-modal" :id="'exampleModal_' + AreaToItem_bonusProduct.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content" style="background-color: #182029;">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              <p>{{ bonusProduct.id }}</p>
+              <p>{{ AreaToItem_bonusProduct.id }}</p>
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <h2>{{ bonusProduct.name }}</h2>
-            <h5>{{ getProductTypeName(bonusProduct.productTypeId-1) }}</h5>
+            <h2>{{ AreaToItem_bonusProduct.name }}</h2>
+            <h5>{{ getProductTypeName(AreaToItem_bonusProduct.productTypeId-1) }}</h5>
             <div class="my-center-container">
-              <img :src="`/images/bonus/${bonusProduct.productTypeId}/${bonusProduct.url}`" typeof="btn" @click="imgclickEvent(bonusProduct.id)"/>
+              <img :src="`/images/bonus/${AreaToItem_bonusProduct.productTypeId}/${AreaToItem_bonusProduct.url}`" typeof="btn" @click="imgclickEvent(AreaToItem_bonusProduct.id)"/>
             </div>
           </div>
           <div>
@@ -76,27 +76,24 @@ memberBonusPoint = $cookie.getCookie("bouns");
 let isModalOpen= ref(false);
 let isApplyMode = ref(true);
 
-// V1
-// const props = defineProps({
-//   bonusProduct: Object,
-//   bonusProductTypes: Object,
-//   modalId: String
-// });
-
-// V2
 const props = defineProps({
-  bonusProduct: Object,
-  bonusProductTypes: Object,
+  AreaToItem_bonusProduct: Object,
+  AreaToItem_bonusProductTypes: Object,
   modalId: String
 });
+
+onMounted(()=>{
+  console.log(props.AreaToItem_bonusProduct,props.AreaToItem_bonusProductTypes)
+})
+
 
 function getProductTypeName(productTypeId) 
 {
   //都有傳進來
-  if (props.bonusProductTypes && props.bonusProductTypes[productTypeId])
+  if (props.AreaToItem_bonusProductTypes && props.AreaToItem_bonusProductTypes[productTypeId])
    {
     //傳出對應ID的名稱
-    return props.bonusProductTypes[productTypeId].name;
+    return props.AreaToItem_bonusProductTypes[productTypeId].name;
   } 
   else 
   {

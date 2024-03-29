@@ -5,10 +5,14 @@
     [V] 找到對應的名稱與類型
 
 [] 側面欄位完成
+    [V]由sideber的search將輸入文字傳到主要area
+        [V]大小寫
+
     [V] 關鍵字篩選
         [V] Bonus.vue可以接到輸入文字
 
     [] 類別篩選
+        [] 動態生成
         [] 可以透過type篩選
         [] 製作一個checkbox的sass樣式
         [] mixin
@@ -29,12 +33,11 @@
     [] 讀取
     [] 類別篩選
 側面欄位
-    [V]由sideber的search將輸入文字傳到主要area
-        [V]大小寫
-[] 命名约定
-    [] apiToBonus
-    [] bonusToArea
-    [] areaToItem
+    
+[V] 命名约定
+    [V] apiToBonus
+    [V] bonusToArea
+    [V] areaToItem
 ===OK========================================
     
 
