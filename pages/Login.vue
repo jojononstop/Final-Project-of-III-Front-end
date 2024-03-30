@@ -41,11 +41,13 @@
 
 <script setup lang="ts">
 
-definePageMeta({
-  middleware: 'auth',
+onBeforeMount(() => {
+  definePageMeta({
+    middleware: 'auth',
+  });
 });
 
-
+  
   import { useRouter } from 'vue-router';
   import { googleTokenLogin } from 'vue3-google-login'
   import axios from 'axios';
