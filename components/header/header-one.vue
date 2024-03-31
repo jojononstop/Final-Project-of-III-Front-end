@@ -82,8 +82,7 @@
 
                     <li class="search" v-if="isAccountIdExists">
                       <nuxt-link to="/">
-                        <!-- <img src="/images/icons/shopping-cart.png"> -->
-                        <img src="/images/icons/shopping-cart.png">
+                        <img src="../../public/images/icons/shopping-cart.png">
                       </nuxt-link>
                     </li>
 
@@ -136,6 +135,12 @@
 import menu_data from '@/data/menu-data';
 import menu_data_cookie from '@/data/menu-data-cookie';
 import connection from '@/data/signalR';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+router.beforeEach((to, from) => {
+  checkLogin()
+})
 
 let name = "";
 
@@ -143,7 +148,20 @@ defineProps<{ style_2?: boolean }>();
 
 
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
+<<<<<<< HEAD
 let isAccountIdExists = ref<boolean>(false);
+=======
+
+
+let isAccountIdExists = ref(false);
+
+function checkLogin() {
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+  if($cookie.getCookie("name")){
+  name =$cookie.getCookie("name");
+ }
+}
+>>>>>>> 2790ce94d215c44cf06241b65126ac0067de89ca
 
 
 
@@ -157,7 +175,7 @@ let isAccountIdExists = ref<boolean>(false);
 
 // onMounted
 onBeforeMount(() => {
-  isAccountIdExists = $cookie.isCookieAvailable('accountId');
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
   if($cookie.getCookie("name")){
   name =$cookie.getCookie("name");
  }

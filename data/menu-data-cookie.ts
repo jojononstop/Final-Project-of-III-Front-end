@@ -61,9 +61,26 @@ type IMenuDataType = {
     },
     {
       id:7,
+<<<<<<< HEAD
       title:'Game',
       link:'/game',
     },
+=======
+      title:'測試防禦',
+      link:'/Login',
+    },
+    // {
+    //   id:6,
+    //   title:'Game',
+    //   link:'/game',
+    // },
+    // {
+    //   id:7,
+    //   title:'Bonus',
+    //   link:'/bonus',
+    // },
+
+>>>>>>> 2790ce94d215c44cf06241b65126ac0067de89ca
   ]
   
   export default menu_data;
