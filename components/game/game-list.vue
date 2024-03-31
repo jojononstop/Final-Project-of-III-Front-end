@@ -1,10 +1,8 @@
 <template>
     <div>
-        <div>
-            <p class="test">
-                123
-            </p>
-        </div>
+        <p v-if="tagName != null">Search By Tag: {{tagName}}</p>
+    </div>
+    <div>
         <div v-for="game in gameData" :key="game.id">
             <nuxt-link :to="`/game-details/${game.id}`">
                 <div class="row mb-2">
@@ -13,7 +11,7 @@
                             :src="'images/games/cover/' + game.developerId + '/' + game.id + '/' + game.cover + '.jpg'" />
                     </div>
                     <div class="col-7 d-flex align-items-center">
-                        <h3 class="">{{ game.name }}</h3>
+                        <h3 class="">{{ game.name , tagName}}</h3>
                     </div>
                     <div v-if="game.discountPrice" class="col-2 d-flex align-items-center container">
                         <p class="text-decoration-line-through text-start">
@@ -41,19 +39,12 @@
 
 <script setup>
 import { defineProps } from 'vue';
-import { useRoute , useRouter } from 'vue-router';
-const route = useRoute();
-
-const router = useRouter();
-
-router.beforeEach((to, from) => {
-  console.log(from)
-})
+import axios from 'axios'
 
 const props = defineProps({
     gameData: Object,
+    tagName: String
 });
-
 
 </script>
 <style scoped>
@@ -92,9 +83,4 @@ const props = defineProps({
     align-items: center;
 }
 
-.test{
- font-size: 24px;
- 
-
-}
 </style>
