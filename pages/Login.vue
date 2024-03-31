@@ -45,11 +45,20 @@
 
 <script setup lang="ts">
 
+<<<<<<< HEAD
 onBeforeMount(() => {
   definePageMeta({
     middleware: 'auth',
   });
 });
+=======
+import { useRouter } from 'vue-router';
+import { googleTokenLogin } from 'vue3-google-login'
+import axios from 'axios';
+import { VueCookieNext as $cookie } from 'vue-cookie-next'
+import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
+import startConnection from '@/data/signalR';
+>>>>>>> e330e556ef6cf2a474bcc53298d88abc9b531c2d
 
   
   import { useRouter } from 'vue-router';
@@ -126,26 +135,7 @@ const login = () => {
 
 
 
-        connection.start().then(() => {
-          console.log('SignalR 成功連線');
-        }).catch(err => {
-          console.error('SignalR connection failed:', err.toString());
-        });
-
-        connection.on('userconnected', (ConnectionId) => {
-          // 在這裡處理從伺服器端接收到的通知
-          console.log('新使用者已連接：', ConnectionId);
-          console.log('新使用者ID：', ConnectionId.ConnectionId);
-        });
-        connection.on('userdisconnected', (ConnectionId) => {
-          // 在這裡處理從伺服器端接收到的通知
-          console.log('使用者已離線：', ConnectionId);
-          console.log('離線使用者ID：', ConnectionId.ConnectionId);
-        });
-
-        console.log(response.data[0]);
-        id = $cookie.getCookie("accountId")
-        console.log(id);
+        startConnection();
         //
         // console.log( header.isAccountIdExists);
         // header.isAccountIdExists = true;
@@ -215,23 +205,7 @@ const handleGoogleLogin = async () => {
         $cookie.setCookie('google', google);
 
 
-        connection.start().then(() => {
-          console.log('SignalR 成功連線');
-        }).catch(err => {
-          console.error('SignalR connection failed:', err.toString());
-        });
-
-        connection.on('userconnected', (ConnectionId) => {
-          // 在這裡處理從伺服器端接收到的通知
-          console.log('新使用者已連接：', ConnectionId);
-          console.log('新使用者ID：', ConnectionId.ConnectionId);
-        });
-        connection.on('userdisconnected', (ConnectionId) => {
-          // 在這裡處理從伺服器端接收到的通知
-          console.log('使用者已離線：', ConnectionId);
-          console.log('離線使用者ID：', ConnectionId.ConnectionId);
-        });
-
+        startConnection();
         router.push('/');
       }
       else {

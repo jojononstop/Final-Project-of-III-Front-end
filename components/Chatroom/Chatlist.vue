@@ -1,6 +1,6 @@
 <template>
     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-        aria-controls="offcanvasScrolling">好友列表</button>
+        aria-controls="offcanvasScrolling" @click="getUserFriends();">好友列表</button>
 
     <div class="offcanvas offcanvas-start text-bg-dark" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
         id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -33,7 +33,10 @@
                         <img :src="friend.avatarUrl" alt="avatar">
                         <div class="about">
                             <div class="name">{{ friend.userName }}</div>
-                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                            <div class="status" v-if="friend.connectionId != null"> <i class="fa fa-circle online"></i>
+                                在線
+                            </div>
+                            <div class="status" v-else> <i class="fa fa-circle offline"></i> 離線 </div>
                         </div>
                         <div class="small text-right row">
                             <div class="col-8">最後上線時間</div>
@@ -50,38 +53,29 @@
 </template>
 
 <script setup>
-import connection from '@/data/signalR';
 import { VueCookieNext as $cookie } from 'vue-cookie-next';
 import axios from 'axios';
+import startConnection from '@/data/signalR';
 
-let onlinefriends = ref([]);
 let friends = ref([]);
 const selectedFriend = ref([]);
 let avatarUrl = ref('');
 let userName = ref('');
 
-
+const connection = startConnection();
 avatarUrl.value = $cookie.getCookie('avatarUrl');
 userName.value = $cookie.getCookie('name');
-
 let id;
+id = $cookie.getCookie('Id');
+
 async function getUserFriends() {
-    id = $cookie.getCookie('Id');
-    try {
-        const response = await axios.get(`https://localhost:7048/Chat/GetUserFriends?id=${id}`);
-        friends.value = response.data;
-        console.log(friends.value);
-    } catch (error) {
-        console.error('Error fetching user friends:', error);
-        return [];
-    }
-}
-async function getOnlineUsers() {
-    axios.get('https://localhost:7048/Chat/GetAllUsersIds').then(res => {
-        onlinefriends.value = res.data;
+    await axios.get(`https://localhost:7048/Chat/GetUserFriends?id=${id}`
+    ).then(res => {
+        friends.value = res.data;
         console.log(res.data);
     });
-};
+}
+
 
 const selectFriend = (friend) => {
     selectedFriend.value = friend;
@@ -90,45 +84,7 @@ const selectFriend = (friend) => {
 provide('selectedFriend', selectedFriend);
 
 
-onMounted(() => {
-    getUserFriends();
-    getOnlineUsers();
-});
-// 斷開事件處理程序
-connection.onclose(async () => {
-    console.log('連線中斷,嘗試重連...');
 
-    // 重新連接函數
-    async function start() {
-        try {
-            // 重新連接
-            await connection.start();
-            console.log('重新連線成功.');
-        } catch (err) {
-            console.error('Error while reconnecting:', err);
-            // 設置重連延遲時間，這裡可以根據需求調整
-            await new Promise(resolve => setTimeout(resolve, 5000));
-            // 再次嘗試重新連接
-            await start();
-        }
-    }
-
-    // 開始重新連接
-    await start();
-});
-
-// 開始 SignalR 連接
-connection.start().then(() => {
-    console.log('SignalR 連線成功.');
-}).catch(err => console.error('Error while establishing SignalR connection:', err));
-
-
-connection.on('userConnected', (userId) => {
-    console.log('使用者ID已上線', userId);
-});
-connection.on('userDisconnected', (userId) => {
-    console.log('使用者ID已離線', userId);
-});
 </script>
 
 <style scoped>

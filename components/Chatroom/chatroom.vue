@@ -46,8 +46,8 @@
                         <div class=" chat-footer chat-message clearfix  sticky-bottom">
                             <div class="input-area mb-0 ">
                                 <input type="text" v-model="newMessage" placeholder="請輸入訊息....."
-                                    @keydown.enter="sendMessage">
-                                <button @click="sendMessage">send</button>
+                                    @keydown.enter="sendMessage()">
+                                <button @click="sendMessage()">send</button>
                                 <button @click="test">test</button>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
 
 
 <script setup>
-import connection from '@/data/signalR';
+import startConnection from '@/data/signalR';
 import { VueCookieNext as $cookie } from 'vue-cookie-next';
 import axios from 'axios';
 
@@ -75,7 +75,7 @@ friendInfo.value = selectedFriend;
 
 let IdFromCookie = ref('');
 IdFromCookie.value = parseInt($cookie.getCookie('Id'));
-
+let connection = startConnection();
 
 // 模拟聊天消息数据
 let messages = ref([]);
@@ -85,6 +85,7 @@ async function getMessageHistory(x, y) {
     x = parseInt(x);
     y = parseInt(y);
     console.log(x, y);
+    messages.value = [];
     try {
         let response = await axios.get(`https://localhost:7048/Chat/GetMessageHistory?memberId=${x}&friendId=${y}`);
         messages.value = response.data;
@@ -103,7 +104,16 @@ function scrollToBottom() {
 
 connection.on('sendMessageTo', (message) => {
     messages.value.push(message);
-    newMessage.value = '';
+    console.log(message);
+
+    setTimeout(() => {
+        scrollToBottom();
+    });
+});
+
+connection.on('sendCaller', async (message) => {
+    await amessages.value.push(message);
+    console.log(message);
 
     setTimeout(() => {
         scrollToBottom();
@@ -115,7 +125,9 @@ const sendMessage = () => {
     if (messageContent === '') {
         return; // 如果消息内容为空，则不发送消息
     }
-    connection.invoke('SendMessageToFriend', 1, 2, friendInfo.value.connectionId, messageContent);
+    console.log(IdFromCookie.value, selectedFriend.value.userId, selectedFriend.value.connectionId, messageContent);
+    connection.invoke('SendMessageToFriend', IdFromCookie.value, selectedFriend.value.userId, selectedFriend.value.connectionId, messageContent);
+    newMessage.value = '';
 }
 
 
