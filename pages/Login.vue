@@ -110,7 +110,7 @@ const login = () => {
   console.log(postData)
   axios.post('https://localhost:7048/api/Members/Login', postData.value)
   .then(response => {
-  
+    console.log(response.data)
     if(response.data[0]=="登入成功"){
       // 設置 'account' Cookie，過期時間為一小時後
       

@@ -87,16 +87,17 @@
     }
 
     async function AddToWishList(gameId) {
-        console.log(id)
+
         let wishList = {};
         wishList.gameId = gameId;
         wishList.memberId = id;
-        console.log(wishList)
-        // try {
-        //     await axios.post('https://localhost:7048/api/Games/AddToWishList',wishList)
-        // } catch (error) {
-        //     console.error(error);
-        // }
+
+        try {
+            await axios.post('https://localhost:7048/api/Games/AddToWishList',wishList)
+            alert('已加入願望清單')
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     const releaseDate = new Date(props.gameData.releaseDate);
