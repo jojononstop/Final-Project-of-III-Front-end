@@ -3,6 +3,7 @@
       <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
         <h2 v-if="loading">驗證中...</h2>
         <h2 v-if="message">{{ message }}</h2>
+        <router-link to="/Login" v-if="trueactive">點此進行登入</router-link>
       </div>
   </section>
 </template>
@@ -15,6 +16,7 @@ import { useRoute } from 'vue-router';
 
 const loading = ref(true);
 const message = ref(null);
+const trueactive = ref(false);
 const router = useRoute();
 
 
@@ -61,6 +63,7 @@ const active = (memberId, confirmCode) => {
       console.log(response.data);
     if(response.data ==1){
       loading.value = false;
+      trueactive.value= true;
       message.value = '已開通成功,謝謝!';    
     }
     else{
