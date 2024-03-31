@@ -4,10 +4,7 @@
     <breadcrumb-three title="BONUS" subtitle="BONUS LIST"> </breadcrumb-three>
     <!-- breadcrumb area end -->
     <!-- item -->
-    <bonus-area v-if="dbData_bonusProducts && dbData_bonusProductTypes"
-    :bonusProductsInArea="dbData_bonusProducts" 
-    :bonusProductTypesInArea="dbData_bonusProductTypes" 
-    @data-from-bonus="handleDataFromBonus"></bonus-area>
+    <bonusItems-area ></bonusItems-area>
   </div>
 </template>
 

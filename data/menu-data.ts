@@ -37,6 +37,10 @@ const menu_data:IMenuDataType[] = [
     id:4,
     title:'點數商店',
     link:'/bonus',
+    sub_menu:[
+      {title:'bonus',link:'/bonus'},
+      // {title:'bonusItem',link:'/bounsItem'},
+    ]
   },
   {
     id:5,
