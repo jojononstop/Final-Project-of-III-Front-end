@@ -45,28 +45,13 @@
 
 <script setup lang="ts">
 
-<<<<<<< HEAD
-onBeforeMount(() => {
-  definePageMeta({
-    middleware: 'auth',
-  });
-});
-=======
-import { useRouter } from 'vue-router';
-import { googleTokenLogin } from 'vue3-google-login'
-import axios from 'axios';
-import { VueCookieNext as $cookie } from 'vue-cookie-next'
-import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
-import startConnection from '@/data/signalR';
->>>>>>> e330e556ef6cf2a474bcc53298d88abc9b531c2d
-
   
   import { useRouter } from 'vue-router';
   import { googleTokenLogin } from 'vue3-google-login'
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
   import { ref } from 'vue'; // 引入 ref 函数用于创建响应式数据
-  import connection from '@/data/signalR';
+  import startConnection from '@/data/signalR';
 
   const router = useRouter();
 //   import { useAuthStore } from '../store/logincookies'
@@ -79,7 +64,11 @@ import startConnection from '@/data/signalR';
 
 const isActive = ref<boolean>(false);
 
-
+  onBeforeMount(() => {
+  definePageMeta({
+    middleware: 'auth',
+  });
+});
 
 // import { ElMessageBox } from 'element-plus';
 
