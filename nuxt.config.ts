@@ -15,7 +15,10 @@ export default defineNuxtConfig({
       ],
     }
   },
-  // modules: ['@nuxt/ui'],
+  // modules: ['@nuxt/ui'],npm
+  modules: [
+    '@pinia/nuxt',
+  ],
   css: [
     "bootstrap/scss/bootstrap.scss",
     "swiper/css/bundle",
@@ -35,6 +38,6 @@ export default defineNuxtConfig({
     },
     //'這邊放上你的 Google Client Secret'
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET
-  }
+  },
 })
 

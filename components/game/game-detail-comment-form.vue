@@ -8,7 +8,7 @@
 					<li>
 						<div class="comments-box">
 							<div class="comments-avatar">
-								<img :src="avatar.value" alt="img">
+								<img :src="avatar" alt="img">
 
 								<div class="container-wrapper">
 									<div class="container d-flex align-items-center justify-content-center">
@@ -112,6 +112,11 @@ function getRating() {
 }
 
 let id = $cookie.getCookie("accountId");
+
+let avatar = ref('');
+avatar.value = $cookie.getCookie("avatarUrl");
+
+
 let memberId;
 
 axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
@@ -121,26 +126,8 @@ axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
 	.catch(error => {
 		console.log(error);
 	});
-console.log(memberId)
 
-let avatar = ref('');
-
-onMounted(
-
-	async function getMemberAvatar(memberId) {
-		try {
-			const response = await axios.get(`https://localhost:7048/api/Comments/memberAvatar/${memberId}`);
-			const avatarUrl = response.data;
-			return avatarUrl;
-		} catch (error) {
-			console.error(error);
-		}
-	},
-	avatar = getMemberAvatar(memberId)
-)
-
-
-
+const emitEvents = defineEmits(['refreshComment']);
 
 const submitComment = () => {
 	handleSubmit((values) => {
@@ -152,13 +139,13 @@ const submitComment = () => {
 
 		axios.post('https://localhost:7048/api/Comments', values)
 			.then(response => {
+				emitEvents('refreshComment', response.data);
 				alert('提交成功');
 			})
 			.catch(error => {
 				alert('提交失败');
 			});
 
-		alert(JSON.stringify(values, null, 2));
 		resetForm()
 	})();
 };

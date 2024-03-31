@@ -3,10 +3,10 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="blog-post-wrapper">
-                    <game-list :gameData="games" />
+                    <game-list :gameData="games" :tagName="tagName" />
                     <div class="pagination__wrap">
                         <!-- pagination start -->
-                        <ui-pagination></ui-pagination>
+                        <!-- <ui-pagination></ui-pagination> -->
                         <!-- pagination end -->
                     </div>
                 </div>
@@ -16,24 +16,26 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { useRoute } from 'vue-router';
 import axios from "axios";
 
 const route = useRoute();
 
 let games = ref(null);
+let tagName = ref(null)
 
-(async () => {
+
+onBeforeMount(async () => {
 
     if (route.query.search != null) {
         const queryString = route.query.search.split('_');
 
         if (queryString[0] == "tag") {
-            const tags = Array.from(String(queryString[1]), Number);
+            const tags = [Number(queryString[1])];
             const response = await axios.post("https://localhost:7048/api/Games/FilterByTags", tags);
             games.value = response.data;
-            console.log(games.value)
+            const response1 = await axios.get(`https://localhost:7048/api/Games/tag/${tags}`);
+            tagName.value = response1.data
         }
 
     } else {
@@ -41,5 +43,5 @@ let games = ref(null);
         games.value = response.data;
     }
 
-})();
+});
 </script>

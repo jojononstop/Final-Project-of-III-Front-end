@@ -1,5 +1,4 @@
 <template>
-    <!-- <button @click="show(gameData)"></button> -->
     <section class="blog-area blog-details-area">
         <div class="container">
             <div class="row justify-content-center">
@@ -12,9 +11,11 @@
                             <div class="blog-post-meta">
                                 <ul class="list-wrap">
                                     <li>發行商 : <nuxt-link to="#">{{ developerName }}</nuxt-link></li>
-                                    <li><i class="far fa-calendar-alt"></i>發行日期 : {{ formatDate(gameData.releaseDate)
-                                        }}</li>
-                                    <li>評分 : {{ gameData.rating }}</li>
+                                    <li v-if="releaseDate < currentDate"><i class="far fa-calendar-alt"></i>發行日期 : {{
+                                formatDate(gameData.releaseDate)
+                            }}</li>
+                                    <li v-else><i class="far fa-calendar-alt"></i>發行日期 : 即將發行</li>
+                                    <li v-if="releaseDate < currentDate">評分 : {{ gameData.rating }}</li>
                                 </ul>
                             </div>
                             <h1 class="title text-capitalize">Description</h1>
@@ -29,7 +30,8 @@
                                             <h4>{{ dlc.name }}</h4>
                                         </div>
                                         <div class="col-4 image-container">
-                                            <img :src="`/images/games/cover/${dlc.developerId}/${dlc.id}/${dlc.cover}`">
+                                            <img
+                                                :src="`/images/games/cover/${dlc.developerId}/${dlc.id}/${dlc.cover}.jpg`">
                                         </div>
                                     </div>
                                 </nuxt-link>
@@ -45,18 +47,18 @@
                                         </div>
                                         <div class="col-4 image-container">
                                             <img
-                                                :src="`/images/games/cover/${games.developerId}/${games.id}/${games.cover}`">
+                                                :src="`/images/games/cover/${games.developerId}/${games.id}/${games.cover}.jpg`">
                                         </div>
                                     </div>
                                 </nuxt-link>
                             </div>
                         </div>
                     </div>
-                    <div v-if="memberId">
+                    <div v-if="memberId && releaseDate < currentDate">
 
                         <div v-if="memberComment.length <= 0" class="comment-respond mb-3">
                             <h1 class="fw-title">留下評分與評價</h1>
-                            <game-detail-comment-form :gameId="gameId" />
+                            <game-detail-comment-form :gameId="gameId" @refreshComment="loadComment" />
                         </div>
 
                         <div v-else class="comment-respond mb-3">
@@ -65,16 +67,16 @@
                         </div>
 
                     </div>
-                    <div class="comments-wrap">
+                    <div v-if="releaseDate < currentDate" class="comments-wrap">
                         <h4 class="comments-wrap-title">Comments</h4>
                         <game-detail-comments :gameId="gameId" />
                     </div>
                 </div>
+
                 <div class="blog-post-sidebar">
-                    <!-- blog sidebar start -->
                     <game-sidebar :gameData="gameData" />
-                    <!-- blog sidebar end -->
                 </div>
+
             </div>
         </div>
     </section>
@@ -88,6 +90,8 @@ import axios from 'axios';
 const props = defineProps({
     gameData: Object,
 });
+const currentDate = new Date()
+const releaseDate = new Date(props.gameData.releaseDate);
 
 let id = $cookie.getCookie("accountId");
 let memberId;
@@ -131,6 +135,11 @@ const formatDate = (dateString) => {
     // 返回格式化后的日期字符串
     return `${year}-${month}-${day}`;
 };
+
+async function loadComment() {
+    const response = await axios.get(`https://localhost:7048/api/Comments/${gameId}`);
+    memberComment.value = response.data.filter(comment => comment.memberId === memberId)
+}
 
 // function show(gameData) { console.log(gameData.displayImages) };
 </script>

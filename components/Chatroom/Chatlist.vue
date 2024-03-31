@@ -1,6 +1,6 @@
 <template>
     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-        aria-controls="offcanvasScrolling">好友列表</button>
+        aria-controls="offcanvasScrolling" @click="getUserFriends();">好友列表</button>
 
     <div class="offcanvas offcanvas-start text-bg-dark" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
         id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -11,9 +11,9 @@
         </div>
         <div class="offcanvas-body">
             <div class="row">
-                <img src="\images\avatar\152.png" height="100px" class="col-4">
+                <img :src="avatarUrl" height="100px" class="col-4">
                 <div class="col-4">
-                    <h5 class="p-1">Bllen Kuo</h5>
+                    <h5 class="p-1">{{ userName }}</h5>
                     <div class="status"> <i class="fa fa-circle online"></i> online </div>
                 </div>
                 <div class="col-2"></div>
@@ -33,7 +33,10 @@
                         <img :src="friend.avatarUrl" alt="avatar">
                         <div class="about">
                             <div class="name">{{ friend.userName }}</div>
-                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                            <div class="status" v-if="friend.connectionId != null"> <i class="fa fa-circle online"></i>
+                                在線
+                            </div>
+                            <div class="status" v-else> <i class="fa fa-circle offline"></i> 離線 </div>
                         </div>
                         <div class="small text-right row">
                             <div class="col-8">最後上線時間</div>
@@ -50,52 +53,37 @@
 </template>
 
 <script setup>
-import connection from '@/data/signalR';
 import { VueCookieNext as $cookie } from 'vue-cookie-next';
 import axios from 'axios';
+import startConnection from '@/data/signalR';
 
-let onlinefriends = ref([]);
 let friends = ref([]);
 const selectedFriend = ref([]);
+let avatarUrl = ref('');
+let userName = ref('');
 
-let id = $cookie.get('accountId');
-let userid = axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
-    .then(response => {
-        memberId = response.data
-    })
-    .catch(error => {
-        console.log(error);
-    });
+const connection = startConnection();
+avatarUrl.value = $cookie.getCookie('avatarUrl');
+userName.value = $cookie.getCookie('name');
+let id;
+id = $cookie.getCookie('Id');
 
-async function getUserFriends(id) {
-    try {
-        const response = await axios.get(`https://localhost:7048/Chat/GetUserFriends?id=${id}`);
-        console.log(response.data);
-        friends.value = response.data;
-    } catch (error) {
-        console.error('Error fetching user friends:', error);
-        return [];
-    }
-}
-async function getOnlineUsers() {
-    axios.get('https://localhost:7048/Chat/GetAllUsersIds').then(res => {
-        onlinefriends.value = res.data;
+async function getUserFriends() {
+    await axios.get(`https://localhost:7048/Chat/GetUserFriends?id=${id}`
+    ).then(res => {
+        friends.value = res.data;
         console.log(res.data);
     });
-};
+}
+
 
 const selectFriend = (friend) => {
-    console.log(friend);
     selectedFriend.value = friend;
+
 };
 provide('selectedFriend', selectedFriend);
 
 
-
-onMounted(() => {
-    getUserFriends(1);
-    getOnlineUsers();
-});
 
 </script>
 

@@ -82,8 +82,7 @@
 
                     <li class="search" v-if="isAccountIdExists">
                       <nuxt-link to="/">
-                        <!-- <img src="/images/icons/shopping-cart.png"> -->
-                        <img src="/images/icons/shopping-cart.png">
+                        <img src="../../public/images/icons/shopping-cart.png">
                       </nuxt-link>
                     </li>
 
@@ -132,38 +131,69 @@
   </header>
 </template>
 
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import menu_data from '@/data/menu-data';
 import menu_data_cookie from '@/data/menu-data-cookie';
-import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
 import connection from '@/data/signalR';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
-let name ="";
+router.beforeEach((to, from) => {
+  checkLogin()
+})
+
+let name = "";
 
 defineProps<{ style_2?: boolean }>();
 
 
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
-let isAccountIdExists: boolean;
+<<<<<<< HEAD
+let isAccountIdExists = ref<boolean>(false);
+=======
+
+
+let isAccountIdExists = ref(false);
+
+function checkLogin() {
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+  if($cookie.getCookie("name")){
+  name =$cookie.getCookie("name");
+ }
+}
+>>>>>>> 2790ce94d215c44cf06241b65126ac0067de89ca
 
 
 
 
-   // 监听 accountId cookie 的变化
-   watch(() => $cookie.getCookie('accountId'), (newVal, oldVal) => {
-    // 如果 cookie 发生变化，更新 isAccountIdExists 的值
-    isAccountIdExists = $cookie.isCookieAvailable('accountId');
-    // 处理其他逻辑
-  });
+  //  // 监听 accountId cookie 的变化
+  //  watch(() => $cookie.getCookie('accountId'), (newVal, oldVal) => {
+  //   // 如果 cookie 发生变化，更新 isAccountIdExists 的值
+  //   isAccountIdExists = $cookie.isCookieAvailable('accountId');
+  //   // 处理其他逻辑
+  // });
 
 // onMounted
 onBeforeMount(() => {
-  isAccountIdExists = $cookie.isCookieAvailable('accountId');
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
   if($cookie.getCookie("name")){
   name =$cookie.getCookie("name");
  }
 
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+  if ($cookie.getCookie("name")) {
+    name = $cookie.getCookie("name");
+  }
 });
+
+function checkLogin() {
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+  console.log(isAccountIdExists)
+  if ($cookie.getCookie("name")) {
+    name = $cookie.getCookie("name");
+
+  }
+}
 
 
 const { isSticky, isStickyVisible } = useSticky();
@@ -222,12 +252,98 @@ const handleSignOut = () => {
     }).catch(err => {
       console.error('SignalR connection failed:', err.toString());
     });
+    console.log('SignalR 斷開連線');
+  }).catch(err => {
+    console.error('SignalR connection failed:', err.toString());
+  });
 
-
+  
   location.reload();
 
 };
 
 
 
+</script> -->
+<script setup>
+import menu_data from '@/data/menu-data';
+import menu_data_cookie from '@/data/menu-data-cookie';
+import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+router.beforeEach((to, from) => {
+  checkLogin()
+})
+
+let name = "";
+
+defineProps({ style_2: Boolean });
+
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
+let isAccountIdExists = ref(false);
+
+// onMounted
+onBeforeMount(() => {
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+  if ($cookie.getCookie("name")) {
+    name = $cookie.getCookie("name");
+  }
+});
+
+function checkLogin() {
+  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+}
+
+const { isSticky, isStickyVisible } = useSticky();
+const route = useRoute();
+const isActive = ref(false);
+const isOffCanvasOpen = ref(false);
+const isMobileOffCanvasOpen = ref(false);
+
+const handleOpenSearch = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isActive.value = !isActive.value;
+};
+
+const handleCloseSearch = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isActive.value = !isActive.value;
+};
+// off canvas
+const handleOpenOffCanvas = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isOffCanvasOpen.value = !isOffCanvasOpen.value;
+};
+
+const handleCloseOffCanvas = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isOffCanvasOpen.value = !isOffCanvasOpen.value;
+};
+// mobile off canvas
+const handleOpenMobileOffCanvas = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isMobileOffCanvasOpen.value = !isMobileOffCanvasOpen.value;
+};
+
+const handleCloseMobileOffCanvas = (audioPath) => {
+  const audio = new Audio(audioPath);
+  audio.play();
+  isMobileOffCanvasOpen.value = !isMobileOffCanvasOpen.value;
+};
+
+const handleSignOut = () => {
+  $cookie.removeCookie('accountId');
+  $cookie.removeCookie('avatarUrl');
+  $cookie.removeCookie('bonus');
+  $cookie.removeCookie('name');
+  $cookie.removeCookie('google');
+  $cookie.removeCookie('Id');
+  location.reload();
+};
 </script>
