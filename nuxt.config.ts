@@ -15,13 +15,10 @@ export default defineNuxtConfig({
       ],
     }
   },
-<<<<<<< HEAD
   // modules: ['@nuxt/ui'],npm
-=======
   modules: [
     '@pinia/nuxt',
   ],
->>>>>>> 2790ce94d215c44cf06241b65126ac0067de89ca
   css: [
     "bootstrap/scss/bootstrap.scss",
     "swiper/css/bundle",
