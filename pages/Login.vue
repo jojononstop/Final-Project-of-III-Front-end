@@ -5,21 +5,21 @@
       <div style="display: grip; justify-content: center;align-items: center;">
         <!-- height: 30vh;width:50vh; -->
         <!-- background-color:#242633  -->
-            <div style="margin-left:8vh;margin-top:3vh;">
+            <div style="margin-left:4vh;margin-top:3vh;">
                 <p style="display: inline-block; ">帳號: </p>
                 <input  v-model="postData.account" id="account"  style="display: inline-block; margin-left: 10px;">
             </div>
-            <div style="margin-left:8vh;margin-top:2vh;">
+            <div style="margin-left:4vh;margin-top:2vh;">
                 <p style="display: inline-block; ">密碼: </p>
                 <input  v-model="postData.password" id="password" type="password"  style="display: inline-block; margin-left: 10px;">
             </div>
             <div style="text-align: center;">
                    <p v-if="message" style="color: red;">{{ message }}</p>
             </div>
-            <button v-on:click="login" style="display: flex; justify-content: center; align-items: center; margin-left: 15vh; margin-top: 2vh; width: 10vh; text-align: center;">登入</button>
+            <button v-on:click="login" style="display: flex; justify-content: center; align-items: center; margin-left: 12vh; margin-top: 2vh; width: 10vh; text-align: center;">登入</button>
             <!-- Google Sign-In 按钮 -->
             <div class="flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8" style="margin-top:6vh;">
-              <div class="flex w-full max-w-md flex-col items-center justify-center" style="margin-left:7vh;margin-top:2vh;">
+              <div class="flex w-full max-w-md flex-col items-center justify-center" style="margin-left:4vh;margin-top:2vh;">
                 <img src="../public/images/login/googleSign.png" alt="" @click="handleGoogleLogin">
           <!-- <button 
           class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" style="margin-left:12vh;margin-top:8vh;background-image:url(../public/images/login/googleSign.png)"
