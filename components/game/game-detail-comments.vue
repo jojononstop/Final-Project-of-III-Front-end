@@ -6,7 +6,6 @@
                     <div class="comments-avatar">
                         <img :src="comment.avatarUrl" alt="img">
 
-
                         <div class="container-wrapper">
                             <div class="container d-flex align-items-center justify-content-center">
                                 <div class="row justify-content-center">
@@ -46,7 +45,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                     </div>
                     <div class="comments-text">
