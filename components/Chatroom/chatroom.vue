@@ -13,7 +13,8 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img :src="friendInfo.value.avatarUrl" alt="avatar">
+                                        <img :src="friendInfo.value.avatarUrl" alt="avatar"
+                                            @load="getMessageHistory(IdFromCookie, friendInfo.value.userId);">
                                     </a>
                                     <div class="chat-about">
                                         <h6 class="m-b-0 text-white">{{ friendInfo.value.userName }}</h6>
@@ -26,14 +27,16 @@
                             <ul class="m-b-0" id="chatroom">
                                 <li v-for="message in messages" class="clearfix">
                                     <div class="clearfix">
-                                        <div :class="{ 'message-data': true, 'text-right': message.sender_id === 1 }">
+                                        <div
+                                            :class="{ 'message-data': true, 'text-right': message.sender_id === IdFromCookie }">
                                             <span class="message-data-time text-white"
-                                                :class="{ 'float-right': message.sender_id === 1 }">{{ message.sendTime
-                                                }}</span>
+                                                :class="{ 'float-right': message.sender_id === IdFromCookie }">{{
+            message.sendTime
+        }}</span>
                                             <i class="fa fa-check"></i>
                                         </div>
                                         <div
-                                            :class="{ 'message': true, 'other-message': message.sender_id === 1, 'my-message': message.sender_id != 1, 'float-right': message.sender_id === 1 }">
+                                            :class="{ 'message': true, 'other-message': message.sender_id === IdFromCookie, 'my-message': message.sender_id != IdFromCookie, 'float-right': message.sender_id === IdFromCookie }">
                                             {{ message.message }}
                                         </div>
                                     </div>
@@ -45,6 +48,7 @@
                                 <input type="text" v-model="newMessage" placeholder="請輸入訊息....."
                                     @keydown.enter="sendMessage">
                                 <button @click="sendMessage">send</button>
+                                <button @click="test">test</button>
                             </div>
                         </div>
                     </div>
@@ -59,20 +63,28 @@
 
 <script setup>
 import connection from '@/data/signalR';
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
 import axios from 'axios';
 
 // 定义一个响应式变量来存储新消息的内容
 const newMessage = ref('');
-const friendInfo = ref('');
-
-const selectedFriend = inject('selectedFriend');
+let friendInfo = ref('');
+let selectedFriend = ref(null);
+selectedFriend = inject('selectedFriend');
 friendInfo.value = selectedFriend;
+
+let IdFromCookie = ref('');
+IdFromCookie.value = parseInt($cookie.getCookie('Id'));
+
 
 // 模拟聊天消息数据
 let messages = ref([]);
 
 
 async function getMessageHistory(x, y) {
+    x = parseInt(x);
+    y = parseInt(y);
+    console.log(x, y);
     try {
         let response = await axios.get(`https://localhost:7048/Chat/GetMessageHistory?memberId=${x}&friendId=${y}`);
         messages.value = response.data;
@@ -81,7 +93,6 @@ async function getMessageHistory(x, y) {
         console.error('An error occurred while fetching message history:', error);
     }
 }
-
 
 // 定义 scrollToBottom 方法
 function scrollToBottom() {
@@ -107,9 +118,13 @@ const sendMessage = () => {
     connection.invoke('SendMessageToFriend', 1, 2, friendInfo.value.connectionId, messageContent);
 }
 
+
+
+
+
 onMounted(() => {
-    getMessageHistory(1, 2);
     scrollToBottom();
+
 });
 
 </script>

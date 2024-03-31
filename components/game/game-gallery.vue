@@ -25,33 +25,6 @@
                                     </div>
                                 </div>
                             </swiper-slide>
-                            <!-- <swiper-slide>
-                                <div class="gallery__item">
-                                    <div class="gallery__thumb">
-                                        <a data-cursor="-theme" data-cursor-text="View <br> Image"
-                                            class="popup-image cursor-pointer" @click.prevent="handleShowImage(index)"
-                                            @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-                                            <video controls class="swiper-item">
-                                                <source
-                                                    :src="`/images/games/video/${gameData.developerId}/${gameData.id}/${gameData.video}`"
-                                                    type="video/webm">
-                                            </video>
-                                        </a>
-                                    </div>
-                                </div>
-                            </swiper-slide>
-                            <swiper-slide v-for="(item, index) in gameData.displayImages" :key="item.id">
-                                <div class="gallery__item">
-                                    <div class="gallery__thumb">
-                                        <a data-cursor="-theme" data-cursor-text="View <br> Image"
-                                            class="popup-image cursor-pointer" @click.prevent="handleShowImage(index)"
-                                            @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-                                            <img :src="`/images/games/image/${gameData.developerId}/${gameData.id}/${item}`"
-                                                alt="img" class="swiper-item" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </swiper-slide> -->
                             <div class="swiper-scrollbar"></div>
                         </swiper>
                     </div>
@@ -80,14 +53,14 @@ onMounted(() => {
     // 添加视频
     mediaItems.value.push({
         type: 'video',
-        src: `/images/games/video/${props.gameData.developerId}/${props.gameData.id}/${props.gameData.video}`,
+        src: `/images/games/video/${props.gameData.developerId}/${props.gameData.id}/${props.gameData.video}.webm`,
     });
 
     // 添加图片
     props.gameData.displayImages.forEach(image => {
         mediaItems.value.push({
             type: 'image',
-            src: `/images/games/image/${props.gameData.developerId}/${props.gameData.id}/${image}`,
+            src: `/images/games/image/${props.gameData.developerId}/${props.gameData.id}/${image}.jpg`,
         });
     });
 });

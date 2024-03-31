@@ -59,16 +59,17 @@ type IMenuDataType = {
       title:'測試',
       link:'/chattest',
     },
-    // {
-    //   id:6,
-    //   title:'Game',
-    //   link:'/game',
-    // },
-    // {
-    //   id:7,
-    //   title:'Bonus',
-    //   link:'/bonus',
-    // },
+    {
+      id:7,
+      title:'Game',
+      link:'/game',
+    },
+    {
+      id:8,
+      title:'測試防禦',
+      link:'/Login',
+    },
+  
 
   ]
   
