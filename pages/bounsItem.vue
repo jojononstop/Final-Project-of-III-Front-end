@@ -4,7 +4,10 @@
     <breadcrumb-three title="BONUS" subtitle="BONUS LIST"> </breadcrumb-three>
     <!-- breadcrumb area end -->
     <!-- item -->
-    <bonusItems-area ></bonusItems-area>
+    <bonusItems-area v-if="dbData_bonusProducts && dbData_bonusProductTypes"
+    :bonusProductsInArea="dbData_bonusProducts" 
+    :bonusProductTypesInArea="dbData_bonusProductTypes" 
+    @data-from-bonus="handleDataFromBonus"></bonusItems-area>
   </div>
 </template>
 
@@ -24,7 +27,7 @@ onMounted(async () => {
     // 把接到的請求資料丟到bonusProducts
     const responseAllBonusProduct = await axios.get("https://localhost:7048/api/BonusProducts");
     dbData_bonusProducts.value = responseAllBonusProduct.data;
-
+    
     //Get All BonusType
     // 把請求的資料丟到bonusProductTypes
     const responseAllTypes = await axios.get("https://localhost:7048/api/BonusProducts/Type");

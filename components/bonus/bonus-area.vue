@@ -1,5 +1,6 @@
 <style lang="scss">
 @import "@/assets/css/my-style.css";
+
 </style>
 
 <template>
@@ -11,6 +12,7 @@
           <bonus-sidebar @search="handleSearch" />
         </div>
         <div class="col-xl-9 col-lg-8 col-md-11">
+        <div>{{ bonus }}</div>
           <div>
             <h4>投影片部分</h4>
             <div
@@ -88,6 +90,10 @@
 <script setup>
 // import product_data from "@/data/product-data";
 import { defineProps, defineEmits, onMounted } from "vue";
+//cookie
+import { VueCookieNext as $cookie } from 'vue-cookie-next'
+let id = $cookie.getCookie("Id");
+let bonus = $cookie.getCookie("bonus");
 
 const props = defineProps({
   bonusProductsInArea: Object,
