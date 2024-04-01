@@ -88,7 +88,7 @@
 
                     <!-- 會員名稱 -->
                     <li class="search" v-if="isAccountIdExists">
-                      <nuxt-link to="/">
+                      <nuxt-link :to="`/Id=${id}/profiles`">
                         {{ name }}
                       </nuxt-link>
                     </li>
@@ -274,10 +274,13 @@ const router = useRouter();
 
 router.beforeEach((to, from) => {
   checkLogin()
+  if ($cookie.getCookie("name")) {
+    name = $cookie.getCookie("name");
+  }
 })
 
 let name = "";
-
+let id= ref("");
 defineProps({ style_2: Boolean });
 
 import { VueCookieNext as $cookie } from 'vue-cookie-next';
@@ -286,13 +289,23 @@ let isAccountIdExists = ref(false);
 // onMounted
 onBeforeMount(() => {
   isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
-  if ($cookie.getCookie("name")) {
+  if ($cookie.isCookieAvailable("name")) {
     name = $cookie.getCookie("name");
+  }
+  if ($cookie.isCookieAvailable("Id")) {
+    id.value = $cookie.getCookie('Id');
+    // id.value = parseInt($cookie.getCookie('Id'), 10);
+    console.log(id.value)
   }
 });
 
 function checkLogin() {
   isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+  if ($cookie.isCookieAvailable("Id")) {
+    id.value = $cookie.getCookie('Id');
+    // id.value = parseInt($cookie.getCookie('Id'), 10);
+    console.log(id.value)
+  }
 }
 
 const { isSticky, isStickyVisible } = useSticky();

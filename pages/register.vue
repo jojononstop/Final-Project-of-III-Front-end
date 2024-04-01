@@ -1,37 +1,38 @@
 <template>
   <section class="slider__area slider__bg" style="background-image: url(/images/slider/slider_bg.jpg);height:750px" data-background="/images/slider/slider_bg.jpg" >
     <div style="display: flex;justify-content: center;align-items: center;height: 50vh; ">
-        <div style="display: grip; justify-content: center;place-items: center;">
-            <div style="margin-top:2vh;">
-                <p style="display: inline-block; ">帳號</p><br>
-                <input  v-model="postData.account" id="account"  style="display: inline-block; "@blur="focusoutaccount();validatebutton()">
+        <div style="display: grid; justify-content: center;place-items: center; background-color:#171d24; width:25%;border: solid; border-color: #0EFC8C; border-radius: 5px 5px 5px 5px;">
+            <div style="margin-top:2vh;margin-left:32px;">
+                <p style="display: inline-block;color:white ">帳號:</p>
+                <input  v-model="postData.account" class="textinput" id="account"  style="display: inline-block; "@blur="focusoutaccount();" autocomplete="off">
                 <p v-if="isAccountOK" class="dangertext">帳號已存在</p>
                 <p v-if="isAccountEmpty" class="dangertext">帳號不得為空</p>
             </div>
-            <div style="margin-top:2vh;">
-                <p style="display: inline-block; ">暱稱</p><br>
-                <input v-model="postData.name"  id="name"  style="display: inline-block; "@blur="focusoutname();validatebutton()">
+            <div style="margin-top:10px;margin-left:32px; ">
+                <p style="display: inline-block;color:white ">暱稱:</p>
+                <input v-model="postData.name" class="textinput"  id="name"  style="display: inline-block; "@blur="focusoutname();validatebutton()" autocomplete="off">
                 <p v-if="isNicknameOK" class="dangertext">暱稱已存在</p>
                 <p v-if="isNicknameEmpty" class="dangertext">暱稱不得為空</p>
             </div>
-            <div style="margin-top:2vh;">
-                <p style="display: inline-block; ">密碼</p><br>
-                <input v-model="postData.password"  id="password" type="password"  style="display: inline-block; "@blur="focusoutPassword();validatebutton()">
-                <p v-if="isPasswordOK" class="dangerrepasswordtext">請確認密碼格式正確:</p>
-                <p v-if="isPasswordOK" class="dangerrepasswordtext">需有大小寫英文和數字 長度介於6-12間</p>
+            <div style="margin-top:10px;margin-left:32px; width:280px">
+                <p style="display: inline-block;color:white;margin-left:18px">密碼:</p>
+                <input v-model="postData.password" class="textinput"  id="password" type="password"  style="display: inline-block; "@blur="focusoutPassword();validatebutton()" autocomplete="off">
+                <p v-if="isPasswordOK" class="dangertext">請確認密碼格式正確:</p>
+                <p v-if="isPasswordOK" class="dangertext">需有大小寫英文和數字 長度介於6-12間</p>
+                <!-- dangerrepasswordtext -->
             </div>
-            <div style="margin-top:2vh;">
-                <p style="display: inline-block; ">重複密碼</p><br>
+            <div style="margin-top:10px;">
+                <p style="display: inline-block;color:white ">重複密碼:</p>
                 <!-- @focusout="" -->
-                <input v-model="rePassword"  id="rePassword" type="password"  style="display: inline-block; "@blur="focusoutRePassword();validatebutton()">
+                <input v-model="rePassword" class="textinput"  id="rePassword" type="password"  style="display: inline-block; "@blur="focusoutRePassword();validatebutton()" autocomplete="off">
                 <p v-if="isRePasswordOK" class="dangertext">密碼需一致</p>
             </div>
-            <div style="margin-top:2vh;">
-                <p style="display: inline-block; ">郵箱</p><br>
-                <input v-model="postData.email"  id="email" type="email"  style="display: inline-block; "@blur="validateEmail();validatebutton()">
+            <div style="margin-top:10px;margin-left:32px;">
+                <p style="display: inline-block;color:white ">郵箱:</p>
+                <input v-model="postData.email" class="textinput"  id="email" type="email"  style="display: inline-block; "@blur="validateEmail();validatebutton()" autocomplete="off">
                 <p v-if="isEmailOK" class="dangertext">郵箱格式不正確</p>
             </div>
-            <div style="margin-left: 33%;margin-top:3vh;">
+            <div style="margin-top:10px;margin-bottom: 10px;">
                 <button  @click="register" :disabled="isButtonDisabled" style="justify-content: center; ">註冊帳號</button>
             </div>
         </div>
@@ -85,7 +86,7 @@ const register = () => {
     if(response.data =="註冊成功"){
 
       console.log(response.data);    
-
+      router.push("/registersuccess");
     }
     else{
       console.log(response.data);
@@ -105,7 +106,8 @@ const focusoutaccount = () => {
 
   if(postData.value.account=="")
   {
-    isAccountEmpty.value = !isAccountEmpty.value;
+    isAccountEmpty.value = true;
+    validatebutton();
     console.log("112")
   }
   else{
@@ -114,15 +116,19 @@ const focusoutaccount = () => {
           state =response.data
           if(state==false)
           {
-             isAccountOK.value = !isAccountOK.value;
-
+             isAccountOK.value = true;
+             console.log(isAccountOK.value);
           }
+          validatebutton();
             })
          .catch(error => {
             console.log(error);
           });
+     }
   }
-}
+
+
+
 
 //暱稱驗證
 const focusoutname = () => {
@@ -209,12 +215,20 @@ const validatebutton =() => {
 .dangertext {
   color: red;
   text-align: center;
-  font-size: 14px;
-  margin-right: 10px;
+  /* font-size: 14px; */
+  /* margin-right: 10px; */
+  margin:0px;
 }
 .dangerrepasswordtext {
   color: red;
   margin-top: 0;
-  font-size: 14px;
+  /* font-size: 14px; */
+}
+.textinput{
+  background: #54575a;
+  border: 1px solid #26292c;
+  border-radius: 5px 5px 5px 5px;
+  color:white;
+  overflow: hidden; /* 隱藏超出範圍的內容 */
 }
 </style>
