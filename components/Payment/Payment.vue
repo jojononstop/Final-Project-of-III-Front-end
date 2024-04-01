@@ -12,40 +12,51 @@ import axios from 'axios';
 import { VueCookieNext as $cookie } from 'vue-cookie-next';
 
 async function show() {
+  let test = ref(null);
   let id = $cookie.getCookie('Id')
-
+  
   let cartItems = ref(null);
-
-  const response = axios.get(`https://localhost:7048/api/CartItems/${id}`)
+  let testData = {};
+  let cartData = {}
+  
+  const response = await axios.get(`https://localhost:7048/api/CartItems/${id}`)
+ 
   cartItems.value = response.data;
-  console.log(response.data)
-  cartItems.value.forEach(async (item) => {
+  testData.amount = 0;
+  testData.packages = [];
+  testData.packages.amount = 0;
+    testData.packages.products = [];
+  for (let item of cartItems.value) {
     // 从item中获取所需的信息
-    const itemId = item.gameId;
+    let itemId = item.gameId;
+ 
     // 发送另一个axios请求
-    const gameResponse = await axios.get(`https://localhost:7048/api/Game/${itemId}`);
+    let gameResponse = await axios.get(`https://localhost:7048/api/Games/${itemId}`);
     // 获取游戏数据
-    const game = gameResponse.data;
+    let game = gameResponse.data;
+    
+  
     // 将游戏数据添加到gameData对象中
-    gameData[itemId] = game;
+    
 
     testData.amount += game.discountPrice;
-
-    testData.packages = [];
+    
     testData.packages.amount += game.discountPrice;
     testData.packages.id = 1;
-    testData.packages.name = test;
-    testData.packages.products = [];
+    testData.packages.name = "test";
 
     let cartGame = {
-      "name": "game.name",
+      "name": `${game.name}`,
       "quantity": 1,
       "price": game.discountPrice
     }
-    test.packages.products.push(cartGame)
-  })
 
-  let testData = {};
+    console.log(cartGame)
+    testData.packages.products.push(cartGame)
+
+  }
+
+  
   testData.currency = 'TWD';
   testData.orderId = '1';
   testData.redirectUrls = {
