@@ -12,7 +12,7 @@
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item">
-                    <nuxt-link to="/">Home</nuxt-link>
+                    <nuxt-link to="/">返回首頁</nuxt-link>
                   </li>
                   <li class="breadcrumb-item active" aria-current="page">
                     {{ subtitle }}

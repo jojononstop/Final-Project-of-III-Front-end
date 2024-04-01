@@ -23,22 +23,23 @@ const dbData_bonusProductTypes = ref(null);
 
 onMounted(async () => {
   try {
-    //Get All BonusProduct
+    // Get All BonusProduct
     // 把接到的請求資料丟到bonusProducts
     const responseAllBonusProduct = await axios.get("https://localhost:7048/api/BonusProducts");
     dbData_bonusProducts.value = responseAllBonusProduct.data;
 
-    //Get All BonusType
+    // Get All BonusType
     // 把請求的資料丟到bonusProductTypes
     const responseAllTypes = await axios.get("https://localhost:7048/api/BonusProducts/Type");
     dbData_bonusProductTypes.value = responseAllTypes.data;
-
-    // console.log(dbData_bonusProducts.value,dbData_bonusProductTypes.value)
     
-    // // 把接到的請求資料丟到bonusProducts
+    // // Get BonusProduct By TypeId
     // const responseTypes = await axios.get(`https://localhost:7048/api/BonusProducts/Type/${producttypeid}`);
     // bonusProducts.value = responseTypes.data;
-  } catch (error) {
+  } 
+  catch (error)
+  {
+    alert("未正確找到商品");
     console.error("未正確找到紅利商品", error);
   }
 });
@@ -48,13 +49,13 @@ async function handleDataFromBonus(keyword)
   {
     try
     {
-      //
       // 把接到的請求資料丟到bonusProducts
       const response = await axios.get("https://localhost:7048/api/BonusProducts");
       dbData_bonusProducts.value = responseAllBonusProduct.data;
     }
     catch(error)
     {
+      alert("未正確找到商品");
       console.error("未正確找到紅利商品", error);
     }
   }
@@ -62,12 +63,13 @@ async function handleDataFromBonus(keyword)
   {
     try
     {
-      const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}`);
       // 把接到的請求資料丟到bonusProducts
+      const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}`);
       dbData_bonusProducts.value = responseSearchName.data;
     }
     catch(error)
     {
+      alert("未正確找到商品");
       console.error("未正確找到紅利商品", error);
     }
   }
