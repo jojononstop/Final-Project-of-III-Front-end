@@ -13,11 +13,7 @@ const menu_data:IMenuDataType[] = [
   {
     id:1,
     title:'首頁',
-    link:'#',
-    sub_menu:[
-      {title:'Home One',link:'/'},
-      {title:'Home Two',link:'/home-2'},
-    ]
+    link:'/',
   },
   {
     id:2,

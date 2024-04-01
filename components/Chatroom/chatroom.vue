@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="chatModal" @shown="scrollToBottom">
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="chatModal" @shown="scrollToBottom();">
         <div class="modal-dialog ">
             <div class="modal-content bg-success">
                 <div class="modal-header">
@@ -93,6 +93,9 @@ async function getMessageHistory(x, y) {
     } catch (error) {
         console.error('An error occurred while fetching message history:', error);
     }
+    setTimeout(() => {
+        scrollToBottom();
+    });
 }
 
 // 定义 scrollToBottom 方法
@@ -111,8 +114,8 @@ connection.on('sendMessageTo', (message) => {
     });
 });
 
-connection.on('sendCaller', async (message) => {
-    await amessages.value.push(message);
+connection.on('sendCaller', (message) => {
+    messages.value.push(message);
     console.log(message);
 
     setTimeout(() => {
@@ -132,11 +135,10 @@ const sendMessage = () => {
 
 
 
-
-
 onMounted(() => {
-    scrollToBottom();
-
+    setTimeout(() => {
+        scrollToBottom();
+    });
 });
 
 </script>

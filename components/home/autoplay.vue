@@ -91,7 +91,51 @@ const slider_setting = {
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Scrollbar } from "swiper/modules";
-import gallery_data from "@/data/gallery-data";
+
+const gallery_data = [
+    {
+        id: 1,
+        img: '/images/Home/Background/background4.jpg',
+        title: '活動 - 1',
+        rate: '50%'
+    },
+    {
+        id: 2,
+        img: '/images/Home/Background/background5.jpg',
+        title: '活動 - 2',
+        rate: '65%'
+    },
+    {
+        id: 3,
+        img: '/images/Home/Background/background6.jpg',
+        title: '活動 - 3',
+        rate: '60%'
+    },
+    {
+        id: 4,
+        img: '/images/Home/Background/background7.jpg',
+        title: '活動 - 4',
+        rate: '70%'
+    },
+    {
+        id: 5,
+        img: '/images/Home/Background/background8.jpg',
+        title: '活動 - 5',
+        rate: '85%'
+    },
+    {
+        id: 5,
+        img: '/images/Home/Background/background9.jpg',
+        title: '活動 - 6',
+        rate: '85%'
+    },
+]
+
+
+
+
+
+
 const mouse = useBigMouse();
 
 const handleMouseEnter = () => {
