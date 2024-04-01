@@ -28,7 +28,7 @@
             </div>
             <div style="margin-top:2vh;">
                 <p style="display: inline-block; ">郵箱</p><br>
-                <input v-model="postData.email"  id="email" type="email"  style="display: inline-block; "@blur="">
+                <input v-model="postData.email"  id="email" type="email"  style="display: inline-block; "@blur="validateEmail();validatebutton()">
                 <p v-if="isEmailOK" class="dangertext">郵箱格式不正確</p>
             </div>
             <div style="margin-left: 33%;margin-top:3vh;">
@@ -40,6 +40,12 @@
 </template>
 
 <script setup lang="ts">
+
+definePageMeta({
+  middleware: 'auth',
+});
+
+
   import { useRouter } from 'vue-router';
   import axios from 'axios';
   import { VueCookieNext as $cookie } from 'vue-cookie-next'
@@ -145,15 +151,15 @@ else{
         });
  }
 }
-
+// 正则表达式用于验证密码格式
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,12}$/;
 //驗證密碼
 const focusoutPassword = () => {
     const password = postData.value.password;
 
     isPasswordOK.value = false;
 
-    // 正则表达式用于验证密码格式
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,12}$/;
+
 
     // 检查密码是否符合格式
     if (!passwordRegex.test(password)) {
@@ -171,20 +177,19 @@ const focusoutRePassword = () => {
       isRePasswordOK.value =false
     }
 }
-
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 //驗證郵箱
-const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+const validateEmail = () => {
+  isEmailOK.value = false;
+  // return emailRegex.test(email);
+  const email = postData.value.email;
+  if (!emailRegex.test(email)) {
+  isEmailOK.value=!isEmailOK.value
+}
 };
 
 
-const email = 'example@example.com';
-if (validateEmail(email)) {
-  console.log('Email 格式正确');
-} else {
-  console.log('Email 格式不正确');
-}
+
 
 //驗證按鈕
 const validatebutton =() => {

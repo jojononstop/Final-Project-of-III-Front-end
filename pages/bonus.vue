@@ -4,41 +4,72 @@
     <breadcrumb-three title="BONUS" subtitle="BONUS LIST"> </breadcrumb-three>
     <!-- breadcrumb area end -->
     <!-- item -->
-    <bonus-area :bonusProducts="bonusProducts" :bonusProductTypes="bonusProductTypes" @data-from-bonus="handleDataFromBonus"></bonus-area>
-    
+    <bonus-area v-if="dbData_bonusProducts && dbData_bonusProductTypes"
+    :bonusProductsInArea="dbData_bonusProducts" 
+    :bonusProductTypesInArea="dbData_bonusProductTypes" 
+    @data-from-bonus="handleDataFromBonus"></bonus-area>
   </div>
 </template>
 
 <script setup >
 useSeoMeta({ title: "BONUS - MYKD" });
-import { ref ,onMounted, defineEmits } from "vue";
+import { ref ,onMounted } from "vue";
+
 // 透過axios GET & POST請求
 import axios from "axios";
 
-const bonusProducts = ref(null);
-const bonusProductTypes = ref(null);
-const bonusSearchName =ref(null);
+const dbData_bonusProducts = ref(null);
+const dbData_bonusProductTypes = ref(null);
 
 onMounted(async () => {
   try {
-    const response = await axios.get("https://localhost:7048/api/BonusProducts");
+    //Get All BonusProduct
     // 把接到的請求資料丟到bonusProducts
-    bonusProducts.value = response.data;
+    const responseAllBonusProduct = await axios.get("https://localhost:7048/api/BonusProducts");
+    dbData_bonusProducts.value = responseAllBonusProduct.data;
 
+    //Get All BonusType
+    // 把請求的資料丟到bonusProductTypes
+    const responseAllTypes = await axios.get("https://localhost:7048/api/BonusProducts/Type");
+    dbData_bonusProductTypes.value = responseAllTypes.data;
+
+    // console.log(dbData_bonusProducts.value,dbData_bonusProductTypes.value)
     
-    const responseTypes = await axios.get(`https://localhost:7048/api/BonusProducts/Type/${producttypeid}`);
-    // 把接到的請求資料丟到bonusProductTypes
-    bonusProductTypes.value = responseTypes.data;
-
-    const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${productName}`);
-    // 把接到的請求資料丟到bonusSearchName
-    bonusSearchName.value = responseSearchName.data;
-
+    // // 把接到的請求資料丟到bonusProducts
+    // const responseTypes = await axios.get(`https://localhost:7048/api/BonusProducts/Type/${producttypeid}`);
+    // bonusProducts.value = responseTypes.data;
   } catch (error) {
     console.error("未正確找到紅利商品", error);
   }
 });
-function handleDataFromBonus(keyword){
-  console.log("Data from bonus-area:",keyword)
+async function handleDataFromBonus(keyword)
+{
+  if(keyword === '')
+  {
+    try
+    {
+      //
+      // 把接到的請求資料丟到bonusProducts
+      const response = await axios.get("https://localhost:7048/api/BonusProducts");
+      dbData_bonusProducts.value = responseAllBonusProduct.data;
+    }
+    catch(error)
+    {
+      console.error("未正確找到紅利商品", error);
+    }
+  }
+  else
+  {
+    try
+    {
+      const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}`);
+      // 把接到的請求資料丟到bonusProducts
+      dbData_bonusProducts.value = responseSearchName.data;
+    }
+    catch(error)
+    {
+      console.error("未正確找到紅利商品", error);
+    }
+  }
 }
 </script>

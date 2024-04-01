@@ -49,6 +49,26 @@
             margin: -1px;
             padding: 20px;
         }
+        &-myinner {
+            background: #171d24;
+            border: 1px solid #26292c;
+            @include border-radius(0 0 5px 5px);
+            margin: 0; /* 預設寬度 */
+            overflow: hidden; /* 隱藏超出範圍的內容 */
+            max-height: 1; /* 初始時設置高度為 0，即收起來 */
+            transition: max-height 0.3s ease; /* 添加過渡效果 */
+
+            .accordion-body {
+                padding: 20px; /* 添加 padding */
+                box-sizing: content-box; /* 確保 padding 不會影響寬度 */
+            }
+        } 
+        &-dietaills{
+            background: #171d24;
+            border: 1px solid #26292c;
+            @include border-radius(0 0 5px 5px);
+            margin: 5px;
+        }
     }
     &__search {
         @include flexbox();
