@@ -50,11 +50,11 @@
                     <div class="comments-text">
                         <div class="avatar-name">
                             <h6 class="name">{{ comment.name }}<a href="" class="comment-reply-link"
-                                    @click.prevent="toggleVisibility(comment.id)"><i class="fas fa-reply"></i> 查看回復</a>
+                                    @click.prevent="toggleVisibility(comment.id)"><i class="fas fa-reply"></i>查看回復</a>
                             </h6>
                             <span class="date">{{ formatDate(comment.date) }}</span>
                         </div>
-                        <p>{{ comment.comment1 }}</p>
+                        <p><span>{{ comment.comment1 }} </span></p>
                     </div>
                 </div>
                 <ul v-show="showComments[comment.id]" v-if="comment.attachedComment.length > 0" class="children">
@@ -78,18 +78,17 @@
                         <div class="comments-box">
                             <div class="comments-text">
                                 <div class="avatar-name">
-                                    <h6 class="name">reply the comment </h6>
+                                    <h6 class="name">回覆評論</h6>
                                 </div>
                                 <form class="comment-form" @submit.prevent="submitAttachedComment(comment.id)"
                                     :validation-schema="schema">
                                     <div class="form-grp">
                                         <err-message :msg="errors.comment" />
                                         <Field name="comment" v-slot="{ field }">
-                                            <textarea v-bind="field" name="comment"
-                                                placeholder="Reply The Comment *"></textarea>
+                                            <textarea v-bind="field" name="comment" placeholder="回覆評論"></textarea>
                                         </Field>
                                     </div>
-                                    <button type="submit">Post Reply</button>
+                                    <button type="submit">送出</button>
                                 </form>
                             </div>
                         </div>

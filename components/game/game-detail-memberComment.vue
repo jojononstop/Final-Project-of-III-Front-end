@@ -59,7 +59,9 @@
                             </h6>
                             <span class="date">{{ formatDate(comment.date) }}</span>
                         </div>
-                        <p>{{ comment.comment1 }}</p>
+                        <p>
+                            {{ comment.comment1 }}
+                        </p>
                     </div>
                 </div>
                 <ul v-show="showComments[comment.id]" v-if="comment.attachedComment.length > 0" class="children">
@@ -128,6 +130,7 @@ axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
 let comments = ref([]);
 
 
+
 async function fetchComments(gameId) {
     try {
         const response = await axios.get(`https://localhost:7048/api/Comments/${gameId}`);
@@ -135,6 +138,7 @@ async function fetchComments(gameId) {
         for (const comment of comments.value) {
             comment.avatarUrl = await getMemberAvatar(comment.memberId);
             comment.name = await getMemberName(comment.memberId)
+
             for (const attachedComment of comment.attachedComment) {
                 attachedComment.avatarUrl = await getMemberAvatar(attachedComment.memberId);
                 attachedComment.name = await getMemberName(attachedComment.memberId)
