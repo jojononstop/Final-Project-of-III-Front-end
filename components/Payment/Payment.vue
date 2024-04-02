@@ -11,7 +11,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { VueCookieNext as $cookie } from 'vue-cookie-next';
 
-async function show() {
+async function getLinePayData() {
   let test = ref(null);
   let id = $cookie.getCookie('Id')
   
@@ -27,18 +27,14 @@ async function show() {
   testData.packages.amount = 0;
     testData.packages.products = [];
   for (let item of cartItems.value) {
-    // 从item中获取所需的信息
+
     let itemId = item.gameId;
  
     // 发送另一个axios请求
     let gameResponse = await axios.get(`https://localhost:7048/api/Games/${itemId}`);
-    // 获取游戏数据
+
     let game = gameResponse.data;
     
-  
-    // 将游戏数据添加到gameData对象中
-    
-
     testData.amount += game.discountPrice;
     
     testData.packages.amount += game.discountPrice;
@@ -51,11 +47,8 @@ async function show() {
       "price": game.discountPrice
     }
 
-    console.log(cartGame)
     testData.packages.products.push(cartGame)
-
   }
-
   
   testData.currency = 'TWD';
   testData.orderId = '1';
@@ -63,36 +56,13 @@ async function show() {
     "confirmUrl": "https://localhost:7048/api/LinePay/confirm",
     "cancelUrl": "https://localhost:7048/api/LinePay/cancel"
   }
-
-  console.log(testData)
+  return testData
 }
 
 
 const postLinePay = async () => {
   try {
-    const data = {
-      "amount": 1,
-      "currency": "TWD",
-      "orderId": "1",
-      "packages": [
-        {
-          "id": "1",
-          "amount": 1,
-          "name": "POKEMON",
-          "products": [
-            {
-              "name": "POKEMON",
-              "quantity": 1,
-              "price": 1
-            }
-          ]
-        }
-      ],
-      "redirectUrls": {
-        "confirmUrl": "https://localhost:7048/api/LinePay/confirm",
-        "cancelUrl": "https://localhost:7048/api/LinePay/cancel"
-      }
-    };
+    const data = getLinePayData();
 
     const res = await axios.post('https://localhost:7048/api/LinePay/Create', data);
     cartItem.value = res.data;
@@ -142,7 +112,7 @@ const postEcPay = async () => {
       console.error("無法找到 paymentUrl 屬性或 paymentUrl.web 屬性。");
     }
   } catch (error) {
-    console.error('調用 LINE PAY API 時出錯：', error);
+    console.error('調用 ECPAY API 時出錯：', error);
   }
 };
 </script>
