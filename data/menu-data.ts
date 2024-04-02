@@ -38,7 +38,7 @@ const menu_data:IMenuDataType[] = [
     title:'點數商店',
     link:'/bonus',
     sub_menu:[
-      {title:'bonus',link:'/bonus'},
+      {title:'點數商店清單',link:'/bonus'},
       // {title:'bonusItem',link:'/bounsItem'},
     ]
   },

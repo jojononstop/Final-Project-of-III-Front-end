@@ -1,6 +1,30 @@
 <style lang="scss">
 @import "@/assets/css/my-style.css";
+    .my-outer-container {
+        position: relative;
+        width: 250px; 
+        height: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .my-image {
+        position: absolute;
+        top: 50%; /* 依附於父物件的垂直中心點 */
+        left: 50%; /* 依附於父物件的水平中心點 */
+        transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+        width: 93%; 
+        height: auto;
+    }
+    .my-Frameimage {
+        position: absolute;
+        top: 50%; /* 依附於父物件的垂直中心點 */
+        left: 50%; /* 依附於父物件的水平中心點 */
+        transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+        width: 100%;
+        height: auto;
+    }
 </style>
 
 <template>
@@ -9,20 +33,32 @@
       <div class="row justify-content-center">
         <div class="col-xl-3 col-lg-4 col-md-11 order-2 order-lg-0">
           <!-- 搜尋功能列 -->
+          <div class="my-outer-container">
+            <!-- <img src="/public/images/Bonus/2/CatImage.gif" alt="Image 1" class="my-image">
+            <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage"> -->
+            <img :src="`${memberAvatarURL}`" alt="Image 1" class="my-image">
+            <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage">
+          </div>
           <bonus-sidebar @search="handleSearch" />
         </div>
         <div class="col-xl-9 col-lg-8 col-md-11">
-        <div>{{ bonus }}</div>
           <div>
-            <h4>投影片部分</h4>
+            <h5>
+            您的點數餘額：<img src="/public//images/gold-coin-icon.png" style="width: 30px; height: 30px;align-items: center;"/>{{ bonus }}
+            </h5>
+          </div>
+          <div>
+            <!-- <h4>投影片部分</h4>
             <div
               id="carouselExampleControls"
               class="carousel slide"
               data-bs-ride="false"
             >
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <h4>第一頁</h4>
+              <div class="my-carousel-inner">
+                <div class="my-carousel-item active">
+                  <h4>
+                  第一頁
+                  </h4>
                 </div>
                 <div class="carousel-item">
                   <h4>第二頁</h4>
@@ -52,7 +88,7 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
-            </div>
+            </div> -->
           </div>
           <!--物品清單-->
           <div
@@ -67,22 +103,13 @@
               />
             </div>
           </div>
-          <!-- 換頁按鈕 -->
-          <div class="pagination__wrap">
-            <ul class="list-wrap d-flex flex-wrap justify-content-center">
-              <li><nuxt-link to="#" class="page-numbers">01</nuxt-link></li>
-              <li><span class="page-numbers current">02</span></li>
-              <li><nuxt-link to="#" class="page-numbers">03</nuxt-link></li>
-              <li><nuxt-link to="#" class="page-numbers">....</nuxt-link></li>
-              <li>
-                <nuxt-link to="#" class="next page-numbers">
-                  <i class="fas fa-angle-double-right"></i>
-                </nuxt-link>
-              </li>
-            </ul>
+          <div style="position: absolute;left: 50%;">
+            <h4>{{ errormessageInArea }}</h4>
           </div>
         </div>
       </div>
+    </div>
+    <div>
     </div>
   </section>
 </template>
@@ -92,23 +119,25 @@
 import { defineProps, defineEmits, onMounted } from "vue";
 //cookie
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
+import { string } from "yup";
 let id = $cookie.getCookie("Id");
 let bonus = $cookie.getCookie("bonus");
+let memberAvatarURL = $cookie.getCookie("avatarUrl");
 
 const props = defineProps({
   bonusProductsInArea: Object,
   bonusProductTypesInArea: Object,
+  errormessageInArea: String
 });
 
 onMounted(() => {
-  // console.log(props.bonusProductsInArea, props.bonusProductTypesInArea);
+  console.log($cookie);
 });
 
 
 const emits = defineEmits(["data-from-bonus"]);
 
 function handleSearch(keyword) {
-  // console.log("Search keyword",keyword);
   emits("data-from-bonus", keyword);
 }
 </script>

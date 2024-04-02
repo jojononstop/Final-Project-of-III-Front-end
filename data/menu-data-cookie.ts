@@ -43,8 +43,8 @@ type IMenuDataType = {
         // {title:'Our Services',link:'/services'},
         // {title:'Services Details',link:'/service-details'},
         // {title:'Player Details',link:'/team-details'},
-        {title:'紅利點數商店',link:'/bonus'},
-        {title:'紅利商品收藏庫',link:'/bounsItem'},
+        {title:'點數商店清單',link:'/bonus'},
+        {title:'點數商品收藏庫',link:'/bonusUserCollect'},
       ]
     },
     {
