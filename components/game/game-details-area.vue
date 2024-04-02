@@ -15,7 +15,9 @@
                                 formatDate(gameData.releaseDate)
                             }}</li>
                                     <li v-else><i class="far fa-calendar-alt"></i>發行日期 : 即將發行</li>
-                                    <li v-if="releaseDate < currentDate">評分 : {{ gameData.rating }}</li>
+                                    <li v-if="releaseDate < currentDate && gameData.rating != 0">評分 : {{
+                                gameData.rating }}</li>
+                                    <li v-else>評分 : 暫無評分</li>
                                 </ul>
                             </div>
                             <h1 class="title text-capitalize">Description</h1>

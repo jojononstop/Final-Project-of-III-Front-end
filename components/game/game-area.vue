@@ -2,6 +2,11 @@
     <section class="blog-area">
         <div class="container">
             <div class="row justify-content-center">
+
+                <input type="text" class="form-control mb-3" id="autocomplete">
+                <div class="list-group">
+                </div>
+
                 <div class="blog-post-wrapper">
                     <game-list :gameData="games" :tagName="tagName" />
                     <div class="pagination__wrap">

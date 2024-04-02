@@ -54,7 +54,7 @@
                             </h6>
                             <span class="date">{{ formatDate(comment.date) }}</span>
                         </div>
-                        <p>{{ comment.comment1 }}</p>
+                        <p><span>{{ comment.comment1 }} </span></p>
                     </div>
                 </div>
                 <ul v-show="showComments[comment.id]" v-if="comment.attachedComment.length > 0" class="children">
