@@ -2,6 +2,7 @@
   <section class="slider__area slider__bg" style="background-image: url(/images/slider/slider_bg.jpg);height:750px" data-background="/images/slider/slider_bg.jpg" >
     <div style="display: flex;justify-content: center;align-items: center;height: 50vh; ">
         <div style="display: grid; justify-content: center;place-items: center; background-color:#171d24; width:25%;border: solid; border-color: #0EFC8C; border-radius: 5px 5px 5px 5px;">
+          <h1>註冊</h1>
             <div style="margin-top:2vh;margin-left:32px;">
                 <p style="display: inline-block;color:white ">帳號:</p>
                 <input  v-model="postData.account" class="textinput" id="account"  style="display: inline-block; "@blur="focusoutaccount();" autocomplete="off">

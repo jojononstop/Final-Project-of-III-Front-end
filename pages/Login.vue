@@ -10,6 +10,9 @@
         <!-- background-color:#242633  -->
         <!-- style="margin-left:4vh;margin-top:3vh;" -->
         <!-- <div style="width: 100%; height: 3vh; background-color:#0EFC8C;"><p></p></div> -->
+            <div>
+              <h1 style="margin-left: 83px;">登入</h1>
+            </div>
             <div  style="margin-top:3vh;">
                 <p style="display: inline-block; color:white">帳號: </p>
                 <input  v-model="postData.account" id="account" class="textinput" style="display: inline-block; margin-left: 10px;" autocomplete="off">
@@ -126,7 +129,6 @@ const login = () => {
       $cookie.setCookie('bonus', response.data[3]);
       $cookie.setCookie('name', response.data[4]);
       $cookie.setCookie('Id', response.data[5]);
-
       // const accountId=$cookie.getCookie('accountId');
       // authStore.setCookieData({ accountId})
 

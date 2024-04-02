@@ -86,6 +86,15 @@
                       </nuxt-link>
                     </li>
 
+
+
+                    <!-- 會員頭像 -->
+                    <li class="search" v-if="isAccountIdExists">
+                      <nuxt-link to="">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Member Avatar" class="avatar" style="height: 30px; width:30px">
+                      </nuxt-link>
+                    </li>
+
                     <!-- 會員名稱 -->
                     <li class="search" v-if="isAccountIdExists">
                       <nuxt-link :to="`/Id=${id}/profiles`">
