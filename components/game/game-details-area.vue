@@ -20,7 +20,7 @@
                                     <li v-else>評分 : 暫無評分</li>
                                 </ul>
                             </div>
-                            <h1 class="title text-capitalize">Description</h1>
+                            <h1 class="title text-capitalize">遊戲介紹</h1>
                             <p>{{ gameData.description }}</p>
                         </div>
                         <div v-if="gameData.dlCs.length > 0">
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div v-if="games">
-                            <h2>MainGame</h2>
+                            <h2>主要遊戲</h2><span>(你必須擁有主要遊戲才能安裝DLC內容)</span>
                             <div>
                                 <nuxt-link :to="`/game-details/${games.id}`">
                                     <div class="row dlc-container justify-content-center align-items-center">
@@ -70,7 +70,7 @@
 
                     </div>
                     <div v-if="releaseDate < currentDate" class="comments-wrap">
-                        <h4 class="comments-wrap-title">Comments</h4>
+                        <h4 class="comments-wrap-title">評論</h4>
                         <game-detail-comments :gameId="gameId" />
                     </div>
                 </div>

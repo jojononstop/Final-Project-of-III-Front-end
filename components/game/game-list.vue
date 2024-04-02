@@ -1,7 +1,10 @@
 <template>
 
     <div class="row">
-        <div class="col-8"></div>
+        <div class="col-4">
+            <p v-if="tagName != null">搜尋標籤: {{ tagName }}</p>
+        </div>
+        <div class="col-4"></div>
         <div class="col-4">
             <input type="text" class="form-control mb-3" v-model="keyword" @input="handleInput">
             <div class="list-group" v-if="showList">
@@ -11,9 +14,7 @@
         </div>
     </div>
 
-    <div>
-        <p v-if="tagName != null">Search By Tag: {{ tagName }}</p>
-    </div>
+
 
     <div>
         <div v-for="game in gameData" :key="game.id">

@@ -3,15 +3,13 @@
         <div class="container">
             <div class="row justify-content-center">
 
-                <input type="text" class="form-control mb-3" id="autocomplete">
-                <div class="list-group">
-                </div>
+
 
                 <div class="blog-post-wrapper">
                     <game-list :gameData="games" :tagName="tagName" />
                     <div class="pagination__wrap">
                         <!-- pagination start -->
-                        <!-- <ui-pagination></ui-pagination> -->
+                        <game-pagination></game-pagination>
                         <!-- pagination end -->
                     </div>
                 </div>
@@ -23,8 +21,16 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import axios from "axios";
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const route = useRoute();
+
+
+router.beforeEach((to, from) => {
+    console.log(to.query.page)
+})
+
 
 let games = ref(null);
 let tagName = ref(null)
