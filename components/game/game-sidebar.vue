@@ -17,7 +17,7 @@
 
 
         <div class="blog-widget">
-            <h4 class="fw-title">Tags</h4>
+            <h4 class="fw-title">標籤</h4>
             <div class="tagcloud">
                 <nuxt-link v-for="(tag, index) in gameData.tags" :key="index" :to="`/game?search=tag_${tag.id}`">{{
                         tag.name
