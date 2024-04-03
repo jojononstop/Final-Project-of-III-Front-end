@@ -1,6 +1,7 @@
 <template>
+  <ClientOnly>
   <div>
-    <breadcrumb-three title="BONUS" subtitle="BONUS LIST"> </breadcrumb-three>
+    <breadcrumb-three title="紅利點數商店" subtitle="BONUS LIST"> </breadcrumb-three>
     
     <bonus-area v-if="dbData_bonusProducts && dbData_bonusProductTypes"
     :bonusProductsInArea="dbData_bonusProducts" 
@@ -8,6 +9,7 @@
     :errormessageInArea="errormessage"
     @data-from-bonus="handleDataFromBonus"></bonus-area>
   </div>
+  </ClientOnly>
 </template>
 
 <script setup >
@@ -16,7 +18,8 @@ import { ref ,onMounted } from "vue";
 
 // 透過axios GET & POST請求
 import axios from "axios";
-
+//cookie
+import { VueCookieNext as $cookie } from "vue-cookie-next";
 const dbData_bonusProducts = ref(null);
 const dbData_bonusProductTypes = ref(null);
 
@@ -24,6 +27,7 @@ let errormessage = ``;
 
 onMounted(async () => 
 {
+  let memberId = $cookie.getCookie("Id");
   try 
   {
     // Get All BonusProduct
@@ -36,6 +40,11 @@ onMounted(async () =>
     const responseAllTypes = await axios.get("https://localhost:7048/api/BonusProducts/Type");
     dbData_bonusProductTypes.value = responseAllTypes.data;
     
+    // Add BonusProduct to BonusItem
+    // 購買 API
+    // const responseAddBonusItem = await axios.get(`https://localhost:7048/api/BonusProducts/${0}?memberId=${0}`);
+    // dbData_addBonusItem.value = responseAddBonusItem.data;
+
     // // Get BonusProduct By TypeId
     // const responseTypes = await axios.get(`https://localhost:7048/api/BonusProducts/Type/${producttypeid}`);
     // bonusProducts.value = responseTypes.data;

@@ -63,15 +63,12 @@
 </template>
 
 <script setup>
-import { ref,defineProps,onMounted } from "vue";
+import { ref,onMounted,defineProps,defineEmits} from "vue";
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
 
 //cookie
-let memberId = ref('');
-memberId = $cookie.getCookie("Id");
-
-let memberBonusPoint = ref('');
-memberBonusPoint = $cookie.getCookie("bouns");
+let memberId = $cookie.getCookie("Id");
+let memberBonusPoint = $cookie.getCookie("bouns");
 
 let isModalOpen= ref(false);
 let isApplyMode = ref(true);
@@ -82,8 +79,19 @@ const props = defineProps({
   modalId: String
 });
 
+const emit = defineEmits([
+  'childClick'
+])
+
+const imgclickEvent = (id) =>
+{
+  openModal();
+  console.log(id);
+  emit('childClick',id)
+}
+
+
 onMounted(()=>{
-  // console.log(props.AreaToItem_bonusProduct,props.AreaToItem_bonusProductTypes)
   // console.log(props.bonusProductsInItem,props.bonusProductTypesInItem)
 })
 
@@ -102,12 +110,6 @@ function getProductTypeName(productTypeId)
   }
 }
 
-function imgclickEvent(id)
-{
-  openModal();
-  console.log(id);
-}
-
 function switchBtn()
 {
   console.log("切換按鈕")
@@ -124,12 +126,10 @@ function applyBonusProduct() {
 }
 
 const openModal = () => {
-  // 點擊圖片時打開模態框
   isModalOpen.value = true;
 };
 
 const closeModal = () => {
-  // 關閉模態框
   isModalOpen.value = false;
 };
 </script>

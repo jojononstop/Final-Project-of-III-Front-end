@@ -83,7 +83,6 @@ const props = defineProps({
 });
 
 onMounted(()=>{
-  // console.log(props.AreaToItem_bonusProduct,props.AreaToItem_bonusProductTypes)
   // console.log(props.bonusProductsInItem,props.bonusProductTypesInItem)
 })
 

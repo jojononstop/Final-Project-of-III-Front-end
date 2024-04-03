@@ -1,30 +1,30 @@
 <style lang="scss">
 @import "@/assets/css/my-style.css";
-    .my-outer-container {
-        position: relative;
-        width: 250px; 
-        height: 250px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.my-outer-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .my-image {
-        position: absolute;
-        top: 50%; /* 依附於父物件的垂直中心點 */
-        left: 50%; /* 依附於父物件的水平中心點 */
-        transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
-        width: 93%; 
-        height: auto;
-    }
-    .my-Frameimage {
-        position: absolute;
-        top: 50%; /* 依附於父物件的垂直中心點 */
-        left: 50%; /* 依附於父物件的水平中心點 */
-        transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
-        width: 100%;
-        height: auto;
-    }
+.my-image {
+  position: absolute;
+  top: 50%; /* 依附於父物件的垂直中心點 */
+  left: 50%; /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  width: 93%;
+  height: auto;
+}
+.my-Frameimage {
+  position: absolute;
+  top: 50%; /* 依附於父物件的垂直中心點 */
+  left: 50%; /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  width: 100%;
+  height: auto;
+}
 </style>
 
 <template>
@@ -33,18 +33,19 @@
       <div class="row justify-content-center">
         <div class="col-xl-3 col-lg-4 col-md-11 order-2 order-lg-0">
           <!-- 搜尋功能列 -->
-          <div class="my-outer-container">
-            <!-- <img src="/public/images/Bonus/2/CatImage.gif" alt="Image 1" class="my-image">
-            <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage"> -->
-            <img :src="`${memberAvatarURL}`" alt="Image 1" class="my-image">
-            <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage">
+          <div class="my-outer-container" >
+            <img :src="`${memberAvatarURL}`" alt="Image 1" class="my-image" />
+            <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage" />
           </div>
           <bonus-sidebar @search="handleSearch" />
         </div>
         <div class="col-xl-9 col-lg-8 col-md-11">
           <div>
             <h5>
-            您的點數餘額：<img src="/public//images/gold-coin-icon.png" style="width: 30px; height: 30px;align-items: center;"/>{{ bonus }}
+              您的點數餘額：<img
+                src="/public//images/gold-coin-icon.png"
+                style="width: 30px; height: 30px; align-items: center"
+              />{{ bonus }}
             </h5>
           </div>
           <div>
@@ -95,21 +96,22 @@
             class="row justify-content-start row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1"
           >
             <!-- 把接到的請求資料丟到bonusProducts -->
-            <div v-for="bonusProductItem in bonusProductsInArea" :key="bonusProductItem.id" class="col">
+            <div v-for="bonusProductItem in bonusProductsInArea"
+              :key="bonusProductItem.id"
+              class="col"
+            >
               <bonus-item
                 :bonusProductsInItem="bonusProductItem"
                 :bonusProductTypesInItem="bonusProductTypesInArea"
-                :modalId="'exampleModal_' + bonusProductItem.id"
+                :modalId="'exampleModal_' + bonusProductItem.id" @childClick="handleChildClick"
               />
             </div>
           </div>
-          <div style="position: absolute;left: 50%;">
+          <div style="position: absolute; left: 50%">
             <h4>{{ errormessageInArea }}</h4>
           </div>
         </div>
       </div>
-    </div>
-    <div>
     </div>
   </section>
 </template>
@@ -118,22 +120,27 @@
 // import product_data from "@/data/product-data";
 import { defineProps, defineEmits, onMounted } from "vue";
 //cookie
-import { VueCookieNext as $cookie } from 'vue-cookie-next'
-import { string } from "yup";
-let id = $cookie.getCookie("Id");
+import { VueCookieNext as $cookie } from "vue-cookie-next";
+let memberId = $cookie.getCookie("Id");
 let bonus = $cookie.getCookie("bonus");
 let memberAvatarURL = $cookie.getCookie("avatarUrl");
+
+console.log(memberAvatarURL)
 
 const props = defineProps({
   bonusProductsInArea: Object,
   bonusProductTypesInArea: Object,
-  errormessageInArea: String
+  errormessageInArea: String,
 });
+
+const handleChildClick = (id) =>
+{
+  console.log('測試子物件傳數值',id)
+}
 
 onMounted(() => {
-  console.log($cookie);
+  // console.log(memberId);
 });
-
 
 const emits = defineEmits(["data-from-bonus"]);
 

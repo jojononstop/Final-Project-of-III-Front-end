@@ -13,15 +13,17 @@
         <div class="col-xl-9 col-lg-8 col-md-11">
         <!-- cookie檢查 -->
           <div>
-            <div>{{ cookiedetails }}</div>
+            <!-- <div>{{ memberId }}</div> -->
           </div>
           <!--物品清單-->
           <div
             class="row justify-content-start row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1"
           >
             <!-- 把接到的請求資料丟到bonusProducts -->
-            <div v-for="bonusProductItem in bonusProductsInArea" :key="bonusProductItem.id" class="col">
-              <bonus-item
+            <div v-for="bonusProductItem in bonusProductsByMemberIdInArea"
+            :key="bonusProductItem.id"
+            class="col">
+              <bonusUserCollect-item
                 :bonusProductsInItem="bonusProductItem"
                 :bonusProductTypesInItem="bonusProductTypesInArea"
                 :modalId="'exampleModal_' + bonusProductItem.id"
@@ -39,18 +41,21 @@ import { defineProps, defineEmits, onMounted } from "vue";
 
 //cookie
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
-let id = $cookie.getCookie("Id");
-let bonus = $cookie.getCookie("bonus");
-let cookiedetails = $cookie
+
+  let memberId = $cookie.getCookie("Id");
+  let bonus = $cookie.getCookie("bonus");
+  let cookiedetails = $cookie
 
 const props = defineProps({
-  bonusProductsInArea: Object,
+  bonusProductsByMemberIdInArea: Object,
   bonusProductTypesInArea: Object,
+
 });
 
-onMounted(() => {
-  // console.log(props.bonusProductsInArea, props.bonusProductTypesInArea);
-  console.log(cookiedetails)
+onMounted(() =>
+{
+  // console.log(props.bonusProductsByMemberIdInArea, props.bonusProductTypesInArea);
+  // console.log(cookiedetails)
 });
 
 
