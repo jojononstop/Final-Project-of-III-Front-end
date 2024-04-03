@@ -91,7 +91,10 @@
                     <!-- 會員頭像 -->
                     <li class="search" v-if="isAccountIdExists">
                       <nuxt-link to="">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Member Avatar" class="avatar" style="height: 30px; width:30px">
+                      <div style="height: 30px; width:30px" class="my-outer-container">
+                        <img :src="ava" alt="Member Avatar" class="my-image" >
+                        <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage" />
+                      </div>
                       </nuxt-link>
                     </li>
 
@@ -286,8 +289,11 @@ router.beforeEach((to, from) => {
   if ($cookie.getCookie("name")) {
     name = $cookie.getCookie("name");
   }
+  if ($cookie.getCookie("avatarUrl")) {
+    ava = $cookie.getCookie("avatarUrl");
+  }
 })
-
+let ava = "";
 let name = "";
 let id= ref("");
 defineProps({ style_2: Boolean });
@@ -301,17 +307,20 @@ onBeforeMount(() => {
   if ($cookie.isCookieAvailable("name")) {
     name = $cookie.getCookie("name");
   }
-  if ($cookie.isCookieAvailable("Id")) {
-    id.value = $cookie.getCookie('Id');
+  if ($cookie.isCookieAvailable("accountId")) {
+    id.value = $cookie.getCookie('accountId');
     // id.value = parseInt($cookie.getCookie('Id'), 10);
     console.log(id.value)
+  }
+  if ($cookie.getCookie("avatarUrl")) {
+    ava = $cookie.getCookie("avatarUrl");
   }
 });
 
 function checkLogin() {
   isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
-  if ($cookie.isCookieAvailable("Id")) {
-    id.value = $cookie.getCookie('Id');
+  if ($cookie.isCookieAvailable("accountId")) {
+    id.value = $cookie.getCookie('accountId');
     // id.value = parseInt($cookie.getCookie('Id'), 10);
     console.log(id.value)
   }
@@ -369,3 +378,33 @@ const handleSignOut = () => {
   location.reload();
 };
 </script>
+
+
+<style lang="scss">
+@import "@/assets/css/my-style.css";
+.my-outer-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-image {
+  position: absolute;
+  top: 50%; /* 依附於父物件的垂直中心點 */
+  left: 50%; /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  width: 93%;
+  height: auto;
+}
+.my-Frameimage {
+  position: absolute;
+  top: 50%; /* 依附於父物件的垂直中心點 */
+  left: 50%; /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  width: 100%;
+  height: auto;
+}
+</style>

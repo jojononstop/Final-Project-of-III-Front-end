@@ -40,15 +40,27 @@
 
 <template>
 <section class="team__info-area">
-     <div class="container">
+    <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="team__info-wrap">
-                    <div>
-                        <p></p>
+                <div style="width: 100%;height:80px">
+                    <div style="display: flex;justify-content: center; align-items: center; background-color: red; width:100%;height:100%">
+                        <div style="margin-right: auto;;margin-left:20px" >
+                           <p style="display: inline-block; color:white">暱稱</p>
+                           <input type="text" >
+                        </div>
+                        <!-- <div>
+                           <p style="display: inline-block; color:white">個人資訊</p>
+                           <input type="text" >
+                        </div> -->
+                        <div style="margin-left: auto;margin-right:20px;">
+                           <p style="display: inline-block; color:white">生日</p>
+                           <input type="date" >
+                        </div>
                     </div>
-                   
-
+                </div>
+                
                 </div>
             </div>
         </div>
@@ -57,5 +69,6 @@
 </template>
 
 <script setup lang="ts">
+
 
 </script>

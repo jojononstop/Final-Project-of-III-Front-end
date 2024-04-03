@@ -21,9 +21,29 @@
           <div
             class="col-xl-6 col-lg-5 position-relative d-none d-lg-block"
           >
-            <div class="breadcrumb__img">
-              <img :src="brd_img" alt="img" />
+          <!-- breadcrumb__img -->
+            <div class="breadcrumb__myimg;">
+              <div class="my-outer-container;">
+            
+                <img :src="brd_img" alt="img" class="my-image" />
+                <img :src="Frame_img" alt="img" class="my-Frameimage" />
+
+              </div>
             </div>
+
+            <!-- <div class="my-outer-container">
+                　<img
+                  src="/public/images/Bonus/2/CatImage.gif"
+                  alt="Image 1"
+                  class="my-image"
+                />
+                　<img
+                  src="/public/images/Bonus/4/ApexFrame.png"
+                  alt="Image 2"
+                  class="my-Frameimage"
+                />
+              </div> -->
+
           </div>
         </div>
       </div>
@@ -36,12 +56,49 @@ withDefaults(
   defineProps<{
     bg?: string;
     brd_img?: string;
+    Frame_img?: string;
     title: string;
     subtitle: string;
   }>(),
   {
     bg: "/images/bg/breadcrumb_bg01.jpg",
-    brd_img: "/images/others/breadcrumb_img01.png",
+    brd_img: "/images/Bonus/2/CatImage.gif",
+    Frame_img:"/images/Bonus/4/ApexFrame.png"
   }
+  
 );
+
+onMounted(() => {
+  
+});
 </script>
+
+
+<style lang="scss">
+@import "@/assets/css/my-style.css";
+.my-outer-container {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-image {
+  position: absolute;
+  top: 50%; /* 依附於父物件的垂直中心點 */
+  left: 50%; /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  width: 93%;
+  height: auto;
+}
+.my-Frameimage {
+  position: absolute;
+  top: 50%; /* 依附於父物件的垂直中心點 */
+  left: 50%; /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  width: 100%;
+  height: auto;
+}
+</style>
