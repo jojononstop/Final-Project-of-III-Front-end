@@ -24,14 +24,14 @@ import axios from 'axios';
 const cartItem = ref(null);
 
 onMounted(async()=>{
-  try {
-    const res = await axios.get("https://localhost:7048/api/Cart/1");
-    cartItem.value = res.data;
-    console.log(res.data);
-  } catch (error) {
-    console.error("獲取購物車時發生錯誤：", error);
-  }
-  console.log(cartItem.value.id)
+  // try {
+  //   const res = await axios.get("https://localhost:7048/api/Cart/1");
+  //   cartItem.value = res.data;
+  //   console.log(res.data);
+  // } catch (error) {
+  //   console.error("獲取購物車時發生錯誤：", error);
+  // }
+  // console.log(cartItem.value.id)
 }
 
 )
