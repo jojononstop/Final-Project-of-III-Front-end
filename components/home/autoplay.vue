@@ -1,5 +1,5 @@
 <template>
-    <section class="gallery__area fix section-pb-130">
+    <section class="gallery__area fix  section-pt-120 section-pb-120">
         <div class="gallery__slider">
             <div class="container">
                 <div class="row justify-content-center">
@@ -7,19 +7,20 @@
                         <swiper v-bind="slider_setting" :modules="[Navigation, Scrollbar]"
                             class="swiper-container gallery-active" :centeredSlides="true" :observer="true"
                             :observeParents="true">
-                            <swiper-slide v-for="(item, index) in gallery_data" :key="item.id">
+                            <swiper-slide v-for="(item, index) in discounts" :key="item.id">
                                 <div class="gallery__item">
                                     <div class="gallery__thumb">
-                                        <a data-cursor="-theme" data-cursor-text="View <br> Image"
-                                            class="popup-image cursor-pointer" :title="item.title" @click.prevent="
-                            handleShowImage(index)
-                            " @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-                                            <img :src="item.img" alt="img" />
+                                        <a data-cursor="-theme" data-cursor-text="View"
+                                            class="popup-image cursor-pointer" :title="item.discountName"
+                                            @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+                                            <nuxt-link :to="`/discount/${item.id}`" :discountItem="item">
+                                                <img :src="item.image" alt="img" />
+                                            </nuxt-link>
                                         </a>
                                     </div>
                                     <div class="gallery__content">
-                                        <h3 class="title">{{ item.title }}</h3>
-                                        <span class="rate">rate {{ item.rate }}</span>
+                                        <h2 class="text_blue">{{ item.discountName }}</h2>
+                                        <h3 class="text_green">最高-{{ item.percent }}%off</h3>
                                     </div>
                                 </div>
                             </swiper-slide>
@@ -32,7 +33,7 @@
     </section>
 
     <!-- image lightbox start -->
-    <popup-image-lightbox :images="gallery_data.map((p) => p.img)" :indexVal="index" :visible="visible"
+    <popup-image-lightbox :images="discounts.map((p) => p.image)" :indexVal="index" :visible="visible"
         @handleHide="handleHide"></popup-image-lightbox>
     <!-- image lightbox end -->
 </template>
@@ -91,47 +92,14 @@ const slider_setting = {
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Scrollbar } from "swiper/modules";
+import axios from "axios";
 
-const gallery_data = [
-    {
-        id: 1,
-        img: '/images/Home/Background/background4.jpg',
-        title: '活動 - 1',
-        rate: '50%'
-    },
-    {
-        id: 2,
-        img: '/images/Home/Background/background5.jpg',
-        title: '活動 - 2',
-        rate: '65%'
-    },
-    {
-        id: 3,
-        img: '/images/Home/Background/background6.jpg',
-        title: '活動 - 3',
-        rate: '60%'
-    },
-    {
-        id: 4,
-        img: '/images/Home/Background/background7.jpg',
-        title: '活動 - 4',
-        rate: '70%'
-    },
-    {
-        id: 5,
-        img: '/images/Home/Background/background8.jpg',
-        title: '活動 - 5',
-        rate: '85%'
-    },
-    {
-        id: 5,
-        img: '/images/Home/Background/background9.jpg',
-        title: '活動 - 6',
-        rate: '85%'
-    },
-]
+let discounts = ref([]);
 
-
+let discount = axios.get("https://localhost:7048/api/Discount/GetDiscount").then((res) => {
+    console.log(res.data);
+    discounts.value = res.data;
+});
 
 
 
@@ -183,3 +151,12 @@ const slider_setting = {
     },
 };
 </script>
+<style scoped>
+.text_green {
+    color: springgreen;
+}
+
+.text_blue {
+    color: w;
+}
+</style>

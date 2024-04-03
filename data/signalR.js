@@ -7,10 +7,11 @@ let connectionInstance = null;
 
 export default function startConnection() {
     if (!connectionInstance) {
-        let userId;
+        let userId, username;
         userId = $cookie.getCookie('Id');
+        username = $cookie.getCookie('name');
         connectionInstance = new signalR.HubConnectionBuilder()
-        .withUrl(`https://localhost:7048/chatHub?userId=${userId}`, {
+        .withUrl(`https://localhost:7048/chatHub?userId=${userId}&username=${username}`, {
             skipNegotiation: true,
             transport: signalR.HttpTransportType.WebSockets,
         })
@@ -23,14 +24,7 @@ export default function startConnection() {
             console.error('SignalR connection failed:', err.toString());
         });
         
-        connectionInstance.on('userconnected', (ConnectionId) => {
-            console.log('新使用者已連接：', ConnectionId);
-            console.log('新使用者ID：', ConnectionId.ConnectionId);
-        });
-        connectionInstance.on('userdisconnected', (ConnectionId) => {
-            console.log('使用者已離線：', ConnectionId);
-            console.log('離線使用者ID：', ConnectionId.ConnectionId);
-        });
+        
     }
 
     return connectionInstance;

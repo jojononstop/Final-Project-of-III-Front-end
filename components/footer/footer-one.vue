@@ -1,5 +1,5 @@
 <template>
- <footer class="footer-style-one">
+  <footer class="footer-style-one">
     <div class="footer__top-wrap">
       <div class="container">
         <div class="row">
@@ -11,48 +11,48 @@
                 </nuxt-link>
               </div>
               <div class="footer-text">
-                <p class="desc">Lorem ipsum dolor sitamet consectur adipiscing Duis esollici tudin augue euismod. Nulla ullam dolor sitamet consectetur</p>
-                <p class="social-title">Active <span>With Us <i class="fas fa-angle-double-right"></i></span></p>
+                <p class="desc"></p>
+                <p class="social-title"><span>關於我們 <i class="fas fa-angle-double-right"></i></span></p>
                 <div class="footer-social">
-                  <nuxt-link to="#"><img src="/images/icons/social_icon01.png" alt="iocn"/></nuxt-link>
-                  <nuxt-link to="#"><img src="/images/icons/social_icon02.png" alt="iocn"/></nuxt-link>
-                  <nuxt-link to="#"><img src="/images/icons/social_icon03.png" alt="iocn"/></nuxt-link>
-                  <nuxt-link to="#"><img src="/images/icons/social_icon04.png" alt="iocn"/></nuxt-link>
+                  <nuxt-link to="#"><img src="/images/icons/social_icon01.png" alt="iocn" /></nuxt-link>
+                  <nuxt-link to="#"><img src="/images/icons/social_icon02.png" alt="iocn" /></nuxt-link>
+                  <nuxt-link to="#"><img src="/images/icons/social_icon03.png" alt="iocn" /></nuxt-link>
+                  <nuxt-link to="#"><img src="/images/icons/social_icon04.png" alt="iocn" /></nuxt-link>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
             <div class="footer-widget widget_nav_menu">
-              <h4 class="fw-title">quick link</h4>
+              <h4 class="fw-title">前端使用技術</h4>
               <ul class="list-wrap menu">
-                <li><nuxt-link to="#">Gaming</nuxt-link></li>
-                <li><nuxt-link to="#">Product</nuxt-link></li>
-                <li><nuxt-link to="#">All NFTs</nuxt-link></li>
-                <li><nuxt-link to="#">Social Network</nuxt-link></li>
-                <li><nuxt-link to="#">Domain Names</nuxt-link></li>
-                <li><nuxt-link to="#">Collectibles</nuxt-link></li>
+                <li><a href="https://vuejs.org/">Vue</a></li>
+                <li><nuxt-link to="#">JavaScript</nuxt-link></li>
+                <li><nuxt-link to="#">CSS</nuxt-link></li>
+                <li><nuxt-link to="#">Ajax</nuxt-link></li>
+                <li><nuxt-link to="#">Nuxt</nuxt-link></li>
+                <li><nuxt-link to="#">Swipper</nuxt-link></li>
               </ul>
             </div>
           </div>
           <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
             <div class="footer-widget widget_nav_menu">
-              <h4 class="fw-title">Supports</h4>
+              <h4 class="fw-title">後端使用技術</h4>
               <ul class="list-wrap menu">
-                <li><nuxt-link to="#">Setting & Privacy</nuxt-link></li>
-                <li><nuxt-link to="#">Help & Support</nuxt-link></li>
-                <li><nuxt-link to="#">Live Auctions</nuxt-link></li>
-                <li><nuxt-link to="#">Item Details</nuxt-link></li>
-                <li><nuxt-link to="#">24/7 Supports</nuxt-link></li>
-                <li><nuxt-link to="#">Our News</nuxt-link></li>
+                <li><nuxt-link to="#">C#</nuxt-link></li>
+                <li><nuxt-link to="#">ASP.NET CORE</nuxt-link></li>
+                <li><nuxt-link to="#">SIGNALR</nuxt-link></li>
+                <li><nuxt-link to="#">JWT</nuxt-link></li>
+                <li><nuxt-link to="#">XX</nuxt-link></li>
+                <li><nuxt-link to="#">XX</nuxt-link></li>
               </ul>
             </div>
           </div>
           <div class="col-xl-4 col-lg-5 col-md-7">
             <div class="footer-widget">
-              <h4 class="fw-title">Newsletter</h4>
+              <h4 class="fw-title">聯絡我們</h4>
               <div class="footer-newsletter">
-                <p>Subscribe our newsletter to get our latest update & newsconsectetur</p>
+                <p>若有任何問題請留下您的電子郵件，將會有專人跟你聯絡</p>
                 <form action="#" class="footer-newsletter-form">
                   <input type="email" placeholder="Your email address" />
                   <button type="submit"><i class="flaticon-paper-plane"></i></button>
@@ -68,12 +68,13 @@
         <div class="row align-items-center">
           <div class="col-md-7">
             <div class="copyright__text">
-              <p>Copyright © {{new Date().getFullYear()}} - All Rights Reserved By <span>Mykd</span></p>
+              <p>全端班第二組 © {{ new Date().getFullYear() }} - RizzGamingBase <span>Rizz</span></p>
             </div>
           </div>
           <div class="col-md-5">
             <div class="copyright__card text-center text-md-end">
-              <img src="/images/others/payment_card.png" alt="img" />
+              <img src="/public/images/Home/Pay/linepay.png" alt="img" />
+              <img src="/public/images/Home/Pay/ecpay.png" alt="img" />
             </div>
           </div>
         </div>

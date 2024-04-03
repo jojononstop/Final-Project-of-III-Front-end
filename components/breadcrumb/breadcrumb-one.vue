@@ -5,22 +5,20 @@
         <div class="row">
           <div class="col-xl-6 col-lg-7">
             <div class="breadcrumb__content">
-              <h2 class="title">{{ title }}</h2>
+              <h2 class="title">關於我們</h2>
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item">
-                    <nuxt-link to="/">Home</nuxt-link>
+                    <h3 class="text-clgreen">全端班第二組</h3>
                   </li>
                   <li class="breadcrumb-item active" aria-current="page">
-                    {{ subtitle }}
+                    <h5>姚欽堂,張淳毓,徐宏勝,陳冠廷,彭湫雯</h5>
                   </li>
                 </ol>
               </nav>
             </div>
           </div>
-          <div
-            class="col-xl-6 col-lg-5 position-relative d-none d-lg-block"
-          >
+          <div class="col-xl-6 col-lg-5 position-relative d-none d-lg-block">
             <div class="breadcrumb__img">
               <img :src="brd_img" alt="img" />
             </div>
@@ -41,7 +39,12 @@ withDefaults(
   }>(),
   {
     bg: "/images/bg/breadcrumb_bg01.jpg",
-    brd_img: "/images/others/breadcrumb_img01.png",
+    brd_img: "/images/others/breadcrumb_img03.png",
   }
 );
 </script>
+<style scoped>
+.text-clgreen {
+  color: springgreen;
+}
+</style>

@@ -12,9 +12,6 @@
     <services-area></services-area>
     <!-- services area end -->
 
-    <!-- team area start -->
-    <team-area></team-area>
-    <!-- team area end -->
   </div>
 </template>
 

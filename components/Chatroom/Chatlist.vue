@@ -47,7 +47,6 @@
             </div>
         </div>
     </div>
-    <button @click="getOnlineUsers">get</button>
     <chatroom-add-new-friend></chatroom-add-new-friend>
     <chatroom></chatroom>
 </template>

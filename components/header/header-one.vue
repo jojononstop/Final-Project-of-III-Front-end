@@ -55,6 +55,8 @@
                           {{ menu.title }}
                         </nuxt-link>
                       </li>
+                      <chatroom-toasts></chatroom-toasts>
+
                     </template>
 
 
@@ -62,12 +64,6 @@
                 </div>
                 <div class="tgmenu__action d-none d-md-block">
                   <ul class="list-wrap">
-                    <!-- 搜尋 -->
-                    <li class="search">
-                      <a class="cursor-pointer" @click="handleOpenSearch('/audio/click.wav')">
-                        <i class="flaticon-search-1"></i>
-                      </a>
-                    </li>
 
                     <!-- 登入按鈕 -->
                     <li class="header-btn" v-if="isAccountIdExists === false">
@@ -92,9 +88,6 @@
                         {{ name }}
                       </nuxt-link>
                     </li>
-
-
-
                     <li class="header-btn" v-if="isAccountIdExists">
                       <!-- @click="handleSignOut" -->
                       <nuxt-link :class="`${style_2 ? 'tg-btn-3 tg-svg' : 'tg-border-btn'}`" @click="handleSignOut">
@@ -102,11 +95,7 @@
                         <i class="flaticon-edit"></i> ~sign out
                       </nuxt-link>
                     </li>
-                    <li class="side-toggle-icon" @click="handleOpenOffCanvas('/audio/click.wav')">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </li>
+
                   </ul>
                 </div>
               </nav>
@@ -148,9 +137,7 @@ defineProps<{ style_2?: boolean }>();
 
 
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
-<<<<<<< HEAD
 let isAccountIdExists = ref<boolean>(false);
-=======
 
 
 let isAccountIdExists = ref(false);
@@ -161,7 +148,6 @@ function checkLogin() {
   name =$cookie.getCookie("name");
  }
 }
->>>>>>> 2790ce94d215c44cf06241b65126ac0067de89ca
 
 
 
