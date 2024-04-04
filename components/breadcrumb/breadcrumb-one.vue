@@ -7,10 +7,11 @@
             <div class="breadcrumb__content">
               <h2 class="title">{{ title }}</h2>
               <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
+                <ol class="breadcrumb" style="list-style-type: none;">
+                  <!-- <li class="breadcrumb-item">
                     <nuxt-link to="/">Home</nuxt-link>
-                  </li>
+                  </li> -->
+                  <!--  -->
                   <li class="breadcrumb-item active" aria-current="page">
                     {{ subtitle }}
                   </li>
@@ -22,11 +23,11 @@
             class="col-xl-6 col-lg-5 position-relative d-none d-lg-block"
           >
           <!-- breadcrumb__img -->
-            <div class="breadcrumb__myimg;">
-              <div class="my-outer-container;">
+            <div class="breadcrumb__myimg;" style="background-color: red; width:100%">
+              <div class="my-outer-container;" >
             
-                <img :src="brd_img" alt="img" class="my-image" />
-                <img :src="Frame_img" alt="img" class="my-Frameimage" />
+                <img :src="brd_img" alt="img" class="my-image" style="width: 279px;height:279px"/>
+                <img :src="Frame_img" alt="img" class="my-Frameimage" style="width: 300px;height:300px"/>
 
               </div>
             </div>

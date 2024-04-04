@@ -4,8 +4,8 @@
   <div>
     <!-- breadcrumb area start -->
     <breadcrumb-one
-      title="SHAKH DANIAL"
-      subtitle="TEAM DETAILS"
+      :title="nickName"
+      :subtitle="registrationDate"
       bg="/images/bg/breadcrumb_bg01.jpg"
       brd_img="http://localhost:3000/images/Bonus/2/CatImage.gif"
       Frame_img="http://localhost:3000/images/Bonus/4/ApexFrame.png"
@@ -18,7 +18,7 @@
         <div class="col-12">
           <div class="team__info-wrap">
             <div style="width: 100%; height: 80px">
-              <div
+              <!-- <div
                 style="
                   display: flex;
                   justify-content: center;
@@ -27,11 +27,11 @@
                   width: 100%;
                   height: 100%;
                 "
-              >
-                <div style="margin-right: auto; margin-left: 20px">
+              > -->
+                <!-- <div style="margin-right: auto; margin-left: 20px">
                   <p style="display: inline-block; color: white">暱稱</p>
                   <input type="text" id="nickname" v-model="postData.NickName" />
-                </div>
+                </div> -->
                 <!-- <div>
                   <p style="display: inline-block; color:white">個人資訊</p>
                   
@@ -41,13 +41,13 @@
                   <p style="display: inline-block; color: white">生日</p>
                   <input type="date" id="birthday" v-model="postData.Birthday" />
                 </div> -->
-              </div>
+              <!-- </div> -->
 
-              <div class="input-grp message-grp">
+              <!-- <div class="input-grp message-grp">
                 <Field name="name" v-slot="{ field }">
                   <input v-bind="field" name="name" type="text" placeholder="暱稱" />
                 </Field>
-              </div>
+              </div> -->
 
 
             </div>
@@ -79,33 +79,18 @@ const postData = ref({
   NickName: "",
 });
 
+
+let registrationDate =ref("");
+
+let nickName = ref("");
 let oldnickname = "";
 
-
-// onMounted(() => {
-//   axios.get(`https://localhost:7048/api/Members/${memberId}`)
-//       .then(response => {
-//         console.log(response.data[0])
-//         console.log(response.data[1])
-//         oldnickname =response.data.NickName
-//         oldbirthday =response.data.Birthday
-//         console.log(response)
-//         if(oldbirthday==null){
-//           oldbirthday = "2000-01-01";
-//         }
-//         })
-//         postData.value.NickName=oldnickname
-//         postData.value.Birthday=oldbirthday
-//         console.log(oldnickname)
-//         console.log(oldbirthday)
-
-// });
-
-// onMounted(() => {
+// onBeforeMount(() => {
 //   axios.get(`https://localhost:7048/api/Members/${memberId}`)
 //     .then((response) => {
 //       console.log(response.data);
 //       oldnickname = response.data.nickName;
+//       nickName = response.data.nickName;
 //       postData.value.NickName = oldnickname;
 //       console.log(oldnickname);
 
@@ -114,4 +99,22 @@ let oldnickname = "";
 //       console.error("Error fetching member data:", error);
 //     });
 // });
+
+async function fetchData() {
+  try {
+    const response = await axios.get(`https://localhost:7048/api/Members/${memberId}`);
+    console.log(response.data);
+    oldnickname = response.data.nickName;
+    nickName.value = response.data.nickName;
+    registrationDate.value = "於"+response.data.registrationDate+"創建";
+    postData.value.NickName = oldnickname;
+    console.log(oldnickname);
+
+  } catch (error) {
+    console.error("Error fetching member data:", error);
+  }
+}
+
+fetchData(); // 在组件挂载前调用 fetch 钩子
+
 </script>
