@@ -32,18 +32,7 @@
     let gamePage = ref(null);
 
     router.beforeEach((to, from) => {
-        // chuckGame()
-        injectGames.value = chuckGames.value[(to.query.page) - 1]
-        // console.log((to.query.page) - 1)
-        // if ((to.query.page) - 1 == 0) {
-        //     console.log(chuckGames.value[0])
-        // } else if ((to.query.page) - 1 == 1) {
-        //     console.log(chuckGames.value[1])
-
-        // } else {
-        //     console.log(chuckGames.value[2])
-        // }
-        // console.log(injectGames.value)
+        injectGames.value = chuckGames.value[(to.query.page) - 1]  
     })
 
 
