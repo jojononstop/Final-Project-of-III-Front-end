@@ -34,7 +34,8 @@
                 <p v-if="isEmailOK" class="dangertext">郵箱格式不正確</p>
             </div>
             <div style="margin-top:10px;margin-bottom: 10px;">
-                <button  @click="register" :disabled="isButtonDisabled" style="justify-content: center; ">註冊帳號</button>
+                <button  @click="register" :disabled="isButtonDisabled" style="justify-content: center;" class="button" >註冊帳號</button>
+                <!-- class="button" -->
             </div>
         </div>
     </div>
@@ -57,12 +58,17 @@ definePageMeta({
 
   const isAccountOK = ref<boolean>(false);
   const isAccountEmpty = ref<boolean>(false);
+  const isFirstAccount = ref<boolean>(true);
   const isNicknameOK = ref<boolean>(false);
   const isNicknameEmpty = ref<boolean>(false);
+  const isFirstNickname = ref<boolean>(true);
   const isPasswordOK = ref<boolean>(false);
+  const isFirstPassword = ref<boolean>(true);
   const isRePasswordOK = ref<boolean>(false);
+  const isFirstRePassword = ref<boolean>(true);
   const isEmailOK = ref<boolean>(false);
-  const isButtonDisabled = ref<boolean>(false);
+  const isFirstEmail = ref<boolean>(true);
+  const isButtonDisabled = ref<boolean>(true);
 
     // 创建响应式数据对象用于存储帐号和密码
   const postData = ref({
@@ -104,6 +110,7 @@ const focusoutaccount = () => {
 
   isAccountEmpty.value = false;
   isAccountOK.value = false;
+  isFirstAccount.value = false;
 
   if(postData.value.account=="")
   {
@@ -136,6 +143,7 @@ const focusoutname = () => {
 
 isNicknameEmpty.value = false;
 isNicknameOK.value = false;
+isFirstNickname.value = false;
 
 if(postData.value.name=="")
 {
@@ -165,7 +173,7 @@ const focusoutPassword = () => {
     const password = postData.value.password;
 
     isPasswordOK.value = false;
-
+    isFirstPassword.value = false;
 
 
     // 检查密码是否符合格式
@@ -177,6 +185,7 @@ const focusoutPassword = () => {
 
 //驗證重複密碼
 const focusoutRePassword = () => {
+  isFirstRePassword.value = false;
     if(rePassword.value!=postData.value.password){
       isRePasswordOK.value =true
     }
@@ -188,6 +197,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 //驗證郵箱
 const validateEmail = () => {
   isEmailOK.value = false;
+  isFirstEmail.value = false;
   // return emailRegex.test(email);
   const email = postData.value.email;
   if (!emailRegex.test(email)) {
@@ -201,7 +211,8 @@ const validateEmail = () => {
 //驗證按鈕
 const validatebutton =() => {
   if(isAccountOK.value == false&&isAccountEmpty.value==false&&isNicknameOK.value==false&&
-  isNicknameEmpty.value==false&&isPasswordOK.value==false&&isRePasswordOK.value==false&&isEmailOK.value==false){
+  isNicknameEmpty.value==false&&isPasswordOK.value==false&&isRePasswordOK.value==false&&isEmailOK.value==false&&!isFirstAccount.value&&!isFirstNickname.value&&
+  !isFirstPassword.value&&!isFirstRePassword.value&&!isFirstEmail.value){
     isButtonDisabled.value = false
   }
   else{
@@ -231,5 +242,13 @@ const validatebutton =() => {
   border-radius: 5px 5px 5px 5px;
   color:white;
   overflow: hidden; /* 隱藏超出範圍的內容 */
+}
+.button{
+  background-color: #0EFC8C;
+  color:#324052;
+}
+.button:disabled{
+  background-color: #54575a;
+  color:#4AC877;
 }
 </style>

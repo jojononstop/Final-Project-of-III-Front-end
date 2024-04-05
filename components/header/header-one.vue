@@ -282,6 +282,10 @@ import menu_data from '@/data/menu-data';
 import menu_data_cookie from '@/data/menu-data-cookie';
 import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
 import { useRouter } from 'vue-router';
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
+
+
+
 const router = useRouter();
 
 router.beforeEach((to, from) => {
@@ -294,18 +298,21 @@ router.beforeEach((to, from) => {
   }
 })
 let ava = "";
-let name = "";
+let name = ref("");
 let id= ref("");
 defineProps({ style_2: Boolean });
 
-import { VueCookieNext as $cookie } from 'vue-cookie-next';
+
+
+
+
 let isAccountIdExists = ref(false);
 
 // onMounted
 onBeforeMount(() => {
   isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
   if ($cookie.isCookieAvailable("name")) {
-    name = $cookie.getCookie("name");
+    name.value = $cookie.getCookie("name");
   }
   if ($cookie.isCookieAvailable("accountId")) {
     id.value = $cookie.getCookie('accountId');
@@ -316,6 +323,13 @@ onBeforeMount(() => {
     ava = $cookie.getCookie("avatarUrl");
   }
 });
+
+onMounted(()=>{
+
+});
+
+
+
 
 function checkLogin() {
   isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
@@ -377,6 +391,21 @@ const handleSignOut = () => {
   $cookie.removeCookie('Id');
   location.reload();
 };
+
+
+// try{
+
+// }catch{
+//   console.log("cookiename")
+// }
+
+if (process.client) {
+  watch(() => $cookie.getCookie("name"), (newVal) => {
+  name.value = newVal;
+});
+}
+//   watch($cookie.getCookie("name"), (newVal) => {
+//   name.value = newVal;
 </script>
 
 

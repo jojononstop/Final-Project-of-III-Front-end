@@ -27,6 +27,12 @@
                    <p v-if="message" style="color: red;">{{ message }}</p>
             </div>
             <button v-on:click="login" style="display: flex; justify-content: center; align-items: center; margin-left: 8vh; margin-top: 2vh; width: 10vh; text-align: center;background-color: #0EFC8C;color:#324052">登入</button>
+            <div>
+              <h4 style="margin-left: 12vh; margin-top: 2vh;">或</h4>
+            </div>
+            <div>
+              <button style="margin-left: 8vh; margin-top: 2vh;background-color: #0EFC8C;color:#324052">免密碼登入</button>
+            </div>
             <!-- Google Sign-In 按钮 -->
             <div class="flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8" style="margin-top:2vh;">
               <div class="flex w-full max-w-md flex-col items-center justify-center" style="margin-top:2vh;">
