@@ -9,7 +9,7 @@
                         alt="img" />
                 </div>
                 <div class="sidebar__author-content">
-                    <h4 class="name">{{ gameData.name }}</h4>
+                    <h4 class="name" >{{ gameData.name }}</h4>
                     <p>{{ gameData.introduction }}</p>
                 </div>
             </div>
@@ -43,7 +43,7 @@
             </div>
 
             <div v-else class="price d-flex justify-content-around">
-                <span class="discount-text">
+                <span class="discount-text" >
                     NT $ {{ gameData.price }}
                 </span>
                 <span class="discount-text">
@@ -52,7 +52,16 @@
             </div>
         </div>
 
-        <div class="blog-widget">
+        <div v-if="checkGame == true" class="blog-widget">
+            <div>
+                <nuxt-link to="" class="tg-btn-2 -secondary mb-2 d-flex">
+                    你已擁有此遊戲
+                </nuxt-link>
+            </div>
+        </div>
+
+        
+        <div v-else class="blog-widget">
             <div>
                 <nuxt-link to="" class="tg-btn-2 -secondary mb-2 d-flex" @click="AddToWishList(gameData.id)">
                     加入願望清單
@@ -60,11 +69,12 @@
             </div>
             <div>
                 <nuxt-link v-if="releaseDate < currentDate" to="" class="tg-btn-2 d-flex"
-                    @click="AddToCart(gameData.id)">
-                    加入購物車
-                </nuxt-link>
-            </div>
+                @click="AddToCart(gameData.id)">
+                加入購物車
+            </nuxt-link>
+            <!-- <button class="btn" @click="IsHaveGame(gameData.id)">test</button> -->
         </div>
+    </div>
 
     </aside>
 </template>
@@ -82,6 +92,26 @@ const props = defineProps({
 
 function test() {
     console.log(props.gameData.id)
+}
+
+(async()=>{
+    IsHaveGame(props.gameData.id)
+})();
+let checkGame = ref(false)
+async function IsHaveGame(gameId){
+    let wishList = {};
+    wishList.gameId = gameId;
+    wishList.memberId = id;
+    await axios.post(`https://localhost:7048/api/Games/IsHaveGame`, wishList)
+    .then(response => {
+        console.log(wishList.gameId);
+        console.log(wishList.memberId);
+        console.log(response.data);
+        checkGame.value = response.data
+    })
+    .catch(error => {
+        console.error('Error occurred while checking game existence:', error);
+    });
 }
 
 async function AddToWishList(gameId) {

@@ -1,50 +1,115 @@
 <template>
-  <ul class="list-wrap d-flex flex-wrap justify-content-center">
-    <li>
-      <nuxt-link to="game?page=1" class="page-numbers" @mouseover="addCurrentClass($event.target)"
-        @mouseout="removeCurrentClass($event.target)"> 01 </nuxt-link>
-      <!-- @mouseover="addCurrentClass(this)"
-        @mouseout="removeCurrentClass(this)" -->
-      <!-- <span class="page-numbers current">01</span> -->
-    </li>
-    <li>
-      <!-- <span class="page-numbers current">02</span> -->
-      <nuxt-link to="game?page=2" class="page-numbers" @mouseover="addCurrentClass($event.target)"
-        @mouseout="removeCurrentClass($event.target)"> 02 </nuxt-link>
-    </li>
-    <li>
-      <nuxt-link to="game?page=3" class="page-numbers" @mouseover="addCurrentClass($event.target)"
-        @mouseout="removeCurrentClass($event.target)"> 03 </nuxt-link>
-    </li>
-    <li>
-      <nuxt-link to="game?page=4" class="page-numbers" @mouseover="addCurrentClass($event.target)"
-        @mouseout="removeCurrentClass($event.target)"> 04 </nuxt-link>
-    </li>
+  <div class="d-flex justify-content-center">
+    <ul class="list-wrap d-flex flex-wrap justify-content-center">
 
-    <li>
-      <nuxt-link to="#" class="next page-numbers">
-        <i class="fas fa-angle-double-right"></i>
-      </nuxt-link>
-    </li>
-  </ul>
+      <li>
+        <!-- <span v-if="currentPage != 1" class="page-numbers"><i class="fas fa-angle-double-left"></i></span> -->
+        <nuxt-link v-if="currentPage != 1" :to="frontPage()" class="next page-numbers" @mouseenter="addCurrentClass($event.target)"
+          @mouseout="removeCurrentClass($event.target)">
+          <i class="fas fa-angle-double-left" @mouseenter="addCurrentClass2($event.target)"></i>
+        </nuxt-link>
+
+      </li>
+
+      <li v-for="page in gamePage" :key="page">
+        <span v-if="currentPage == page" class="page-numbers current">{{page}}</span>
+        <nuxt-link v-else :to="getRoute(page)" class="page-numbers" :key="1"
+          @mouseenter="addCurrentClass($event.target)" @mouseout="removeCurrentClass($event.target)"> {{page}}
+        </nuxt-link>
+      </li>
+
+      <!-- <li>
+      <span v-if="currentPage == 1" class="page-numbers current">01</span>
+      <nuxt-link v-else :to="getRoute(1)" class="page-numbers" :key="1" @mouseenter="addCurrentClass($event.target)"
+        @mouseout="removeCurrentClass($event.target)"> 01 </nuxt-link>
+    </li> -->
+
+      <li>
+        <!-- <span v-if="currentPage == gamePage" class="page-numbers"><i class="fas fa-angle-double-right"></i></span> -->
+        <nuxt-link v-if="currentPage != gamePage" :to="nextPage()" class="next page-numbers"
+          @mouseenter="addCurrentClass($event.target)" @mouseout="removeCurrentClass($event.target)">
+          <i class="fas fa-angle-double-right" @mouseenter="addCurrentClass2($event.target)"></i>
+        </nuxt-link>
+
+
+      </li>
+
+      <!-- <li>
+      <span class="page-numbers current" @click="show">test</span>
+    </li> -->
+
+    </ul>
+  </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+  import { useRouter, useRoute } from 'vue-router';
 
-const router = useRouter();
+  const props = defineProps({
+    gamePage: Number,
+  });
 
+  const router = useRouter();
+  const route = useRoute();
 
-router.beforeEach((to, from) => {
-  (to.query.page)
-})
+  let currentPage = ref(null);
+  let currentRoute = ref(null);
 
-function addCurrentClass(element) {
+  router.beforeEach((to, from) => {
+    currentPage.value = to.query.page
+  })
 
-  element.classList.add('current');
-}
+  function getRoute(key) {
+    // if(Object.keys(route.query).length == 0){
+    //   return route.fullPath + `?page=${key}`;
+    // }else{
+    if (route.query.page == undefined) {
+      return route.fullPath + `&page=${key}`;
+    } else {
+      const baseUrl = route.fullPath.split('?')[0];
+      const queryParams = new URLSearchParams(route.fullPath.split('?')[1]);
+      queryParams.set('page', key);
+      return `${baseUrl}?${queryParams.toString()}`;
+    }
+    // }
+  }
 
-function removeCurrentClass(element) {
-  element.classList.remove('current');
-}
+  // function show(){
+  //   console.log(route.query.page)
+  // }
+
+  (async () => {
+    checkPage()
+  }
+  )();
+
+  function nextPage() {
+    const baseUrl = route.fullPath.split('?')[0];
+    const queryParams = new URLSearchParams(route.fullPath.split('?')[1]);
+    queryParams.set('page', parseInt(route.query.page) + 1);
+    return `${baseUrl}?${queryParams.toString()}`;
+  }
+
+  function frontPage() {
+    const baseUrl = route.fullPath.split('?')[0];
+    const queryParams = new URLSearchParams(route.fullPath.split('?')[1]);
+    queryParams.set('page', route.query.page - 1);
+    return `${baseUrl}?${queryParams.toString()}`;
+  }
+
+  function checkPage() {
+    currentPage.value = route.query.page;
+  }
+
+  function addCurrentClass(element) {
+    element.classList.add('current');
+  }
+
+  function addCurrentClass2(element) {
+    element.parentNode.classList.add('current');
+  }
+
+  function removeCurrentClass(element) {
+    element.classList.remove('current');
+  }
 </script>

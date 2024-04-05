@@ -57,7 +57,7 @@ import axios from 'axios'
 
 const props = defineProps({
     gameData: Object,
-    tagName: String
+    tagName: String,
 });
 
 const keyword = ref('');
@@ -73,6 +73,7 @@ function filterTitles() {
 
 function handleInput() {
     showList.value = keyword.value.length > 0;
+    
 }
 
 

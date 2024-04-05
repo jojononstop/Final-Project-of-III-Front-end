@@ -187,13 +187,16 @@ const { errors, handleSubmit, resetForm } = useForm({
 
 let id = $cookie.getCookie("accountId");
 let memberId;
-axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
+if(id != undefined){
+
+    axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
     .then(response => {
         memberId = response.data
     })
     .catch(error => {
         console.log(error);
     });
+}
 
 const submitAttachedComment = (commentId) => {
     handleSubmit((values) => {

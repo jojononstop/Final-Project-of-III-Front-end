@@ -58,7 +58,7 @@
                     </div>
                     <div v-if="memberId && releaseDate < currentDate">
 
-                        <div v-if="memberComment.length <= 0" class="comment-respond mb-3">
+                        <div v-if="memberComment == undefined" class="comment-respond mb-3">
                             <h1 class="fw-title">留下評分與評價</h1>
                             <game-detail-comment-form :gameId="gameId" @refreshComment="loadComment" />
                         </div>
@@ -97,13 +97,16 @@ const releaseDate = new Date(props.gameData.releaseDate);
 
 let id = $cookie.getCookie("accountId");
 let memberId;
-axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
+if(id != undefined){
+
+    axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
     .then(response => {
         memberId = response.data
     })
     .catch(error => {
         console.log(error);
     });
+}
 
 let games = ref(null);
 let developerName = ref(null);
