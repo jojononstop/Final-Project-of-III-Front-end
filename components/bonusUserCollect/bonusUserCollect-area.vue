@@ -35,7 +35,8 @@
           <!-- 使用這頭像 -->
           <div class="my-outer-container" >
             <img :src="`${memberAvatarURL}`" alt="Image 1" class="my-image" />
-            <img src="/public/images/Bonus/4/nullImg.png" alt="Image 2" class="my-Frameimage" />
+            <img src="/public/images/Bonus/4/">
+            <!-- <img v-else="isUsingFrame" src="/public/images/Bonus/4/nullImg.png" alt="Image 2" class="my-Frameimage" /> -->
           </div>
           <!-- 搜尋功能列 -->
           <bonusUserCollect-sidebar @search="handleSearch" />
@@ -79,13 +80,19 @@ import { VueCookieNext as $cookie } from 'vue-cookie-next'
 const props = defineProps({
   bonusProductsByMemberIdInArea: Object,
   bonusProductTypesInArea: Object,
-
 });
+
+
+// 判斷頭像是否有使用
+const isUsingFrame = () =>{
+  
+}
 
 onMounted(() =>
 {
-  // console.log(props.bonusProductsByMemberIdInArea, props.bonusProductTypesInArea);
-  // console.log(cookiedetails)
+  console.log(props.bonusProductsByMemberIdInArea);
+  console.log(props.bonusProductTypesInArea);
+// console.log(cookiedetails)
 });
 
 

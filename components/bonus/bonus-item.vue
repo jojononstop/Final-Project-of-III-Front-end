@@ -94,7 +94,7 @@ const imgclickEvent = (id) =>
   emit('childClick',id)
 }
 
-//所有物品與使用者擁有的物品比對
+// 所有物品與使用者擁有的物品比對
 const isProductOwned = () => {
   // 檢查初始化 bonusItemInItem 是否 null 或者 undefined
   if (!props.bonusItemInItem) {
@@ -107,10 +107,7 @@ const isProductOwned = () => {
     return item.name === props.bonusProductsInItem.name;
   });
 };
-
-// 调用 isProductOwned() 函数，输出 true 或 false
 console.log(isProductOwned());
-
 
 onMounted(()=>
 {
@@ -140,6 +137,7 @@ function getProductTypeName(productTypeId)
 function buyBonusProduct()
 {
   console.log("購買按鈕")
+  // setCookie.("bouns");
 }
 
 
