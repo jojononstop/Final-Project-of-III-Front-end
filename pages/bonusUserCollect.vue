@@ -23,6 +23,7 @@ const dbData_bonusProductsByMemberId = ref(null);
 const dbData_bonusProductTypes = ref(null);
 const dbData_mamberProductItemStatus = ref(null);
 
+
 let bonusId;
 let using;
 
@@ -30,6 +31,7 @@ onMounted(async () =>
 {
   let memberId = $cookie.getCookie("Id");
   let cookiedetails = $cookie
+
   try 
   {
     // Get All BonusProduct By MenberId
@@ -61,19 +63,23 @@ onMounted(async () =>
 });
 async function handleDataFromBonus(keyword)
 {
+  let memberId = $cookie.getCookie("Id");
+
   if(keyword === '')
   {
     //Get All BonusProduct By MenberId
-    const responseByMenberId = await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/1`);
+    const responseByMenberId = await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/${memberId}`);
     dbData_bonusProductsByMemberId.value = responseByMenberId.data;
-    console.error("未正確找到紅利商品", error);
+    console.error("未正確找到紅利商品");
   }
   else
   {
-    const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}`);
-    // 把接到的請求資料丟到bonusProducts
-    dbData_bonusProducts.value = responseSearchName.data;
-    console.error("未正確找到紅利商品", error);
+    // const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}`);
+    // dbData_bonusProductsByMemberId.value = responseSearchName.data;
+    // console.error("未正確找到紅利商品", error);
+    const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}/MemberId/${memberId}`);
+    dbData_bonusProductsByMemberId.value = responseSearchName.data;
+    console.error("未正確找到紅利商品");
   }
 }
 </script>

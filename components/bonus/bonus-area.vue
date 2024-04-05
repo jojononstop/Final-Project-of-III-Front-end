@@ -1,30 +1,5 @@
 <style lang="scss">
 @import "@/assets/css/my-style.css";
-.my-outer-container {
-  position: relative;
-  width: 250px;
-  height: 250px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.my-image {
-  position: absolute;
-  top: 50%; /* 依附於父物件的垂直中心點 */
-  left: 50%; /* 依附於父物件的水平中心點 */
-  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
-  width: 93%;
-  height: auto;
-}
-.my-Frameimage {
-  position: absolute;
-  top: 50%; /* 依附於父物件的垂直中心點 */
-  left: 50%; /* 依附於父物件的水平中心點 */
-  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
-  width: 100%;
-  height: auto;
-}
 </style>
 
 <template>
@@ -33,10 +8,6 @@
       <div class="row justify-content-center">
         <div class="col-xl-3 col-lg-4 col-md-11 order-2 order-lg-0">
           <!-- 搜尋功能列 -->
-          <div class="my-outer-container" >
-            <img :src="`${memberAvatarURL}`" alt="Image 1" class="my-image" />
-            <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage" />
-          </div>
           <bonus-sidebar @search="handleSearch" />
         </div>
         <div class="col-xl-9 col-lg-8 col-md-11">
@@ -103,7 +74,9 @@
               <bonus-item
                 :bonusProductsInItem="bonusProductItem"
                 :bonusProductTypesInItem="bonusProductTypesInArea"
-                :modalId="'exampleModal_' + bonusProductItem.id" @childClick="handleChildClick"
+                :bonusItemInItem="bonusItemInArea"
+                :modalId="'exampleModal_' + bonusProductItem.id" 
+                @childClick="handleChildClick"
               />
             </div>
           </div>
@@ -118,28 +91,34 @@
 
 <script setup>
 // import product_data from "@/data/product-data";
-import { defineProps, defineEmits, onMounted } from "vue";
+import { defineProps, defineEmits, onMounted, watchEffect} from "vue";
 //cookie
 import { VueCookieNext as $cookie } from "vue-cookie-next";
 let memberId = $cookie.getCookie("Id");
 let bonus = $cookie.getCookie("bonus");
-let memberAvatarURL = $cookie.getCookie("avatarUrl");
 
-console.log(memberAvatarURL)
+// console.log(memberAvatarURL)
 
 const props = defineProps({
   bonusProductsInArea: Object,
   bonusProductTypesInArea: Object,
+  bonusItemInArea: Object,
   errormessageInArea: String,
 });
+
 
 const handleChildClick = (id) =>
 {
   console.log('測試子物件傳數值',id)
 }
 
-onMounted(() => {
-  // console.log(memberId);
+onMounted(() => 
+{
+  // console.log(props.bonusItemInArea)
+});
+
+watchEffect(() => {
+  // console.log(props.bonusItemInArea);
 });
 
 const emits = defineEmits(["data-from-bonus"]);

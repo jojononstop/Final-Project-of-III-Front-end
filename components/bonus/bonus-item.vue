@@ -4,12 +4,17 @@
 
 <template>
   <div class="shop__bonus__item">
+    <div class="wishlist-button" >
+      <h6 v-if="isProductOwned()" style="color:#45f882 ;">已持有</h6>
+      <h6 v-else style="color: #FFF;">未持有</h6>
+    </div>
     <div class="shop__bonus__item-thumb">
       <img :src="`/images/bonus/${bonusProductsInItem.productTypeId}/${bonusProductsInItem.url}`" typeof="btn" @click="imgclickEvent(bonusProductsInItem.id)" style="cursor: pointer;" :data-bs-toggle="'modal'" :data-bs-target="'#exampleModal_' + bonusProductsInItem.id" />
-      <!-- 最愛按鈕 -->
-      <nuxt-link to="#" class="wishlist-button">
-        <i class="far fa-heart"></i>
-      </nuxt-link>
+      <!-- 已持有 -->
+      <!-- <div class="wishlist-button">
+        <h6 style="color:#45f882 ;">已持有</h6>
+        <h6 style="color: #FFF;">未持有</h6>
+      </div> -->
     </div>
     <div class="shop__item-line"></div>
     <div class="shop__item-content">
@@ -18,7 +23,7 @@
           <nuxt-link :to="`/shop-details/${bonusProductsInItem.id}`">
             {{bonusProductsInItem.name}}
           </nuxt-link>
-          <div v-if="isModalOpen">測試元件開關</div>
+          <!-- <div v-if="isModalOpen">測試元件開關</div> -->
         </h4>
       </div>
       <div class="shop__item-content-top">
@@ -37,7 +42,7 @@
         <div class="modal-content" style="background-color: #182029;">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">
-              <p>{{ bonusProductsInItem.id }}</p>
+              <!-- <p>{{ bonusProductsInItem.id }}</p> -->
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
@@ -48,12 +53,11 @@
               <img :src="`/images/bonus/${bonusProductsInItem.productTypeId}/${bonusProductsInItem.url}`" typeof="btn" @click="imgclickEvent(bonusProductsInItem.id)"/>
             </div>
           </div>
-          <div>
-            <button type="button" class="btn btn-primary" @click="switchBtn">切換</button>
+          <div v-if="isProductOwned()" class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
           </div>
-          <div class="modal-footer">
-            <button v-if="isApplyMode" type="button" class="btn btn-primary" @click="applyBonusProduct">套用</button>
-            <button v-else type="button" class="btn btn-primary" @click="buyBonusProduct">購買</button>
+          <div v-else class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="buyBonusProduct">購買</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
           </div>
         </div>
@@ -63,7 +67,7 @@
 </template>
 
 <script setup>
-import { ref,onMounted,defineProps,defineEmits} from "vue";
+import { ref, onMounted, watchEffect, defineProps, defineEmits} from "vue";
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
 
 //cookie
@@ -76,6 +80,7 @@ let isApplyMode = ref(true);
 const props = defineProps({
   bonusProductsInItem: Object,
   bonusProductTypesInItem: Object,
+  bonusItemInItem: Object,
   modalId: String
 });
 
@@ -86,15 +91,37 @@ const emit = defineEmits([
 const imgclickEvent = (id) =>
 {
   openModal();
-  console.log(id);
   emit('childClick',id)
 }
 
+//所有物品與使用者擁有的物品比對
+const isProductOwned = () => {
+  // 檢查初始化 bonusItemInItem 是否 null 或者 undefined
+  if (!props.bonusItemInItem) {
+    return false; 
+  }
+  // 使用 Array.some() 方法遍歷 bonusItemInItem 
+  // 如果有任何一個物品的 name 欄位與 bonusProductsInItem 的 name 欄位匹配，則返回 true
+  // 否則返回 false
+  return props.bonusItemInItem.some(item => {
+    return item.name === props.bonusProductsInItem.name;
+  });
+};
 
-onMounted(()=>{
-  // console.log(props.bonusProductsInItem,props.bonusProductTypesInItem)
+// 调用 isProductOwned() 函数，输出 true 或 false
+console.log(isProductOwned());
+
+
+onMounted(()=>
+{
+  // console.log(props.bonusProductsInItem.name)
 })
 
+watchEffect(() => 
+{
+  // console.log(props.bonusItemInItem);
+  // console.log(isProductOwned());
+});
 
 function getProductTypeName(productTypeId) 
 {
@@ -110,20 +137,11 @@ function getProductTypeName(productTypeId)
   }
 }
 
-function switchBtn()
-{
-  console.log("切換按鈕")
-  isApplyMode.value = !isApplyMode.value;
-}
-
 function buyBonusProduct()
 {
   console.log("購買按鈕")
 }
 
-function applyBonusProduct() {
-  console.log("套用按鈕");
-}
 
 const openModal = () => {
   isModalOpen.value = true;
