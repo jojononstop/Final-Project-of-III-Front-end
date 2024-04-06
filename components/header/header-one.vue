@@ -86,9 +86,21 @@
                       </nuxt-link>
                     </li>
 
+
+
+                    <!-- 會員頭像 -->
+                    <li class="search" v-if="isAccountIdExists">
+                      <nuxt-link to="">
+                      <div style="height: 30px; width:30px" class="my-outer-container">
+                        <img :src="ava" alt="Member Avatar" class="my-image" >
+                        <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage" />
+                      </div>
+                      </nuxt-link>
+                    </li>
+
                     <!-- 會員名稱 -->
                     <li class="search" v-if="isAccountIdExists">
-                      <nuxt-link to="/">
+                      <nuxt-link :to="`/Id=${id}/profiles`">
                         {{ name }}
                       </nuxt-link>
                     </li>
@@ -137,29 +149,62 @@ import menu_data from '@/data/menu-data';
 import menu_data_cookie from '@/data/menu-data-cookie';
 import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
 import { useRouter } from 'vue-router';
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
+
+
+
 const router = useRouter();
 
 router.beforeEach((to, from) => {
   checkLogin()
+  if ($cookie.getCookie("name")) {
+    name = $cookie.getCookie("name");
+  }
+  if ($cookie.getCookie("avatarUrl")) {
+    ava = $cookie.getCookie("avatarUrl");
+  }
 })
-
-let name = "";
-
+let ava = "";
+let name = ref("");
+let id= ref("");
 defineProps({ style_2: Boolean });
 
-import { VueCookieNext as $cookie } from 'vue-cookie-next';
+
+
+
+
 let isAccountIdExists = ref(false);
 
 // onMounted
 onBeforeMount(() => {
   isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
-  if ($cookie.getCookie("name")) {
-    name = $cookie.getCookie("name");
+  if ($cookie.isCookieAvailable("name")) {
+    name.value = $cookie.getCookie("name");
+  }
+  if ($cookie.isCookieAvailable("accountId")) {
+    id.value = $cookie.getCookie('accountId');
+    // id.value = parseInt($cookie.getCookie('Id'), 10);
+    console.log(id.value)
+  }
+  if ($cookie.getCookie("avatarUrl")) {
+    ava = $cookie.getCookie("avatarUrl");
   }
 });
 
+onMounted(()=>{
+
+});
+
+
+
+
 function checkLogin() {
   isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+  if ($cookie.isCookieAvailable("accountId")) {
+    id.value = $cookie.getCookie('accountId');
+    // id.value = parseInt($cookie.getCookie('Id'), 10);
+    console.log(id.value)
+  }
 }
 
 const { isSticky, isStickyVisible } = useSticky();
@@ -213,4 +258,49 @@ const handleSignOut = () => {
   $cookie.removeCookie('Id');
   location.reload();
 };
+
+
+// try{
+
+// }catch{
+//   console.log("cookiename")
+// }
+
+if (process.client) {
+  watch(() => $cookie.getCookie("name"), (newVal) => {
+  name.value = newVal;
+});
+}
+//   watch($cookie.getCookie("name"), (newVal) => {
+//   name.value = newVal;
 </script>
+
+
+<style lang="scss">
+@import "@/assets/css/my-style.css";
+.my-outer-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-image {
+  position: absolute;
+  top: 50%; /* 依附於父物件的垂直中心點 */
+  left: 50%; /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  width: 93%;
+  height: auto;
+}
+.my-Frameimage {
+  position: absolute;
+  top: 50%; /* 依附於父物件的垂直中心點 */
+  left: 50%; /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  width: 100%;
+  height: auto;
+}
+</style>
