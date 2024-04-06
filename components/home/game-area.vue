@@ -29,7 +29,7 @@
                         </div>
                         <div class="trendingNft__item-image">
                             <img :src="item.img" alt="img" @mouseover="showInfo(item.id)" @mouseleave="hideInfo()" />
-                            <div v-if="activeIndex === item.id" class="info">
+                            <div v-if="activeIndex === item.id" class="info text-white">
                                 點擊查看詳細資訊
                             </div>
                         </div>
