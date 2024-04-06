@@ -5,12 +5,13 @@
     <div class="total">
       <p>總價:</p>
     </div>
-    <CartLinepay/>
+    <Payment/>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
+//import { ecPayMethod } from '../../components/Payment/ecpay';
 
 // 計算總價格
 // const total = computed(() => {
