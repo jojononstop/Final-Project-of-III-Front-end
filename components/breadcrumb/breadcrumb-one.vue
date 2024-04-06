@@ -167,6 +167,7 @@ const submit =() => {
   $cookie.setCookie('name',postData.value.name);
   isButtonDisabled.value = true;
   setName();
+  location.reload();
 }
 
 

@@ -2,10 +2,16 @@
   <section class="slider__area slider__bg" style="background-image: url(/images/slider/slider_bg.jpg);height:750px"
     data-background="/images/slider/slider_bg.jpg">
     <div style="display: flex;justify-content: center;align-items: center;height: 50vh;">
+      <div style="height:100%; display: flex;flex-direction: column; margin-right: 10px;" >
+        <button @click="acc1" style="background-color: #0EFC8C;color:#324052;">測試帳號1</button>
+        <button @click="acc2" style="background-color: #0EFC8C;color:#324052;margin-top: 5px;">測試帳號2</button>
+        <button @click="acc3" style="background-color: #0EFC8C;color:#324052;margin-top: 5px;">測試帳號3</button>
+      </div>
     <!-- width:40% -->
     <!-- justify-content: center;align-items: center -->
     <!-- #242633 -->
       <div style="display: grid; justify-content: center; align-items: center;background-color:#171d24;width:30%; border: solid; border-color: #0EFC8C; border-radius: 5px 5px 5px 5px;">
+
         <!-- height: 30vh;width:50vh; -->
         <!-- background-color:#242633  -->
         <!-- style="margin-left:4vh;margin-top:3vh;" -->
@@ -235,6 +241,23 @@ const handleGoogleLogin = async () => {
     });
 
 }
+
+const acc1 = () => {
+  postData.value.account = "123";
+  postData.value.password = "123";
+};
+
+const acc2 = () => {
+  postData.value.account = "456";
+  postData.value.password = "456";
+};
+
+const acc3 = () => {
+  postData.value.account = "789";
+  postData.value.password = "789";
+};
+
+
 
 </script>
 
