@@ -55,11 +55,15 @@
   const router = useRouter();
   const route = useRoute();
 
-  let currentPage = ref(null);
+  let currentPage = ref(1);
   let currentRoute = ref(null);
 
   router.beforeEach((to, from) => {
-    currentPage.value = to.query.page
+    if(to.query.search !== from.query.search){
+      currentPage.value = 1;
+    }else{
+      currentPage.value = to.query.page
+    }
   })
 
   function getRoute(key) {
@@ -79,7 +83,7 @@
 
   function show(){
    
-    console.log(currentPage.value - 1)
+    console.log(currentPage.value)
 
   }
 
