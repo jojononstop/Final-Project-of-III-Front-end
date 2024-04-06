@@ -30,12 +30,8 @@
                     <nuxt-link to="/">Home</nuxt-link>
                   </li> -->
                   <!--  -->
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <h3 class="text-clgreen">全端班第二組</h3>
-                  </li>
                   <li class="breadcrumb-item active" aria-current="page">
-                    <h5>姚欽堂,張淳毓,徐宏勝,陳冠廷,彭湫雯</h5>
+                    {{ subtitle }}
                   </li>
                 </ol>
               </nav>
@@ -52,9 +48,6 @@
                 <img :src="Frame_img" alt="img" class="my-Frameimage" style="width: 300px;height:300px"/>
 
               </div>
-          <div class="col-xl-6 col-lg-5 position-relative d-none d-lg-block">
-            <div class="breadcrumb__img">
-              <img :src="brd_img" alt="img" />
             </div>
 
             <!-- <div class="my-outer-container">
@@ -224,12 +217,6 @@ const validatebutton =() => {
 
 
 
-  }>(),
-  {
-    bg: "/images/bg/breadcrumb_bg01.jpg",
-    brd_img: "/images/others/breadcrumb_img03.png",
-  }
-);
 </script>
 
 
@@ -284,10 +271,5 @@ const validatebutton =() => {
 .button:disabled{
   background-color: #54575a;
   color:#4AC877;
-}
-</style>
-<style scoped>
-.text-clgreen {
-  color: springgreen;
 }
 </style>
