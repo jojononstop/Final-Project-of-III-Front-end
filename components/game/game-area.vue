@@ -30,9 +30,11 @@
     let injectGames = ref(null);
     let tagName = ref(null);
     let gamePage = ref(null);
+    let page = ref(0);
 
     router.beforeEach((to, from) => {
-        injectGames.value = chuckGames.value[(to.query.page) - 1]  
+        page.value = (to.query.page) - 1
+        injectGames.value = chuckGames.value[page.value]  
     })
 
 
@@ -52,6 +54,12 @@
                 tagName.value = response1.data
             }
 
+            if (queryString[0] == "popular") {           
+                const response = await axios.post("https://localhost:7048/api/Games/popular?begin=1&end=100");
+                games.value = response.data;
+                countPages(games.value.length, 4)
+            }
+
         } else {
             const response = await axios.get("https://localhost:7048/api/Games");
             games.value = response.data;
@@ -65,7 +73,7 @@
             chuckGames.value.push(games.value.slice(i, i + chunkSize));
         }
         // chuckGames.value.reverse();
-        injectGames.value = chuckGames.value[(route.query.page) - 1]
+        injectGames.value = chuckGames.value[page.value]
     }
 
     async function countPages(allCounts, pageCounts) {

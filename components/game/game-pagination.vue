@@ -4,8 +4,8 @@
 
       <li>
         <!-- <span v-if="currentPage != 1" class="page-numbers"><i class="fas fa-angle-double-left"></i></span> -->
-        <nuxt-link v-if="currentPage != 1" :to="frontPage()" class="next page-numbers" @mouseenter="addCurrentClass($event.target)"
-          @mouseout="removeCurrentClass($event.target)">
+        <nuxt-link v-if="currentPage != 1" :to="frontPage()" class="next page-numbers"
+          @mouseenter="addCurrentClass($event.target)" @mouseout="removeCurrentClass($event.target)">
           <i class="fas fa-angle-double-left" @mouseenter="addCurrentClass2($event.target)"></i>
         </nuxt-link>
 
@@ -34,16 +34,19 @@
 
       </li>
 
-      <!-- <li>
+      <li>
       <span class="page-numbers current" @click="show">test</span>
-    </li> -->
+    </li>
 
     </ul>
   </div>
 </template>
 
 <script setup>
-  import { useRouter, useRoute } from 'vue-router';
+  import {
+    useRouter,
+    useRoute
+  } from 'vue-router';
 
   const props = defineProps({
     gamePage: Number,
@@ -60,44 +63,42 @@
   })
 
   function getRoute(key) {
-    // if(Object.keys(route.query).length == 0){
-    //   return route.fullPath + `?page=${key}`;
-    // }else{
-    if (route.query.page == undefined) {
-      return route.fullPath + `&page=${key}`;
+    if (Object.keys(route.query).length == 0) {
+      return route.fullPath + `?page=${key}`;
     } else {
-      const baseUrl = route.fullPath.split('?')[0];
-      const queryParams = new URLSearchParams(route.fullPath.split('?')[1]);
-      queryParams.set('page', key);
-      return `${baseUrl}?${queryParams.toString()}`;
+      if (route.query.page == undefined) {
+        return route.fullPath + `&page=${key}`;
+      } else {
+        const baseUrl = route.fullPath.split('?')[0];
+        const queryParams = new URLSearchParams(route.fullPath.split('?')[1]);
+        queryParams.set('page', key);
+        return `${baseUrl}?${queryParams.toString()}`;
+      }
     }
-    // }
   }
 
-  // function show(){
-  //   const queryString = route.query.search
-    
-  //     const queryString2 = queryString.split('_');
-  //     console.log(queryString2)
-    
-  // }
+  function show(){
+   
+    console.log(currentPage.value - 1)
+
+  }
 
   (async () => {
     checkPage()
-  }
-  )();
+    currentPage.value = 1;
+  })();
 
   function nextPage() {
     const baseUrl = route.fullPath.split('?')[0];
     const queryParams = new URLSearchParams(route.fullPath.split('?')[1]);
-    queryParams.set('page', parseInt(route.query.page) + 1);
+    queryParams.set('page', parseInt(currentPage.value) + 1);
     return `${baseUrl}?${queryParams.toString()}`;
   }
 
   function frontPage() {
     const baseUrl = route.fullPath.split('?')[0];
     const queryParams = new URLSearchParams(route.fullPath.split('?')[1]);
-    queryParams.set('page', route.query.page - 1);
+    queryParams.set('page', currentPage.value - 1);
     return `${baseUrl}?${queryParams.toString()}`;
   }
 

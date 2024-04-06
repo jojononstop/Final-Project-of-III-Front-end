@@ -44,7 +44,7 @@ type IMenuDataType = {
       link:'#',
       sub_menu:[
         {title:'物品庫',link:'/'},
-        {title:'願望清單',link:'/'}
+        {title:'願望清單',link:'/wishList'}
       ]
     },
     {
