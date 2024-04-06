@@ -1,8 +1,8 @@
 <template>
   <div>
-    <button class="checkout" @click="">test1</button>
-    <button class="checkout" @click="">test2</button>
-    <button class="checkout" @click="getLinePayData">test3</button>
+    <!-- <button class="checkout" @click="">test1</button>
+    <button class="checkout" @click="">test2</button> -->
+    <!-- <button class="checkout" @click="getLinePayData">getLinePayData</button> -->
     <button class="checkout" @click="postLinePay">LinePay結帳</button>
     <button class="checkout" @click="postEcPay">EcPay結帳</button>
   </div>
@@ -23,11 +23,11 @@ async function getLinePayData() {
   let cartItems = ref(null);
 
   let cartData = {};
-  
+
   const response = await axios.get(`https://localhost:7048/api/CartItems/${id}`)
  
   cartItems.value = response.data;
-console.log(cartItems.value[0].id)
+
   cartData.amount = 0;
   cartData.currency = 'TWD';
   orderId = cartItems.value[0].id.toString();
@@ -42,6 +42,7 @@ console.log(cartItems.value[0].id)
   packageData.products = [];
 
   for (let item of cartItems.value) { 
+    console.log(item.gameId)
     // 发送另一个axios请求
     let gameResponse = await axios.get(`https://localhost:7048/api/Games/${item.gameId}`);
 
@@ -85,6 +86,7 @@ const postLinePay = async () => {
     let cartItem = ref(null);
 
     const data = await getLinePayData();
+    console.log(data)
     
     const res = await axios.post('https://localhost:7048/api/LinePay/Create', data);
     

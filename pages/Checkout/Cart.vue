@@ -6,7 +6,7 @@
       <Cart />
       <div class="total">
         <p>總價:</p>
-        <button class="btn btn-primary" @click="getAmount">test</button>
+        <!-- <button class="btn btn-primary" @click="getAmount">test</button> -->
       </div>
       <Payment />
     </div>

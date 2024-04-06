@@ -77,7 +77,7 @@
 
 
                     <li class="search" v-if="isAccountIdExists">
-                      <nuxt-link to="/">
+                      <nuxt-link to="/checkout/cart">
                         <img src="../../public/images/icons/shopping-cart.png">
                       </nuxt-link>
                     </li>
