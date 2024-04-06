@@ -75,7 +75,11 @@
   }
 
   // function show(){
-  //   console.log(route.query.page)
+  //   const queryString = route.query.search
+    
+  //     const queryString2 = queryString.split('_');
+  //     console.log(queryString2)
+    
   // }
 
   (async () => {

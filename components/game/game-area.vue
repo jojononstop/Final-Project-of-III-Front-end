@@ -6,7 +6,7 @@
 
 
                 <div class="blog-post-wrapper">
-                    <game-list :gameData="injectGames" :tagName="tagName" />
+                    <game-list :gameData="injectGames" :tagName="tagName" :allGame="games"/>
                     <div class="pagination__wrap">
                         <!-- pagination start -->
                         <game-pagination :gamePage="gamePage"></game-pagination>

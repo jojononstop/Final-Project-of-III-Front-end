@@ -57,6 +57,7 @@ import axios from 'axios'
 
 const props = defineProps({
     gameData: Object,
+    allGame: Object,
     tagName: String,
 });
 
@@ -68,12 +69,11 @@ const filteredTitles = computed(() => {
 });
 
 function filterTitles() {
-    return props.gameData.filter(item => item.name.toLowerCase().includes(keyword.value.toLowerCase()));
+    return props.allGame.filter(item => item.name.toLowerCase().includes(keyword.value.toLowerCase()));
 }
 
 function handleInput() {
     showList.value = keyword.value.length > 0;
-    
 }
 
 
