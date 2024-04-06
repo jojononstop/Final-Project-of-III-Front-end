@@ -34,9 +34,9 @@
         <div class="col-xl-3 col-lg-4 col-md-11 order-2 order-lg-0">
           <!-- 使用這頭像 -->
           <div class="my-outer-container" >
-            <img :src="`${memberAvatarURL}`" alt="Image 1" class="my-image" />
-            <img src="/public/images/Bonus/4/">
-            <!-- <img v-else="isUsingFrame" src="/public/images/Bonus/4/nullImg.png" alt="Image 2" class="my-Frameimage" /> -->
+            <img :src="`${memberAvatarURL}`" alt="使用者頭像" class="my-image" />
+            <img v-if="isUsingFrame" :src="frameImagePath" alt="使用外框" class="my-Frameimage">
+            <img v-else src="/public/images/Bonus/4/nullImg.png" alt="空外框" class="my-Frameimage" />
           </div>
           <!-- 搜尋功能列 -->
           <bonusUserCollect-sidebar @search="handleSearch" />
@@ -69,29 +69,48 @@
 
 <script setup>
 import { defineProps, defineEmits, onMounted } from "vue";
-
 //cookie
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
 
-  let memberId = $cookie.getCookie("Id");
-  let bonus = $cookie.getCookie("bonus");
-  let memberAvatarURL = $cookie.getCookie("avatarUrl");
+let memberId = $cookie.getCookie("Id");
+let memberAvatarURL = $cookie.getCookie("avatarUrl");
 
 const props = defineProps({
   bonusProductsByMemberIdInArea: Object,
   bonusProductTypesInArea: Object,
 });
 
+// 判斷是否使用頭像
+const isUsingAvatar = computed(() => {
+  //遍歷持有物品，找到頭像類型
+})
 
-// 判斷頭像是否有使用
-const isUsingFrame = () =>{
-  
-}
+
+// 判斷是否有使的外框
+const isUsingFrame = computed(() => {
+  // 遍歷持有物品，找到外框的類型
+  const frameProduct = props.bonusProductsByMemberIdInArea.find(product => {
+    return product.productTypeId === 4 && product.using === true;
+  });
+  // 找出符合類型且有被使用的物品，返回true；否則返回false
+  return !!frameProduct;
+});
+
+// 根据是否使用外框來決定外框路徑
+const frameImagePath = computed(() => {
+  // 遍歷持有物品，找找到外框的類型
+  const frameProduct = props.bonusProductsByMemberIdInArea.find(product => {
+    return product.productTypeId === 4 && product.using === true;
+  });
+
+  // 使用了返回使用路徑，沒使用則返回預設
+  return isUsingFrame.value ? `/images/Bonus/4/${frameProduct.name}.png` : '/public/images/Bonus/4/nullImg.png';
+});
 
 onMounted(() =>
 {
-  console.log(props.bonusProductsByMemberIdInArea);
-  console.log(props.bonusProductTypesInArea);
+  // console.log(props.bonusProductsByMemberIdInArea);
+  // console.log(props.bonusProductTypesInArea);
 // console.log(cookiedetails)
 });
 
