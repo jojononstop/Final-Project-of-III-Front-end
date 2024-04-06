@@ -3,8 +3,8 @@
     <!-- breadcrumb area start -->
     <breadcrumb-three title="Contact us" subtitle="Contact"></breadcrumb-three>
     <!-- breadcrumb area end -->
-
-    <Cart></Cart>
+    <form-contact />
+    <!-- <Cart></Cart> -->
   </div>
 </template>
 

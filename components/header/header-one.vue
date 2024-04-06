@@ -82,9 +82,21 @@
                       </nuxt-link>
                     </li>
 
+
+
+                    <!-- 會員頭像 -->
+                    <li class="search" v-if="isAccountIdExists">
+                      <nuxt-link to="">
+                      <div style="height: 30px; width:30px" class="my-outer-container">
+                        <img :src="ava" alt="Member Avatar" class="my-image" >
+                        <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage" />
+                      </div>
+                      </nuxt-link>
+                    </li>
+
                     <!-- 會員名稱 -->
                     <li class="search" v-if="isAccountIdExists">
-                      <nuxt-link to="/">
+                      <nuxt-link :to="`/Id=${id}/profiles`">
                         {{ name }}
                       </nuxt-link>
                     </li>
@@ -120,165 +132,68 @@
   </header>
 </template>
 
-<!-- <script setup lang="ts">
-import menu_data from '@/data/menu-data';
-import menu_data_cookie from '@/data/menu-data-cookie';
-import connection from '@/data/signalR';
-import { useRouter } from 'vue-router';
-const router = useRouter();
 
-router.beforeEach((to, from) => {
-  checkLogin()
-})
-
-let name = "";
-
-defineProps<{ style_2?: boolean }>();
-
-
-import { VueCookieNext as $cookie } from 'vue-cookie-next'
-let isAccountIdExists = ref<boolean>(false);
-
-
-let isAccountIdExists = ref(false);
-
-function checkLogin() {
-  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
-  if($cookie.getCookie("name")){
-  name =$cookie.getCookie("name");
- }
-}
-
-
-
-
-  //  // 监听 accountId cookie 的变化
-  //  watch(() => $cookie.getCookie('accountId'), (newVal, oldVal) => {
-  //   // 如果 cookie 发生变化，更新 isAccountIdExists 的值
-  //   isAccountIdExists = $cookie.isCookieAvailable('accountId');
-  //   // 处理其他逻辑
-  // });
-
-// onMounted
-onBeforeMount(() => {
-  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
-  if($cookie.getCookie("name")){
-  name =$cookie.getCookie("name");
- }
-
-  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
-  if ($cookie.getCookie("name")) {
-    name = $cookie.getCookie("name");
-  }
-});
-
-function checkLogin() {
-  isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
-  console.log(isAccountIdExists)
-  if ($cookie.getCookie("name")) {
-    name = $cookie.getCookie("name");
-
-  }
-}
-
-
-const { isSticky, isStickyVisible } = useSticky();
-const route = useRoute();
-const isActive = ref<boolean>(false);
-const isOffCanvasOpen = ref<boolean>(false);
-const isMobileOffCanvasOpen = ref<boolean>(false);
-
-const handleOpenSearch = (audioPath: string) => {
-  const audio = new Audio(audioPath);
-  audio.play();
-  isActive.value = !isActive.value;
-};
-
-const handleCloseSearch = (audioPath: string) => {
-  const audio = new Audio(audioPath);
-  audio.play();
-  isActive.value = !isActive.value;
-};
-// off canvas
-const handleOpenOffCanvas = (audioPath: string) => {
-  const audio = new Audio(audioPath);
-  audio.play();
-  isOffCanvasOpen.value = !isOffCanvasOpen.value;
-};
-
-const handleCloseOffCanvas = (audioPath: string) => {
-  const audio = new Audio(audioPath);
-  audio.play();
-  isOffCanvasOpen.value = !isOffCanvasOpen.value;
-};
-// mobile off canvas
-const handleOpenMobileOffCanvas = (audioPath: string) => {
-  const audio = new Audio(audioPath);
-  audio.play();
-  isMobileOffCanvasOpen.value = !isMobileOffCanvasOpen.value;
-};
-
-const handleCloseMobileOffCanvas = (audioPath: string) => {
-  const audio = new Audio(audioPath);
-  audio.play();
-  isMobileOffCanvasOpen.value = !isMobileOffCanvasOpen.value;
-};
-
-const handleSignOut = () => {
-  $cookie.removeCookie('accountId');
-  $cookie.removeCookie('avatarUrl');
-  $cookie.removeCookie('bonus');
-  $cookie.removeCookie('name');
-  $cookie.removeCookie('google');
-  $cookie.removeCookie('Id');
-
-
-  connection.stop().then(() => {
-      console.log('SignalR 斷開連線');
-    }).catch(err => {
-      console.error('SignalR connection failed:', err.toString());
-    });
-    console.log('SignalR 斷開連線');
-  }).catch(err => {
-    console.error('SignalR connection failed:', err.toString());
-  });
-
-  
-  location.reload();
-
-};
-
-
-
-</script> -->
 <script setup>
 import menu_data from '@/data/menu-data';
 import menu_data_cookie from '@/data/menu-data-cookie';
 import { ref, onBeforeMount } from 'vue'; // 引入 ref 和 onBeforeMount
 import { useRouter } from 'vue-router';
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
+
+
+
 const router = useRouter();
 
 router.beforeEach((to, from) => {
   checkLogin()
+  if ($cookie.getCookie("name")) {
+    name = $cookie.getCookie("name");
+  }
+  if ($cookie.getCookie("avatarUrl")) {
+    ava = $cookie.getCookie("avatarUrl");
+  }
 })
-
-let name = "";
-
+let ava = "";
+let name = ref("");
+let id= ref("");
 defineProps({ style_2: Boolean });
 
-import { VueCookieNext as $cookie } from 'vue-cookie-next';
+
+
+
+
 let isAccountIdExists = ref(false);
 
 // onMounted
 onBeforeMount(() => {
   isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
-  if ($cookie.getCookie("name")) {
-    name = $cookie.getCookie("name");
+  if ($cookie.isCookieAvailable("name")) {
+    name.value = $cookie.getCookie("name");
+  }
+  if ($cookie.isCookieAvailable("accountId")) {
+    id.value = $cookie.getCookie('accountId');
+    // id.value = parseInt($cookie.getCookie('Id'), 10);
+    console.log(id.value)
+  }
+  if ($cookie.getCookie("avatarUrl")) {
+    ava = $cookie.getCookie("avatarUrl");
   }
 });
 
+onMounted(()=>{
+
+});
+
+
+
+
 function checkLogin() {
   isAccountIdExists.value = $cookie.isCookieAvailable('accountId');
+  if ($cookie.isCookieAvailable("accountId")) {
+    id.value = $cookie.getCookie('accountId');
+    // id.value = parseInt($cookie.getCookie('Id'), 10);
+    console.log(id.value)
+  }
 }
 
 const { isSticky, isStickyVisible } = useSticky();
@@ -332,4 +247,49 @@ const handleSignOut = () => {
   $cookie.removeCookie('Id');
   location.reload();
 };
+
+
+// try{
+
+// }catch{
+//   console.log("cookiename")
+// }
+
+if (process.client) {
+  watch(() => $cookie.getCookie("name"), (newVal) => {
+  name.value = newVal;
+});
+}
+//   watch($cookie.getCookie("name"), (newVal) => {
+//   name.value = newVal;
 </script>
+
+
+<style lang="scss">
+@import "@/assets/css/my-style.css";
+.my-outer-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-image {
+  position: absolute;
+  top: 50%; /* 依附於父物件的垂直中心點 */
+  left: 50%; /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  width: 93%;
+  height: auto;
+}
+.my-Frameimage {
+  position: absolute;
+  top: 50%; /* 依附於父物件的垂直中心點 */
+  left: 50%; /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  width: 100%;
+  height: auto;
+}
+</style>

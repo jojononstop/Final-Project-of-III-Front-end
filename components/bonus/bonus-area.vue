@@ -12,15 +12,25 @@
         </div>
         <div class="col-xl-9 col-lg-8 col-md-11">
           <div>
-            <h4>投影片部分</h4>
+            <h5>
+              您的點數餘額：<img
+                src="/public//images/gold-coin-icon.png"
+                style="width: 30px; height: 30px; align-items: center"
+              />{{ bonus }}
+            </h5>
+          </div>
+          <div>
+            <!-- <h4>投影片部分</h4>
             <div
               id="carouselExampleControls"
               class="carousel slide"
               data-bs-ride="false"
             >
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <h4>第一頁</h4>
+              <div class="my-carousel-inner">
+                <div class="my-carousel-item active">
+                  <h4>
+                  第一頁
+                  </h4>
                 </div>
                 <div class="carousel-item">
                   <h4>第二頁</h4>
@@ -50,34 +60,28 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
-            </div>
+            </div> -->
           </div>
           <!--物品清單-->
           <div
             class="row justify-content-start row-cols-xl-3 row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-1"
           >
             <!-- 把接到的請求資料丟到bonusProducts -->
-            <div v-for="bonusProductItem in bonusProductsInArea" :key="bonusProductItem.id" class="col">
+            <div v-for="bonusProductItem in bonusProductsInArea"
+              :key="bonusProductItem.id"
+              class="col"
+            >
               <bonus-item
                 :bonusProductsInItem="bonusProductItem"
                 :bonusProductTypesInItem="bonusProductTypesInArea"
-                :modalId="'exampleModal_' + bonusProductItem.id"
+                :bonusItemInItem="bonusItemInArea"
+                :modalId="'exampleModal_' + bonusProductItem.id" 
+                @childClick="handleChildClick"
               />
             </div>
           </div>
-          <!-- 換頁按鈕 -->
-          <div class="pagination__wrap">
-            <ul class="list-wrap d-flex flex-wrap justify-content-center">
-              <li><nuxt-link to="#" class="page-numbers">01</nuxt-link></li>
-              <li><span class="page-numbers current">02</span></li>
-              <li><nuxt-link to="#" class="page-numbers">03</nuxt-link></li>
-              <li><nuxt-link to="#" class="page-numbers">....</nuxt-link></li>
-              <li>
-                <nuxt-link to="#" class="next page-numbers">
-                  <i class="fas fa-angle-double-right"></i>
-                </nuxt-link>
-              </li>
-            </ul>
+          <div style="position: absolute; left: 50%">
+            <h4>{{ errormessageInArea }}</h4>
           </div>
         </div>
       </div>
@@ -87,22 +91,39 @@
 
 <script setup>
 // import product_data from "@/data/product-data";
-import { defineProps, defineEmits, onMounted } from "vue";
+import { defineProps, defineEmits, onMounted, watchEffect} from "vue";
+//cookie
+import { VueCookieNext as $cookie } from "vue-cookie-next";
+let memberId = $cookie.getCookie("Id");
+let bonus = $cookie.getCookie("bonus");
+
+// console.log(memberAvatarURL)
 
 const props = defineProps({
   bonusProductsInArea: Object,
   bonusProductTypesInArea: Object,
+  bonusItemInArea: Object,
+  errormessageInArea: String,
 });
 
-onMounted(() => {
-  // console.log(props.bonusProductsInArea, props.bonusProductTypesInArea);
+
+const handleChildClick = (id) =>
+{
+  console.log('測試子物件傳數值',id)
+}
+
+onMounted(() => 
+{
+  // console.log(props.bonusItemInArea)
 });
 
+watchEffect(() => {
+  // console.log(props.bonusItemInArea);
+});
 
 const emits = defineEmits(["data-from-bonus"]);
 
 function handleSearch(keyword) {
-  // console.log("Search keyword",keyword);
   emits("data-from-bonus", keyword);
 }
 </script>

@@ -1,7 +1,21 @@
 <template>
-    <div>
-        <p v-if="tagName != null">Search By Tag: {{tagName}}</p>
+
+    <div class="row">
+        <div class="col-4">
+            <p v-if="tagName != null">搜尋標籤: {{ tagName }}</p>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <input type="text" class="form-control mb-3" v-model="keyword" @input="handleInput">
+            <div class="list-group" v-if="showList">
+                <a v-for="title in filteredTitles" :key="title.id" :href="'game-details/' + title.id"
+                    class="list-group-item list-group-item-action ">{{ title.name }}</a>
+            </div>
+        </div>
     </div>
+
+
+
     <div>
         <div v-for="game in gameData" :key="game.id">
             <nuxt-link :to="`/game-details/${game.id}`">
@@ -11,7 +25,7 @@
                             :src="'images/games/cover/' + game.developerId + '/' + game.id + '/' + game.cover + '.jpg'" />
                     </div>
                     <div class="col-7 d-flex align-items-center">
-                        <h3 class="">{{ game.name , tagName}}</h3>
+                        <h3 class="">{{ game.name, tagName }}</h3>
                     </div>
                     <div v-if="game.discountPrice" class="col-2 d-flex align-items-center container">
                         <p class="text-decoration-line-through text-start">
@@ -43,10 +57,28 @@ import axios from 'axios'
 
 const props = defineProps({
     gameData: Object,
-    tagName: String
+    allGame: Object,
+    tagName: String,
 });
 
+const keyword = ref('');
+const showList = ref(false);
+
+const filteredTitles = computed(() => {
+    return keyword.value ? filterTitles() : [];
+});
+
+function filterTitles() {
+    return props.allGame.filter(item => item.name.toLowerCase().includes(keyword.value.toLowerCase()));
+}
+
+function handleInput() {
+    showList.value = keyword.value.length > 0;
+}
+
+
 </script>
+
 <style scoped>
 .discount-text {
     color: #ffffff;
@@ -83,4 +115,10 @@ const props = defineProps({
     align-items: center;
 }
 
+.list-group {
+    z-index: 1000;
+    /* 任何比其他元素更高的值都可以 */
+    position: absolute;
+    /* 为了使 z-index 生效，通常需要配合 position 属性 */
+}
 </style>
