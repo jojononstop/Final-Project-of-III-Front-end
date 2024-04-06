@@ -31,11 +31,11 @@
               <h4 style="margin-left: 12vh; margin-top: 2vh;">或</h4>
             </div>
             <div>
-              <button style="margin-left: 8vh; margin-top: 2vh;background-color: #0EFC8C;color:#324052">免密碼登入</button>
+              <button style="margin-left: 8vh; margin-top: 2vh;background-color: #0EFC8C;color:#324052" @click="nopassword">免密碼登入</button>
             </div>
             <!-- Google Sign-In 按钮 -->
-            <div class="flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8" style="margin-top:2vh;">
-              <div class="flex w-full max-w-md flex-col items-center justify-center" style="margin-top:2vh;">
+            <div class="flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8" style="margin-top:1vh;">
+              <div class="flex w-full max-w-md flex-col items-center justify-center" style="margin-top:1vh;">
                 <img src="../public/images/login/googleSign.png" alt="" @click="handleGoogleLogin">
           <!-- <button 
           class="flex rounded-md border border-gray-100 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2" style="margin-left:12vh;margin-top:8vh;background-image:url(../public/images/login/googleSign.png)"
@@ -179,6 +179,10 @@ const test = async () => {
 
 const register = async () => {
   router.push('/register');
+};
+
+const nopassword = async () => {
+  router.push('/nopassword');
 };
 
 const handleGoogleLogin = async () => {
