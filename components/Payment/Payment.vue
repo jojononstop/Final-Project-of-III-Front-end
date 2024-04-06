@@ -14,6 +14,7 @@ import axios from 'axios';
 import { VueCookieNext as $cookie } from 'vue-cookie-next';
 let orderId = ref('');
 let amount = 0;
+let cartGames = ref([]);
 
 
 
@@ -42,10 +43,9 @@ async function getLinePayData() {
   packageData.products = [];
 
   for (let item of cartItems.value) { 
-    console.log(item.gameId)
     // 发送另一个axios请求
     let gameResponse = await axios.get(`https://localhost:7048/api/Games/${item.gameId}`);
-
+    cartGames.value.push(gameResponse.data);
     let game = gameResponse.data;
     
     let cartGame = {};

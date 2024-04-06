@@ -63,12 +63,12 @@
         
         <div v-else class="blog-widget">
             <div>
-                <nuxt-link to="" class="tg-btn-2 -secondary mb-2 d-flex" @click="AddToWishList(gameData.id)">
+                <nuxt-link to="" class="tg-btn-2 -secondary mb-2 d-flex clickable-element" @click="AddToWishList(gameData.id)">
                     加入願望清單
                 </nuxt-link>
             </div>
             <div>
-                <nuxt-link v-if="releaseDate < currentDate" to="" class="tg-btn-2 d-flex"
+                <nuxt-link v-if="releaseDate < currentDate" to="" class="tg-btn-2 d-flex clickable-element"
                 @click="AddToCart(gameData.id)">
                 加入購物車
             </nuxt-link>
@@ -199,5 +199,8 @@ const releaseDate = new Date(props.gameData.releaseDate);
     justify-content: center;
     align-items: center;
     height: 60px;
+}
+.clickable-element {
+  cursor: pointer;
 }
 </style>

@@ -31,40 +31,22 @@
     let tagName = ref(null);
     let gamePage = ref(null);
     let page = ref(0);
+    let currentQuery = ref(null);
 
     router.beforeEach((to, from) => {
+        currentQuery.value = to.query.search;
+        console.log("to",to.query.search)
+        console.log("from",from.query.search)
+        console.log("test",currentQuery.value)
+        // if(to.query.search !== from.query.search){
+            fetchGame();
+        // }
         page.value = (to.query.page) - 1
         injectGames.value = chuckGames.value[page.value]  
     })
 
-
-
-
     onBeforeMount(async () => {
-
-        if (route.query.search != null) {
-            const queryString = route.query.search.split('_');
-
-            if (queryString[0] == "tag") {
-                const tags = [Number(queryString[1])];
-                const response = await axios.post("https://localhost:7048/api/Games/FilterByTags", tags);
-                games.value = response.data;
-                countPages(games.value.length, 4)
-                const response1 = await axios.get(`https://localhost:7048/api/Games/tag/${tags}`);
-                tagName.value = response1.data
-            }
-
-            if (queryString[0] == "popular") {           
-                const response = await axios.post("https://localhost:7048/api/Games/popular?begin=1&end=100");
-                games.value = response.data;
-                countPages(games.value.length, 4)
-            }
-
-        } else {
-            const response = await axios.get("https://localhost:7048/api/Games");
-            games.value = response.data;
-            countPages(games.value.length, 4)
-        }
+        await fetchGame()
     });
 
     async function chuckGame() {
@@ -83,5 +65,41 @@
             gamePage.value = parseInt(allCounts / pageCounts) + 1;
         }
         chuckGame()
+    }
+
+    async function fetchGame(){
+        if (currentQuery.value != null) {
+            const queryString =  currentQuery.value.split('_');
+
+            if (queryString[0] == "tag") {
+                console.log("tag")
+                const tags = [Number(queryString[1])];
+                const response = await axios.post("https://localhost:7048/api/Games/FilterByTags", tags);
+                games.value = response.data;
+                countPages(games.value.length, 4)
+                const response1 = await axios.get(`https://localhost:7048/api/Games/tag/${tags}`);
+                tagName.value = response1.data
+            }
+
+            if (queryString[0] == "popular") { 
+                console.log("popular")          
+                const response = await axios.post("https://localhost:7048/api/Games/popular?begin=1&end=100");
+                games.value = response.data;
+                countPages(games.value.length, 4)
+            }
+
+            if (queryString[0] == "discount") {  
+                console.log("discount")           
+                const response = await axios.post("https://localhost:7048/api/Games/alldiscount");
+                games.value = response.data;
+                countPages(games.value.length, 4)
+            }
+
+        } else {
+            const response = await axios.get("https://localhost:7048/api/Games");
+            games.value = response.data;
+            countPages(games.value.length, 4)
+        }
+        console.log(games.value)
     }
 </script>

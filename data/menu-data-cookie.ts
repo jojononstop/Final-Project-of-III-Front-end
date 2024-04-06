@@ -16,16 +16,15 @@ type IMenuDataType = {
       link:'/',
       sub_menu:[
         {title:'首頁',link:'/'},
-        {title:'所有遊戲',link:'/game'},
+        {title:'暢銷遊戲',link:'/game?search=popular'},
+        {title:'優惠遊戲',link:'/game?search=discount'},
+        {title:'免費遊戲',link:'/game?search=tag_13'},
       ]
     },
     {
       id:2,
       title:'點數商店',
       link:'/bonus',
-      sub_menu:[
-        {title:'bonusItem',link:'/bounsItem'},
-      ]
     },
     {
       id:3,
