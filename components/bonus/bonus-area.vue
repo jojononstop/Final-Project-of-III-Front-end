@@ -11,7 +11,7 @@
           <bonus-sidebar @search="handleSearch" />
         </div>
         <div class="col-xl-9 col-lg-8 col-md-11">
-          <div>
+          <div v-if="memberId">
             <h5>
               您的點數餘額：<img
                 src="/public//images/gold-coin-icon.png"
@@ -77,6 +77,7 @@
                 :bonusItemInItem="bonusItemInArea"
                 :modalId="'exampleModal_' + bonusProductItem.id" 
                 @childClick="handleChildClick"
+                @buyProduct= "buyEvenFormItem"
               />
             </div>
           </div>
@@ -121,9 +122,15 @@ watchEffect(() => {
   // console.log(props.bonusItemInArea);
 });
 
-const emits = defineEmits(["data-from-bonus"]);
+const emits = defineEmits(["data-from-bonus"],["byProduct"]);
 
 function handleSearch(keyword) {
   emits("data-from-bonus", keyword);
 }
+
+function buyEvenFormItem(id,name,price)
+{
+  emits("byProduct",id,name,price)
+}
+
 </script>

@@ -6,7 +6,11 @@
     <bonusUserCollect-area v-if="dbData_bonusProductsByMemberId && dbData_bonusProductTypes"
     :bonusProductsByMemberIdInArea="dbData_bonusProductsByMemberId"
     :bonusProductTypesInArea="dbData_bonusProductTypes" 
-    @data-from-bonus="handleDataFromBonus"></bonusUserCollect-area>
+    @data-from-bonus="handleDataFromBonus"
+    @itemUsing = "itemUsingEventFormArea"
+    ></bonusUserCollect-area>
+    
+    <!-- @itmeUsing="itemUsingEvent" -->
   </div>
 </ClientOnly>
 </template>
@@ -19,19 +23,30 @@ import { VueCookieNext as $cookie } from 'vue-cookie-next'
 // 透過axios GET & POST請求
 import axios from "axios";
 
+async function itemUsingEventFormArea(id,using)
+{
+  let memberId = $cookie.getCookie("Id");
+
+  if(memberId != undefined && id != undefined &&  using != undefined)
+  { 
+    // Update MemberBonusItem Using - 切換使用狀態
+    const responseMemberProductItem = await axios.post(`https://localhost:7048/api/BonusProducts/update?memberId=${memberId}&bonusId=${id}&usingStatus=${using}`);
+    dbData_mamberProductItemStatus.value = responseMemberProductItem.data;
+  }
+  // Get All BonusProduct By MenberId
+  const responseByMenberId = await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/${memberId}`);
+  dbData_bonusProductsByMemberId.value = responseByMenberId.data;
+}
+
 const dbData_bonusProductsByMemberId = ref(null);
 const dbData_bonusProductTypes = ref(null);
 const dbData_mamberProductItemStatus = ref(null);
 
-
-let bonusId;
-let using;
-
 onMounted(async () => 
 {
+
   let memberId = $cookie.getCookie("Id");
   let cookiedetails = $cookie
-
   try 
   {
     // Get All BonusProduct By MenberId
@@ -52,9 +67,7 @@ onMounted(async () =>
     // const responseTypes = await axios.get(`https://localhost:7048/api/BonusProducts/Type/${producttypeid}`);
     // bonusProducts.value = responseTypes.data;
 
-    // Update MemberBonusItem Using - 切換使用狀態
-    // const responseMemberProductItem = await axios.get(`https://localhost:7048/api/BonusProducts/update?memberId=${memberId}&bonusId=${bonusId}&usingStatus=${using}`);
-    // dbData_mamberProductItemStatus.value = responseMemberProductItem.data;
+
   }
   catch (error) 
   {

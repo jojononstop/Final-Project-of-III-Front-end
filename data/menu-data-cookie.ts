@@ -24,7 +24,8 @@ type IMenuDataType = {
       title:'點數商店',
       link:'/bonus',
       sub_menu:[
-        {title:'bonusItem',link:'/bounsItem'},
+        {title:'點數商店清單',link:'/bonus'},
+        {title:'點數商品收藏庫',link:'/bonusUserCollect'},
       ]
     },
     {
