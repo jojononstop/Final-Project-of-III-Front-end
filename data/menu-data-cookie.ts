@@ -12,67 +12,46 @@ type IMenuDataType = {
   const menu_data:IMenuDataType[] = [
     {
       id:1,
-      title:'首頁',
-      link:'#',
+      title:'商店',
+      link:'/',
       sub_menu:[
-        {title:'Home One',link:'/'},
-        {title:'Home Two',link:'/home-2'},
+        {title:'首頁',link:'/'},
+        {title:'所有遊戲',link:'/game'},
       ]
     },
     {
       id:2,
-      title:'關於',
-      link:'/about',
-    },
-    {
-      id:3,
-      title:'商店',
-      link:'#',
-      sub_menu:[
-        {title:'TOURNAMENT',link:'/tournament'},
-        {title:'TOURNAMENT Single',link:'/tournament-details'},
-      ]
-    },
-    {
-      id:4,
       title:'點數商店',
       link:'/bonus',
       sub_menu:[
-        // {title:'Gaming Shop',link:'/shop'},
-        // {title:'Shop Details',link:'/shop-details'},
-        // {title:'Our Services',link:'/services'},
-        // {title:'Services Details',link:'/service-details'},
-        // {title:'Player Details',link:'/team-details'},
-        {title:'Bonus',link:'/bonus'},
         {title:'bonusItem',link:'/bounsItem'},
       ]
+    },
+    {
+      id:3,
+      title:'關於我們',
+      link:'/about',
+    },
+    {
+      id:4,
+      title:'收藏庫',
+      link:'/',
+
     },
     {
       id:5,
       title:'個人資料',
       link:'#',
       sub_menu:[
-        {title:'Our Blog',link:'/blog'},
-        {title:'Blog Details',link:'/blog-details'}
+        {title:'物品庫',link:'/'},
+        {title:'願望清單',link:'/'}
       ]
     },
     {
-      id:6,
-      title:'測試',
+      id:5,
+      title:'聊天室',
       link:'/chattest',
     },
-    {
-      id:7,
-      title:'Game',
-      link:'/game',
-    },
-    {
-      id:8,
-      title:'測試防禦',
-      link:'/Login',
-    },
-  
-
   ]
   
   export default menu_data;

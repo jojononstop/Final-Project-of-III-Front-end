@@ -28,7 +28,7 @@
 const title_data = [
   {
     id: 1,
-    img: '/images/Home/Tags/休閒.jpg',
+    img: '/images/Home/Tags/開放世界.jpg',
     title: '熱門遊戲',
     subtitle: ''
   },
@@ -40,13 +40,13 @@ const title_data = [
   },
   {
     id: 3,
-    img: '/images/Home/Tags/休閒.jpg',
+    img: '/images/Home/Tags/解謎.jpg',
     title: '推薦新品',
     subtitle: ''
   },
   {
     id: 4,
-    img: '/images/Home/Tags/休閒.jpg',
+    img: '/images/Home/Tags/射擊.jpg',
     title: '免費遊戲',
     subtitle: ''
   }

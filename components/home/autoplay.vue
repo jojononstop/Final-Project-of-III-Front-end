@@ -1,5 +1,5 @@
 <template>
-    <section class="gallery__area fix section-pb-130">
+    <section class="gallery__area fix  section-pt-120 section-pb-120">
         <div class="gallery__slider">
             <div class="container">
                 <div class="row justify-content-center">
@@ -7,19 +7,20 @@
                         <swiper v-bind="slider_setting" :modules="[Navigation, Scrollbar]"
                             class="swiper-container gallery-active" :centeredSlides="true" :observer="true"
                             :observeParents="true">
-                            <swiper-slide v-for="(item, index) in gallery_data" :key="item.id">
+                            <swiper-slide v-for="(item, index) in discounts" :key="item.id">
                                 <div class="gallery__item">
                                     <div class="gallery__thumb">
-                                        <a data-cursor="-theme" data-cursor-text="View <br> Image"
-                                            class="popup-image cursor-pointer" :title="item.title" @click.prevent="
-                            handleShowImage(index)
-                            " @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-                                            <img :src="item.img" alt="img" />
+                                        <a data-cursor="-theme" data-cursor-text="View"
+                                            class="popup-image cursor-pointer" :title="item.discountName"
+                                            @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+                                            <nuxt-link :to="`/discount/${item.id}`" :discountItem="item">
+                                                <img :src="item.image" alt="img" />
+                                            </nuxt-link>
                                         </a>
                                     </div>
                                     <div class="gallery__content">
-                                        <h3 class="title">{{ item.title }}</h3>
-                                        <span class="rate">rate {{ item.rate }}</span>
+                                        <h2 class="text_blue">{{ item.discountName }}</h2>
+                                        <h3 class="text_green">最高-{{ item.percent }}%off</h3>
                                     </div>
                                 </div>
                             </swiper-slide>
@@ -32,7 +33,7 @@
     </section>
 
     <!-- image lightbox start -->
-    <popup-image-lightbox :images="gallery_data.map((p) => p.img)" :indexVal="index" :visible="visible"
+    <popup-image-lightbox :images="discounts.map((p) => p.image)" :indexVal="index" :visible="visible"
         @handleHide="handleHide"></popup-image-lightbox>
     <!-- image lightbox end -->
 </template>
@@ -91,7 +92,18 @@ const slider_setting = {
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Scrollbar } from "swiper/modules";
-import gallery_data from "@/data/gallery-data";
+import axios from "axios";
+
+let discounts = ref([]);
+
+let discount = axios.get("https://localhost:7048/api/Discount/GetDiscount").then((res) => {
+    console.log(res.data);
+    discounts.value = res.data;
+});
+
+
+
+
 const mouse = useBigMouse();
 
 const handleMouseEnter = () => {
@@ -139,3 +151,12 @@ const slider_setting = {
     },
 };
 </script>
+<style scoped>
+.text_green {
+    color: springgreen;
+}
+
+.text_blue {
+    color: w;
+}
+</style>

@@ -13,7 +13,7 @@
         <SwiperSlide v-for="item in streamers_data" :key="item.id">
           <div class="streamers__item">
             <div class="streamers__thumb">
-              <nuxt-link to="/team-details">
+              <nuxt-link :to="`/game?search=tag_${item.id}`">
                 <img :src="item.img" alt="img" />
               </nuxt-link>
             </div>
@@ -47,67 +47,67 @@ const streamers_data: {
   title: string;
 }[] = [
     {
-      id: 1,
+      id: 17,
       img: '/images/Home/Tags/角色扮演.jpg',
       title: '角色扮演'
     },
     {
-      id: 2,
+      id: 16,
       img: '/images/Home/Tags/射擊.jpg',
       title: '射擊'
     },
     {
-      id: 3,
+      id: 26,
       img: '/images/Home/Tags/休閒.jpg',
       title: '休閒'
     },
     {
-      id: 4,
+      id: 5,
       img: '/images/Home/Tags/開放世界.jpg',
       title: '開放世界'
     },
     {
-      id: 5,
+      id: 24,
       img: '/images/Home/Tags/冒險.jpg',
       title: '冒險'
     },
     {
-      id: 6,
+      id: 27,
       img: '/images/Home/Tags/格鬥.jpg',
       title: '格鬥'
     },
     {
-      id: 7,
+      id: 28,
       img: '/images/Home/Tags/生存.jpg',
       title: '生存'
     },
     {
-      id: 7,
+      id: 29,
       img: '/images/Home/Tags/模擬.jpg',
       title: '模擬'
     },
     {
-      id: 7,
+      id: 30,
       img: '/images/Home/Tags/策略.jpg',
       title: '策略'
     },
     {
-      id: 7,
+      id: 2,
       img: '/images/Home/Tags/合作.jpg',
       title: '合作'
     },
     {
-      id: 7,
+      id: 4,
       img: '/images/Home/Tags/動作.jpg',
       title: '動作'
     },
     {
-      id: 7,
+      id: 31,
       img: '/images/Home/Tags/運動.jpg',
       title: '運動'
     },
     {
-      id: 7,
+      id: 32,
       img: '/images/Home/Tags/解謎.jpg',
       title: '解謎'
     },

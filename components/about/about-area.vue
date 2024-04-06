@@ -5,12 +5,12 @@
         <div class="col-xl-10">
           <div class="about__tab-wrap">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <about-nav-btn id="01" img="/images/others/about_tab01.png" :isActive="true" />
-              <about-nav-btn id="02" img="/images/others/about_tab02.png" />
-              <about-nav-btn id="03" img="/images/others/about_tab03.png" />
-              <about-nav-btn id="04" img="/images/others/about_tab04.png" />
-              <about-nav-btn id="05" img="/images/others/about_tab05.png" />
-              <about-nav-btn id="06" img="/images/others/about_tab06.png" />
+              <about-nav-btn id="01" img="/images/Home/Number/1.png" :isActive="true" />
+              <about-nav-btn id="02" img="/images/Home/Number/2.png" />
+              <about-nav-btn id="03" img="/images/Home/Number/3.png" />
+              <about-nav-btn id="04" img="/images/Home/Number/4.png" />
+              <about-nav-btn id="05" img="/images/Home/Number/5.png" />
+              <about-nav-btn id="06" img="/images/Home/Number/6.png" />
             </ul>
           </div>
         </div>

@@ -1,38 +1,44 @@
 <template>
-    <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
-        <div v-for="(toast, index) in toasts" :key="index" class="toast align-items-center"
-            :class="[toast.variant ? 'bg-' + toast.variant : '', 'text-white']" role="alert" aria-live="assertive"
-            aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    {{ toast.message }}
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"
-                    @click="removeToast(index)"></button>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="/public/images/icons/cross-out.png" class="rounded me-2" alt="...">
+                <strong class="me-auto">系統通知</strong>
+                <small>{{ Time }}</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body text-bg-success">
+                {{ message }}
             </div>
         </div>
     </div>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            toasts: [],
-        };
-    },
-    methods: {
-        addToast(message, variant = null) {
-            this.toasts.push({ message, variant });
-            setTimeout(() => {
-                this.removeToast(this.toasts.length - 1);
-            }, 5000); // 设置 Toast 显示时间
-        },
-        removeToast(index) {
-            this.toasts.splice(index, 1);
-        },
-    },
-};
+<script setup>
+import startConnection from '@/data/signalR';
+import axios from 'axios';
+
+let Time = ref(new Date().toLocaleTimeString());
+let message = ref('');
+const connection = startConnection();
+const toastLiveExample = document.getElementById('liveToast')
+
+connection.on('userconnected', (connectionId) => {
+    console.log(connectionId);
+    message.value = `您的好友 ${connectionId.UserName} 上線`;
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastBootstrap.show()
+});
+
+connection.on('userdisconnected', (connectionId) => {
+    console.log(connectionId);
+    message.value = `您的好友 ${connectionId.UserName} 離線`;
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastBootstrap.show()
+});
+
+
+
 </script>
 
 <!-- 样式引入，确保你的项目中已经引入了 Bootstrap 样式 -->

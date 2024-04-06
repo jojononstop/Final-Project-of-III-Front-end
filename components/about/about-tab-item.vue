@@ -1,10 +1,6 @@
 <template>
-  <div
-    :class="`tab-pane ${isActive ? 'show active' : ''}`"
-    :id="`about${id}`"
-    role="tabpanel"
-    :aria-labelledby="`about${id}-tab`"
-  >
+  <div :class="`tab-pane ${isActive ? 'show active' : ''}`" :id="`about${id}`" role="tabpanel"
+    :aria-labelledby="`about${id}-tab`">
     <div class="row justify-content-center">
       <div class="col-xl-5 col-lg-10">
         <div class="about__img">
@@ -18,9 +14,7 @@
               <h4 class="title">{{ title }}</h4>
               <span class="rate">rate {{ rate }}</span>
               <p>
-                Lorem ipsum dolor sit amet, consteur adipiscing Duis elementum
-                sollicitudin is yaugue euismods Nulla ullamcorper. Morbi
-                pharetra tellus miolslis, tincidunt massa venenatis.
+                內容
               </p>
             </div>
             <div class="about__content-list">

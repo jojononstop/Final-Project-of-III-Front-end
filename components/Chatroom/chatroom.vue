@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="chatModal" @shown="scrollToBottom">
+        aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="chatModal" @shown="handleModalShown();">
         <div class="modal-dialog ">
             <div class="modal-content bg-success">
                 <div class="modal-header">
@@ -31,13 +31,13 @@
                                             :class="{ 'message-data': true, 'text-right': message.sender_id === IdFromCookie }">
                                             <span class="message-data-time text-white"
                                                 :class="{ 'float-right': message.sender_id === IdFromCookie }">{{
-            message.sendTime
+            message.time
         }}</span>
                                             <i class="fa fa-check"></i>
                                         </div>
                                         <div
                                             :class="{ 'message': true, 'other-message': message.sender_id === IdFromCookie, 'my-message': message.sender_id != IdFromCookie, 'float-right': message.sender_id === IdFromCookie }">
-                                            {{ message.message }}
+                                            {{ message.content }}
                                         </div>
                                     </div>
                                 </li>
@@ -81,6 +81,7 @@ let connection = startConnection();
 let messages = ref([]);
 
 
+
 async function getMessageHistory(x, y) {
     x = parseInt(x);
     y = parseInt(y);
@@ -90,9 +91,16 @@ async function getMessageHistory(x, y) {
         let response = await axios.get(`https://localhost:7048/Chat/GetMessageHistory?memberId=${x}&friendId=${y}`);
         messages.value = response.data;
         console.log(response.data);
+
+        setTimeout(() => {
+            scrollToBottom();
+        });
     } catch (error) {
         console.error('An error occurred while fetching message history:', error);
     }
+    setTimeout(() => {
+        scrollToBottom();
+    });
 }
 
 // 定义 scrollToBottom 方法
@@ -103,17 +111,35 @@ function scrollToBottom() {
 
 
 connection.on('sendMessageTo', (message) => {
-    messages.value.push(message);
+    let receiveMessage = {
+        id: message.Id,
+        sender_id: message.SenderId,
+        receiver_id: message.ReceiveId,
+        content: message.Content,
+        time: message.Time
+    };
+    console.log(receiveMessage);
+    messages.value.push(receiveMessage);
     console.log(message);
-
     setTimeout(() => {
         scrollToBottom();
     });
 });
 
-connection.on('sendCaller', async (message) => {
-    await amessages.value.push(message);
+connection.on('sendCaller', (message) => {
+
+    let sendMessage = {
+        id: message.Id,
+        sender_id: message.SenderId,
+        receiver_id: message.ReceiveId,
+        content: message.Content,
+        time: message.Time
+    };
+    messages.value.push(sendMessage);
+    console.log(sendMessage);
     console.log(message);
+
+
 
     setTimeout(() => {
         scrollToBottom();
@@ -130,13 +156,22 @@ const sendMessage = () => {
     newMessage.value = '';
 }
 
+// 监听模态框的显示状态，并在显示时执行滚动操作
+watchEffect(() => {
+    const modalElement = document.getElementById('staticBackdrop');
+    if (modalElement && modalElement.classList.contains('show')) {
+        scrollToBottom();
+    }
+});
 
-
-
-
+// 在模态框渲染后执行滚动操作
+function handleModalShown() {
+    nextTick(scrollToBottom);
+}
 onMounted(() => {
-    scrollToBottom();
-
+    setTimeout(() => {
+        scrollToBottom();
+    });
 });
 
 </script>
