@@ -1,16 +1,27 @@
 <template>
-  <div class="cart-page">
-    <h1>購物車</h1>
-    <Cart/>
-    <div class="total">
-      <p>總價:</p>
+  <div>
+    <breadcrumb-three title="Cart" subtitle="Cart"></breadcrumb-three>
+    <div v-if="route.query.transactionId == undefined" class="cart-page">
+      <h1>購物車</h1>
+      <Cart />
+      <div class="total">
+        <p>總價:</p>
+        <button class="btn btn-primary" @click="getAmount">test</button>
+      </div>
+      <Payment />
     </div>
-    <CartLinepay/>
+    <OrdersOrder v-else></OrdersOrder>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
+import axios from 'axios'
+const route = useRoute();
+
+//import { ecPayMethod } from '../../components/Payment/ecpay';
 
 // 計算總價格
 // const total = computed(() => {
