@@ -73,6 +73,9 @@
               />
             </div>
           </div>
+          <div style="position: absolute; left: 50%">
+            <h4>{{ errormessageInArea }}</h4>
+          </div>
         </div>
       </div>
     </div>
@@ -84,58 +87,22 @@ import { defineProps, defineEmits, onMounted } from "vue";
 //cookie
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
 
-let memberId = $cookie.getCookie("Id");
 let memberAvatarURL = $cookie.getCookie("avatarUrl");
-let memberFrameURL = $cookie.getCookie()
+let BonusAvatarURL = $cookie.getCookie("aonusAvatarURL")
+let memberFrameURL = $cookie.getCookie("memberFrameURL")
 
 const props = defineProps({
   bonusProductsByMemberIdInArea: Object,
   bonusProductTypesInArea: Object,
+  errormessageInArea: String,
 });
-
-// // 判斷是否使用頭像
-// const isUsingAvatar = computed(() => {
-//   //遍歷持有物品，找到頭像類型
-//   // 找出符合類型且有被使用的物品，返回true；否則返回false
-//   const avatarProduct = props.bonusProductsByMemberIdInArea.find(product =>{
-//     return product.productTypeId === 2 && product.using === true;
-//   });
-//   return !!avatarProduct;
-// })
-// // 設定頭像路徑
-// const avatarImagePath = computed(() => {
-//   // 遍歷持有物品，找找到頭像的類型
-//   const avatarProduct = props.bonusProductsByMemberIdInArea.find(product => {
-//     return product.productTypeId === 2 && product.using === true;
-//   });
-//   // 使用了返回使用路徑，沒使用則返回預設
-//   return isUsingAvatar.value ? `/images/Bonus/2/${avatarProduct.name}.gif` : 'memberAvatarURL';
-// });
-
-// // 判斷是否有使的外框
-// const isUsingFrame = computed(() => {
-//   // 遍歷持有物品，找到外框的類型
-//   // 找出符合類型且有被使用的物品，返回true；否則返回false
-//   const frameProduct = props.bonusProductsByMemberIdInArea.find(product => {
-//     return product.productTypeId === 4 && product.using === true;
-//   });
-//   return !!frameProduct;
-// });
-// // 設定外框路徑
-// const frameImagePath = computed(() => {
-//   // 遍歷持有物品，找找到外框的類型
-//   const frameProduct = props.bonusProductsByMemberIdInArea.find(product => {
-//     return product.productTypeId === 4 && product.using === true;
-//   });
-//   // 使用了返回使用路徑，沒使用則返回預設
-//   return isUsingFrame.value ? `/images/Bonus/4/${frameProduct.name}.png` : '/public/images/Bonus/4/nullImg.png';
-// });
 
 const emit = defineEmits(["data-from-bonus"],["itemUsing"]);
 
 onMounted(() =>
 {
-  
+  console.log(props.bonusProductsByMemberIdInArea)
+  console.log(props.BonusAvatarURL)
 });
 
 function handleSearch(keyword) {
@@ -144,8 +111,44 @@ function handleSearch(keyword) {
 async function itemUsingEventFormItem(id,typeId,using)
 {
   emit("itemUsing",id,typeId,using);
-  console.log("父物件層:"+id,typeId,using)
 
+  // // 判斷是否使用頭像
+  // const isUsingAvatar = computed(() => {
+  //   // 遍歷持有物品，找到頭像類型
+  //   // 找出符合類型且有被使用的物品，返回true；否則返回false
+  //   const avatarProduct = props.bonusProductsByMemberIdInArea.find(product =>{
+  //   return product.productTypeId === 2 && product.using === true;
+  //   });
+  //   return !!avatarProduct;
+  // })
+  // // 設定頭像路徑
+  // const avatarImagePath = computed(() => {
+  //   // 遍歷持有物品，找找到頭像的類型
+  //   const avatarProduct = props.bonusProductsByMemberIdInArea.find(product => {
+  //     return product.productTypeId === 2 && product.using === true;
+  //     });
+  //   // 使用了返回使用路徑，沒使用則返回預設
+  //   return isUsingAvatar.value ? `/images/Bonus/2/${avatarProduct.name}.gif` : 'memberAvatarURL';
+  // });
+
+  // // 判斷是否有使的外框
+  // const isUsingFrame = computed(() => {
+  // // 遍歷持有物品，找到外框的類型
+  // // 找出符合類型且有被使用的物品，返回true；否則返回false
+  //   const frameProduct = props.bonusProductsByMemberIdInArea.find(product => {
+  //     return product.productTypeId === 4 && product.using === true;
+  //   });
+  // return !!frameProduct;
+  // });
+  // // 設定外框路徑
+  // const frameImagePath = computed(() => {
+  //   // 遍歷持有物品，找找到外框的類型
+  //   const frameProduct = props.bonusProductsByMemberIdInArea.find(product => {
+  //     return product.productTypeId === 4 && product.using === true;
+  //     });
+  //   // 使用了返回使用路徑，沒使用則返回預設
+  //   return isUsingFrame.value ? `/images/Bonus/4/${frameProduct.name}.png` : '/public/images/Bonus/4/nullImg.png';
+  // });
 }
 
 </script>

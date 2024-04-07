@@ -6,6 +6,7 @@
     <bonusUserCollect-area v-if="dbData_bonusProductsByMemberId && dbData_bonusProductTypes"
     :bonusProductsByMemberIdInArea="dbData_bonusProductsByMemberId"
     :bonusProductTypesInArea="dbData_bonusProductTypes" 
+    :errormessageInArea="errormessage"
     @data-from-bonus="handleDataFromBonus"
     @itemUsing = "itemUsingEventFormArea"
     ></bonusUserCollect-area>
@@ -21,6 +22,12 @@ import { ref ,onMounted } from "vue";
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
 // 透過axios GET & POST請求
 import axios from "axios";
+
+const dbData_bonusProductsByMemberId = ref(null);
+const dbData_bonusProductTypes = ref(null);
+const dbData_mamberProductItemStatus = ref(null);
+
+let errormessage = ``;
 
 async function itemUsingEventFormArea(id,typeId,using)
 {
@@ -55,10 +62,6 @@ async function fetchMemberProduct(memberId){
         console.log("BymemberId error")
     })
 }
-
-const dbData_bonusProductsByMemberId = ref(null);
-const dbData_bonusProductTypes = ref(null);
-const dbData_mamberProductItemStatus = ref(null);
 
 onMounted(async () => 
 {
@@ -105,13 +108,13 @@ async function handleDataFromBonus(keyword)
   }
   else
   {
-    // const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}`);
-    // dbData_bonusProductsByMemberId.value = responseSearchName.data;
-    // console.error("未正確找到紅利商品", error);
     const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}/MemberId/${memberId}`);
     dbData_bonusProductsByMemberId.value = responseSearchName.data;
     
-    console.error("未正確找到紅利商品");
+    if(dbData_bonusProductsByMemberId.value == "")
+    {
+      errormessage = `噢不！好像沒有找到\"${keyword}\"相關的商品`;
+    }
   }
 }
 </script>

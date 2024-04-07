@@ -24,6 +24,7 @@ import { ref ,onMounted } from "vue";
 import axios from "axios";
 //cookie
 import { VueCookieNext as $cookie } from "vue-cookie-next";
+
 const dbData_bonusProducts = ref(null);
 const dbData_bonusProductTypes = ref(null);
 const dbData_bonusProductsByMemberId = ref(null);
@@ -31,7 +32,6 @@ const dbData_addBonusItem = ref(null);
 const dbData_cookeiBonus = ref(null);
 
 let errormessage = ``;
-
 
 onMounted(async () => 
 {
@@ -109,7 +109,6 @@ async function handleDataFromBonus(keyword)
     const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}`);
     dbData_bonusProducts.value = responseSearchName.data;
       
-    // console.log(dbData_bonusProducts.value);
     if(dbData_bonusProducts.value == "")
     {
       errormessage = `噢不！好像沒有找到\"${keyword}\"相關的商品`;
