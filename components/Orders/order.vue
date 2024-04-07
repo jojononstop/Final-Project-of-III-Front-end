@@ -1,91 +1,43 @@
 <template>
   <div class="container">
-    <h1 class="text-center mb-4">訂單詳情</h1>
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-       
-        <div class="mt-4">
-          <input type="text" class="form-control" v-model="orderId" placeholder="輸入訂單編號">
-          <button class="btn btn-primary mt-2" @click="fetchOrder">查詢訂單</button>
-           <!-- <div class="card"> -->
-            <div class="card-body">
-            <div v-if="order">
-              <p class="mb-0"><strong>訂單編號:</strong> {{ order.orderNumber }}</p>
-              <p class="mb-0"><strong>總金額:</strong> {{ order.totalAmount }}</p>
-            </div>
-            <!-- <div v-else>
-              <p class="mb-0 text-muted">未找到訂單</p>
-            </div> -->
-          </div>
-        <!-- </div> -->
+    <h1 class="text-center mb-4">會員訂單</h1>
+    <div v-if="orders.length > 0">
+      <div v-for="order in orders" :key="order.id" class="card mt-3">
+        <div class="card-body">
+          <p><strong>訂單編號:</strong> {{ order.id }}</p>
+          <p><strong>遊戲名稱:</strong> {{ order.game.name }}</p>
+          <p><strong>遊戲價格:</strong> {{ order.game.price }}</p>
         </div>
       </div>
     </div>
+    <div v-else>
+      <p class="text-center">該會員尚無訂單</p>
+    </div>
   </div>
 </template>
+
 <script setup>
-import { useRoute } from 'vue-router';
-import { VueCookieNext as $cookie } from 'vue-cookie-next';
-import axios from 'axios';
 import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
 
-const route = useRoute();
-let amount = 0;
-let cartItems = ref([]);
-let id;
+const memberId = ref(''); // 初始化會員ID
+const orders = ref([]); // 定義存儲訂單的數組
 
-async function getAmount() {
-  id = $cookie.getCookie('Id');
-  const response = await axios.get(`https://localhost:7048/api/CartItems/${id}`);
-  cartItems.value = response.data;
-  
-  for (let item of cartItems.value) {
-    let gameResponse = await axios.get(`https://localhost:7048/api/Games/${item.gameId}`);
-    let game = gameResponse.data;
-    if (game.discountPrice !== 0) {
-      amount += game.discountPrice;
-    } else {
-      amount += game.price;
-    }
-  }
-}
-
+// 在組件掛載時自動執行的函數
 onMounted(async () => {
-  console.log(route.query.transactionId);
-  if (route.query.transactionId !== undefined) {
-    await getAmount();
-    let postData = {
-      currency: "TWD",
-      amount: amount
-    };
-    console.log(cartItems.value);
-    let response = await axios.post(`https://localhost:7048/api/LinePay/Confirm?transactionId=${route.query.transactionId}&orderId=${route.query.orderId}`, postData);
-    if (response.data.returnCode === "0000") {
-      for (let item of cartItems.value){
-        let postData = {
-          gameId: item.gameId,
-          memberId: item.memberId
-        };
-        await axios.post('https://localhost:7048/api/Order', postData);
-      }
-      await axios.delete(`https://localhost:7048/api/CartItems/delete/${id}`);
-    }
+  try {
+    // 從 Cookie 中獲取會員ID
+   let id;
+  id = $cookie.getCookie('Id');
+    // 向後端發送請求獲取該會員的所有訂單資料
+    const response = await axios.get(`https://localhost:7048/api/Order/member/${id}`);
+    orders.value = response.data;
+  } catch (error) {
+    console.error('獲取訂單時出錯：', error);
   }
 });
-
-let order = ref(null);
-let orderId = ref('');
-async function fetchOrder() {
-  try {
-    const response = await axios.get(`https://localhost:7048/api/Order/member/${orderId.value}`);
-    order.value = response.data;
-  } catch (error) {
-    console.error('查詢訂單時出現錯誤：', error);
-    order.value = null;
-  }
-}
 </script>
-
-<style>
-/* Add your custom styles here */
+<style scoped>
+/* 添加您的自定義樣式 */
 </style>

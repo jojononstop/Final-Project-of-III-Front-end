@@ -2,7 +2,7 @@
   <div>
     <div v-if="cartGames && cartGames.length > 0">
       <div v-for="game in cartGames" :key="game.id">
-        <p>購買遊戲：{{ game.name }}, {{ game.image }}</p>
+        <p>購買遊戲：{{ game.name }},{{ game.images }}</p>
         <p>價格：{{ game.price }}</p>
       </div>
       <p>總價格：{{ total }}</p> <!-- 顯示總價格 -->
@@ -45,3 +45,25 @@ async function fetchCartData() {
 // 在元件掛載時獲取購物車數據
 onMounted(fetchCartData);
 </script>
+
+<style scoped>
+.card {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+</style>
