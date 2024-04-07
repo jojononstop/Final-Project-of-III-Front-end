@@ -17,24 +17,49 @@
 <script setup>
 import startConnection from '@/data/signalR';
 import axios from 'axios';
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
+
 
 let Time = ref(new Date().toLocaleTimeString());
 let message = ref('');
 const connection = startConnection();
 const toastLiveExample = document.getElementById('liveToast')
 
-connection.on('userconnected', (connectionId) => {
-    console.log(connectionId);
-    message.value = `您的好友 ${connectionId.UserName} 上線`;
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-    toastBootstrap.show()
+connection.on('userconnected', async (connectionId) => {
+    // 向后端发送请求检查连接的用户是否是你的好友
+    try {
+        let Id;
+        Id = $cookie.getCookie('Id');
+        const response = await axios.get(`https://localhost:7048/Chat/IsUserFriend?memberId=${Id}&friendId=${connectionId.UserId}`);
+        let isFriend = response.data;
+        if (isFriend == 1) {
+            message.value = `您的好友 ${connectionId.UserName} 上線`;
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastBootstrap.show();
+        } else {
+            console.log(`${connectionId} 不是您的好友`);
+        }
+    } catch (error) {
+        console.error('检查好友关系失败:', error);
+    }
 });
 
-connection.on('userdisconnected', (connectionId) => {
-    console.log(connectionId);
-    message.value = `您的好友 ${connectionId.UserName} 離線`;
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-    toastBootstrap.show()
+connection.on('userdisconnected', async (connectionId) => {
+    try {
+        let Id;
+        Id = $cookie.getCookie('Id');
+        const response = await axios.get(`https://localhost:7048/Chat/IsUserFriend?memberId=${Id}&friendId=${connectionId.UserId}`);
+        let isFriend = response.data;
+        if (isFriend == 1) {
+            message.value = `您的好友 ${connectionId.UserName} 離線`;
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            toastBootstrap.show();
+        } else {
+            console.log(`${connectionId} 不是您的好友`);
+        }
+    } catch (error) {
+        console.error('检查好友关系失败:', error);
+    }
 });
 
 

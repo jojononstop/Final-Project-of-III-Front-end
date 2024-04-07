@@ -12,7 +12,7 @@
               <nav class="tgmenu__nav">
                 <div class="logo">
                   <nuxt-link to="/">
-                    <img src="/images/logo/LOGO_6.png" alt="Logo" />
+                    <img src="/images/logo/logo.png" alt="Logo" />
                   </nuxt-link>
                 </div>
                 <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-xl-flex">
@@ -87,10 +87,10 @@
                     <!-- 會員頭像 -->
                     <li class="search" v-if="isAccountIdExists">
                       <nuxt-link to="">
-                      <div style="height: 30px; width:30px" class="my-outer-container">
-                        <img :src="ava" alt="Member Avatar" class="my-image" >
-                        <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage" />
-                      </div>
+                        <div style="height: 30px; width:30px" class="my-outer-container">
+                          <img :src="ava" alt="Member Avatar" class="my-image">
+                          <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage" />
+                        </div>
                       </nuxt-link>
                     </li>
 
@@ -155,7 +155,7 @@ router.beforeEach((to, from) => {
 })
 let ava = "";
 let name = ref("");
-let id= ref("");
+let id = ref("");
 defineProps({ style_2: Boolean });
 
 
@@ -180,7 +180,7 @@ onBeforeMount(() => {
   }
 });
 
-onMounted(()=>{
+onMounted(() => {
 
 });
 
@@ -257,8 +257,8 @@ const handleSignOut = () => {
 
 if (process.client) {
   watch(() => $cookie.getCookie("name"), (newVal) => {
-  name.value = newVal;
-});
+    name.value = newVal;
+  });
 }
 //   watch($cookie.getCookie("name"), (newVal) => {
 //   name.value = newVal;
@@ -267,6 +267,7 @@ if (process.client) {
 
 <style lang="scss">
 @import "@/assets/css/my-style.css";
+
 .my-outer-container {
   position: relative;
   width: 250px;
@@ -278,17 +279,24 @@ if (process.client) {
 
 .my-image {
   position: absolute;
-  top: 50%; /* 依附於父物件的垂直中心點 */
-  left: 50%; /* 依附於父物件的水平中心點 */
-  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  top: 50%;
+  /* 依附於父物件的垂直中心點 */
+  left: 50%;
+  /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%);
+  /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
   width: 93%;
   height: auto;
 }
+
 .my-Frameimage {
   position: absolute;
-  top: 50%; /* 依附於父物件的垂直中心點 */
-  left: 50%; /* 依附於父物件的水平中心點 */
-  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  top: 50%;
+  /* 依附於父物件的垂直中心點 */
+  left: 50%;
+  /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%);
+  /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
   width: 100%;
   height: auto;
 }

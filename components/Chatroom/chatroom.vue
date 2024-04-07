@@ -31,7 +31,7 @@
                                             :class="{ 'message-data': true, 'text-right': message.sender_id === IdFromCookie }">
                                             <span class="message-data-time text-white"
                                                 :class="{ 'float-right': message.sender_id === IdFromCookie }">{{
-            message.time
+            formattedTime(message.time)
         }}</span>
                                             <i class="fa fa-check"></i>
                                         </div>
@@ -48,7 +48,6 @@
                                 <input type="text" v-model="newMessage" placeholder="請輸入訊息....."
                                     @keydown.enter="sendMessage()">
                                 <button @click="sendMessage()">send</button>
-                                <button @click="test">test</button>
                             </div>
                         </div>
                     </div>
@@ -81,6 +80,11 @@ let connection = startConnection();
 let messages = ref([]);
 
 
+
+const formattedTime = (lastLoginTime) => {
+    const date = new Date(lastLoginTime);
+    return `${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)} ${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`;
+};
 
 async function getMessageHistory(x, y) {
     x = parseInt(x);

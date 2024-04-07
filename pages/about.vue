@@ -1,8 +1,6 @@
 <template>
   <div>
-    <!-- breadcrumb area start -->
-    <breadcrumb-one title="ABOUT US" subtitle="ABOUT US"></breadcrumb-one>
-    <!-- breadcrumb area end -->
+
 
     <!-- about area start -->
     <about-area-3></about-area-3>

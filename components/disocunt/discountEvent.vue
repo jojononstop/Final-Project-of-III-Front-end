@@ -30,20 +30,6 @@
                             <p>{{ discount.discountDescription }}</p>
                             <cite>{{ discount.discountType }}</cite>
                         </blockquote>
-                        <div class="team__details-inner-wrap">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="team__details-inner-img">
-                                        <img src="/images/others/services_details01.jpg" alt="img" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="team__details-inner-img">
-                                        <img src="/images/others/services_details02.jpg" alt="img" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

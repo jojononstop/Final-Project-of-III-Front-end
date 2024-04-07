@@ -1,19 +1,16 @@
 <template>
   <div>
-    <LazyHomeAutoplay></LazyHomeAutoplay>
+    <HomeAutoplay></HomeAutoplay>
     <team-area></team-area>
     <div className="area-background" style="background-image: url(/images/bg/area_bg01.jpg)">
-      <about-area></about-area>
+      <HomeTopsix></HomeTopsix>
     </div>
     <streamers-area></streamers-area>
 
-
-    <!-- nft item area start -->
-    <nft-item-area></nft-item-area>
-    <!-- nft item area end -->
-
-
     <HomeGameArea></HomeGameArea>
+    <HomeGamenew></HomeGamenew>
+
+    <nft-item-area></nft-item-area>
   </div>
 </template>
 
