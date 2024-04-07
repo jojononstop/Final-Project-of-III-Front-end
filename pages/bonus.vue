@@ -7,7 +7,11 @@
     :bonusProductTypesInArea="dbData_bonusProductTypes"
     :bonusItemInArea="dbData_bonusProductsByMemberId"
     :errormessageInArea="errormessage"
-    @data-from-bonus="handleDataFromBonus"></bonus-area>
+    :memberBonusInArea="dbData_cookeiBonus"
+    @data-from-bonus="handleDataFromBonus"
+    @byProduct="buyEvenFormArea"
+    >
+  </bonus-area>
   </div>
   </ClientOnly>
 </template>
@@ -20,16 +24,21 @@ import { ref ,onMounted } from "vue";
 import axios from "axios";
 //cookie
 import { VueCookieNext as $cookie } from "vue-cookie-next";
+
 const dbData_bonusProducts = ref(null);
 const dbData_bonusProductTypes = ref(null);
 const dbData_bonusProductsByMemberId = ref(null);
+const dbData_addBonusItem = ref(null);
+const dbData_cookeiBonus = ref(null);
 
 let errormessage = ``;
 
 onMounted(async () => 
 {
   let memberId = $cookie.getCookie("Id");
-  let cookiedetails = $cookie
+
+  dbData_cookeiBonus.value = $cookie.getCookie("bonus")
+  console.log(dbData_cookeiBonus.value)
   try 
   {
     // Get All BonusProduct
@@ -39,17 +48,13 @@ onMounted(async () =>
     // Get All BonusType
     const responseAllTypes = await axios.get("https://localhost:7048/api/BonusProducts/Type");
     dbData_bonusProductTypes.value = responseAllTypes.data;
-    
-    // Get All BonusProduct By MenberId
-    const responseByMenberId = await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/${memberId}`);
-    dbData_bonusProductsByMemberId.value = responseByMenberId.data;
 
-    // console.log(responseByMenberId.data)
-
-    // Add BonusProduct to BonusItem
-    // 購買 API
-    // const responseAddBonusItem = await axios.get(`https://localhost:7048/api/BonusProducts/${0}?memberId=${0}`);
-    // dbData_addBonusItem.value = responseAddBonusItem.data;
+    if(memberId)
+    {
+      // Get All BonusProduct By MenberId
+      const responseByMenberId = await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/${memberId}`);
+      dbData_bonusProductsByMemberId.value = responseByMenberId.data;
+    }
 
     // // Get BonusProduct By TypeId
     // const responseTypes = await axios.get(`https://localhost:7048/api/BonusProducts/Type/${producttypeid}`);
@@ -61,6 +66,32 @@ onMounted(async () =>
     console.error("未正確找到紅利商品", error);
   }
 });
+
+async function buyEvenFormArea(id,name,price)
+{
+  let memberId = $cookie.getCookie("Id");
+  let memberBonus = $cookie.getCookie("bonus")
+
+  console.log("購買前:"+memberBonus)
+  // Add BonusProduct to BonusItem
+  // 購買 API
+  const responseAddBonusItem = await axios.post(`https://localhost:7048/api/BonusProducts/${id}?memberId=${memberId}`);
+  dbData_addBonusItem.value = responseAddBonusItem.data;
+
+  memberBonus = memberBonus-price
+  $cookie.removeCookie("bonus")
+  $cookie.setCookie('bonus',memberBonus)
+
+    if(memberId)
+    {
+      // Get All BonusProduct By MenberId
+      const responseByMenberId = await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/${memberId}`);
+      dbData_bonusProductsByMemberId.value = responseByMenberId.data;
+
+      dbData_cookeiBonus.value = $cookie.getCookie("bonus")
+    }
+}
+
 async function handleDataFromBonus(keyword)
 {
   if(keyword === '' || keyword == null)
@@ -78,7 +109,6 @@ async function handleDataFromBonus(keyword)
     const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}`);
     dbData_bonusProducts.value = responseSearchName.data;
       
-    // console.log(dbData_bonusProducts.value);
     if(dbData_bonusProducts.value == "")
     {
       errormessage = `噢不！好像沒有找到\"${keyword}\"相關的商品`;

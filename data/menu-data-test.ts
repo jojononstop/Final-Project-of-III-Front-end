@@ -19,32 +19,29 @@ type IMenuDataType = {
         {title:'Home Two',link:'/home-2'},
       ]
     },
-    // {
-    //   id:2,
-    //   title:'關於',
-    //   link:'/about',
-    // },
-    // {
-    //   id:3,
-    //   title:'商店',
-    //   link:'#',
-    //   sub_menu:[
-    //     {title:'TOURNAMENT',link:'/tournament'},
-    //     {title:'TOURNAMENT Single',link:'/tournament-details'},
-    //   ]
-    // },
-    // {
-    //   id:4,
-    //   title:'點數商店',
-    //   link:'#',
-    //   sub_menu:[
-    //     {title:'Gaming Shop',link:'/shop'},
-    //     {title:'Shop Details',link:'/shop-details'},
-    //     {title:'Our Services',link:'/services'},
-    //     {title:'Services Details',link:'/service-details'},
-    //     {title:'Player Details',link:'/team-details'},
-    //   ]
-    // },
+    {
+      id:2,
+      title:'關於',
+      link:'/about',
+    },
+    {
+      id:3,
+      title:'商店',
+      link:'#',
+      sub_menu:[
+        {title:'TOURNAMENT',link:'/tournament'},
+        {title:'TOURNAMENT Single',link:'/tournament-details'},
+      ]
+    },
+    {
+      id:4,
+      title:'點數商店',
+      link:'/bonus',
+      sub_menu:[
+        {title:'點數商店清單',link:'/bonus'},
+        // {title:'bonusItem',link:'/bounsItem'},
+      ]
+    },
     // {
     //   id:5,
     //   title:'個人資料',

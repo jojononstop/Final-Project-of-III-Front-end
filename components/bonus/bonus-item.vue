@@ -9,7 +9,7 @@
       <h6 v-else style="color: #FFF;">未持有</h6>
     </div>
     <div class="shop__bonus__item-thumb">
-      <img :src="`/images/bonus/${bonusProductsInItem.productTypeId}/${bonusProductsInItem.url}`" typeof="btn" @click="imgclickEvent(bonusProductsInItem.id)" style="cursor: pointer;" :data-bs-toggle="'modal'" :data-bs-target="'#exampleModal_' + bonusProductsInItem.id" />
+      <img :src="`/images/bonus/${bonusProductsInItem.productTypeId}/${bonusProductsInItem.url}`" typeof="btn" @click="imgclickEvent" style="cursor: pointer;" :data-bs-toggle="'modal'" :data-bs-target="'#exampleModal_' + bonusProductsInItem.id" />
       <!-- 已持有 -->
       <!-- <div class="wishlist-button">
         <h6 style="color:#45f882 ;">已持有</h6>
@@ -50,14 +50,22 @@
             <h2>{{ bonusProductsInItem.name }}</h2>
             <h5>{{ getProductTypeName(bonusProductsInItem.productTypeId-1) }}</h5>
             <div class="my-center-container">
-              <img :src="`/images/bonus/${bonusProductsInItem.productTypeId}/${bonusProductsInItem.url}`" typeof="btn" @click="imgclickEvent(bonusProductsInItem.id)"/>
+              <img :src="`/images/bonus/${bonusProductsInItem.productTypeId}/${bonusProductsInItem.url}`" typeof="btn" />
+            </div>
+            <!-- 價格 -->
+            <div class="shop__item-price">
+              ${{ bonusProductsInItem.price }}
+              <img
+                src="/public//images/gold-coin-icon.png"
+                style="width: 30px; height: 30px; align-items: center"
+              />
             </div>
           </div>
           <div v-if="isProductOwned()" class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
           </div>
           <div v-else class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="buyBonusProduct">購買</button>
+            <button type="button" class="btn btn-primary" @click="buyProductEvent(bonusProductsInItem.id,bonusProductsInItem.name,bonusProductsInItem.price)">購買</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
           </div>
         </div>
@@ -84,18 +92,29 @@ const props = defineProps({
   modalId: String
 });
 
-const emit = defineEmits([
-  'childClick'
-])
 
-const imgclickEvent = (id) =>
+const openModal = () => {
+  isModalOpen.value = true;
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+};
+
+onMounted(()=>
 {
-  openModal();
-  emit('childClick',id)
-}
+  // console.log(props.bonusItemInItem)
+})
+
+watchEffect(() => 
+{
+  // console.log(props.bonusItemInItem);
+  // console.log(isProductOwned());
+});
 
 // 所有物品與使用者擁有的物品比對
 const isProductOwned = () => {
+  // console.log(props.bonusItemInItem)
   // 檢查初始化 bonusItemInItem 是否 null 或者 undefined
   if (!props.bonusItemInItem) {
     return false; 
@@ -107,18 +126,18 @@ const isProductOwned = () => {
     return item.name === props.bonusProductsInItem.name;
   });
 };
-console.log(isProductOwned());
+const buyProduct = defineEmits(['byProduct'])
 
-onMounted(()=>
+const imgclickEvent = () =>
 {
-  // console.log(props.bonusProductsInItem.name)
-})
+  openModal();
+}
 
-watchEffect(() => 
+function buyProductEvent(id,name,price)
 {
-  // console.log(props.bonusItemInItem);
-  // console.log(isProductOwned());
-});
+  buyProduct("buyProduct",id,name,price)
+  // console.log("購買按鈕Item層:"+id,name,price)
+}
 
 function getProductTypeName(productTypeId) 
 {
@@ -133,19 +152,4 @@ function getProductTypeName(productTypeId)
     return '';
   }
 }
-
-function buyBonusProduct()
-{
-  console.log("購買按鈕")
-  // setCookie.("bouns");
-}
-
-
-const openModal = () => {
-  isModalOpen.value = true;
-};
-
-const closeModal = () => {
-  isModalOpen.value = false;
-};
 </script>

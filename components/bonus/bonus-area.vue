@@ -11,12 +11,12 @@
           <bonus-sidebar @search="handleSearch" />
         </div>
         <div class="col-xl-9 col-lg-8 col-md-11">
-          <div>
+          <div v-if="memberId">
             <h5>
               您的點數餘額：<img
                 src="/public//images/gold-coin-icon.png"
                 style="width: 30px; height: 30px; align-items: center"
-              />{{ bonus }}
+              />{{ memberBonusInArea }}
             </h5>
           </div>
           <div>
@@ -77,6 +77,7 @@
                 :bonusItemInItem="bonusItemInArea"
                 :modalId="'exampleModal_' + bonusProductItem.id" 
                 @childClick="handleChildClick"
+                @buyProduct= "buyEvenFormItem"
               />
             </div>
           </div>
@@ -95,8 +96,6 @@ import { defineProps, defineEmits, onMounted, watchEffect} from "vue";
 //cookie
 import { VueCookieNext as $cookie } from "vue-cookie-next";
 let memberId = $cookie.getCookie("Id");
-let bonus = $cookie.getCookie("bonus");
-
 // console.log(memberAvatarURL)
 
 const props = defineProps({
@@ -104,6 +103,7 @@ const props = defineProps({
   bonusProductTypesInArea: Object,
   bonusItemInArea: Object,
   errormessageInArea: String,
+  memberBonusInArea: Number,
 });
 
 
@@ -121,9 +121,15 @@ watchEffect(() => {
   // console.log(props.bonusItemInArea);
 });
 
-const emits = defineEmits(["data-from-bonus"]);
+const emits = defineEmits(["data-from-bonus"],["byProduct"]);
 
 function handleSearch(keyword) {
   emits("data-from-bonus", keyword);
 }
+
+function buyEvenFormItem(id,name,price)
+{
+  emits("byProduct",id,name,price)
+}
+
 </script>

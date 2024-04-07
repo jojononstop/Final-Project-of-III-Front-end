@@ -14,7 +14,7 @@
     </div>
 
     <!-- 類型篩選 -->
-    <div class="shop__widget">
+    <!-- <div class="shop__widget">
       <h4 class="shop__widget-title">
         <button
           class="accordion-button collapsed"
@@ -111,39 +111,7 @@
           </div>
         </div>
       </div>
-      <h4 class="shop__widget-title">
-        <button
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#flush-collapse_price"
-          aria-expanded="false"
-          aria-controls="flush-collapse_price"
-        >
-          依價格搜尋
-        </button>
-      </h4>
-      <div class="shop__widget-myinner">
-        <div
-          id="flush-collapse_price"
-          class="accordion-collapse collapse"
-          aria-labelledby="flush-collapse_price"
-          data-bs-parent="#accordionFlushExample"
-        >
-          <div class="accordion-body">
-            <h4>價格搜尋內容</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 驅動測試單元 -->
-    <div class="shop__widget">
-      <h4 class="shop__widget-title">驅動測試單元</h4>
-      <div class="shop__widget-inner">
-        <div class="shop__search"></div>
-      </div>
-    </div>
+    </div> -->
   </aside>
 </template>
 

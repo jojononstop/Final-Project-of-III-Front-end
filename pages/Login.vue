@@ -136,7 +136,8 @@ const login = () => {
   axios.post('https://localhost:7048/api/Members/Login', postData.value)
   .then(response => {
     console.log(response.data)
-    if(response.data[0]=="登入成功"){
+    if(response.data[0]=="登入成功")
+    {
       // 設置 'account' Cookie，過期時間為一小時後
       
       $cookie.setCookie('accountId', response.data[1]);
@@ -151,12 +152,10 @@ const login = () => {
 
 
 
-        startConnection();
-        //
-        // console.log( header.isAccountIdExists);
-        // header.isAccountIdExists = true;
-        //
-        router.push('/');
+      startConnection();
+      // console.log( header.isAccountIdExists);
+      // header.isAccountIdExists = true;
+      router.push('/');
 
         //從cookies中拿Id
         axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
