@@ -87,8 +87,6 @@ onMounted(async () =>
     // // Get BonusProduct By TypeId
     // const responseTypes = await axios.get(`https://localhost:7048/api/BonusProducts/Type/${producttypeid}`);
     // bonusProducts.value = responseTypes.data;
-
-
   }
   catch (error) 
   {
