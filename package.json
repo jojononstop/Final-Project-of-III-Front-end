@@ -33,6 +33,7 @@
     "crypt-js": "^1.0.4",
     "dotenv": "^16.4.5",
     "ecpay_aio_nodejs": "^1.2.2",
+    "formidable": "^3.5.1",
     "line-pay": "^1.0.16",
     "line-pay-sdk": "^1.0.3",
     "line-pay-v3": "^1.0.6",

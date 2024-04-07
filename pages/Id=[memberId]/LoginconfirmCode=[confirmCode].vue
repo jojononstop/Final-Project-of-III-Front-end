@@ -72,7 +72,7 @@
       }
       else{
         loading.value = false;
-        message.value = '此連結早已失效.';
+        message.value = '此連結已失效.';
       }
     })
     .catch(error => {

@@ -8,7 +8,8 @@ type IMenuDataType = {
         link: string;
     }[];
   }
-  
+
+
   const menu_data:IMenuDataType[] = [
     {
       id:1,
@@ -37,7 +38,7 @@ type IMenuDataType = {
     {
       id:4,
       title:'收藏庫',
-      link:'/',
+      link:`/Collections`,
 
     },
     {

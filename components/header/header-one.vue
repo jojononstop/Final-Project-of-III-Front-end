@@ -245,6 +245,7 @@ const handleSignOut = () => {
   $cookie.removeCookie('name');
   $cookie.removeCookie('google');
   $cookie.removeCookie('Id');
+  $cookie.removeCookie('jwt');
   location.reload();
 };
 

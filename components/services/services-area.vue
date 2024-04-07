@@ -90,10 +90,10 @@ const service_items: {
       id: 3,
       icon: 'flaticon-user-profile',
       title: '張淳毓',
-      desc1: '登入系統',
+      desc1: '登入系統:驗證密碼回傳jwt',
       desc2: 'Email驗證:註冊、免密碼登入',
       desc3: '第三方登入:Google帳號登入',
-      desc4: '會員CRUD',
+      desc4: '4',
     },
     {
       id: 4,
