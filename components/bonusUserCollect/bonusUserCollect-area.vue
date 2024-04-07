@@ -1,6 +1,6 @@
 <style lang="scss">
 @import "@/assets/css/my-style.css";
-.my-outer-container {
+.my-outer-container-forBonus {
   position: relative;
   width: 250px;
   height: 250px;
@@ -33,11 +33,22 @@
       <div class="row justify-content-center">
         <div class="col-xl-3 col-lg-4 col-md-11 order-2 order-lg-0">
           <!-- 使用這頭像 -->
-          <div class="my-outer-container" >
-            <img :src="`${memberAvatarURL}`" alt="使用者頭像" class="my-image" />
-            <img v-if="isUsingFrame" :src="frameImagePath" alt="使用外框" class="my-Frameimage">
-            <img v-else src="/public/images/Bonus/4/nullImg.png" alt="空外框" class="my-Frameimage" />
+          <!-- https://bootdey.com/img/Content/avatar/avatar2.png -->
+          <!-- http://localhost:3000/images/bonus/2/CatImage.gif -->
+          <div class="my-outer-container-forBonus">
+            <img v-if="isUsingAvatar" :src="`/public/images/bonus/${productType}/${name}.gif`" alt="使用頭像" class="my-image" />
+            <img v-else :src="`${memberAvatarURL}`" alt="未使用頭像" class="my-image" />
+            <img v-if="isUsingFrame"  src="/public/images/bonus/2/CatImage.gif" alt="使用外框" class="my-Frameimage">
+            <img v-else src="/public/images/Bonus/4/nullImg.png" alt="未使用外框" class="my-Frameimage" />
           </div>
+
+          <!-- <div class="my-outer-container-forBonus" >
+            <img v-if="isUsingAvatar" :src="avatarImagePath" alt="使用頭像" class="my-image" />
+            <img v-else :src="`${memberAvatarURL}`" alt="未使用頭像" class="my-image" />
+            <img v-if="isUsingFrame"  :src="frameImagePath" alt="使用外框" class="my-Frameimage">
+            <img v-else src="/public/images/Bonus/4/nullImg.png" alt="未使用外框" class="my-Frameimage" />
+          </div> -->
+          
           <!-- 搜尋功能列 -->
           <bonusUserCollect-sidebar @search="handleSearch" />
         </div>
@@ -58,8 +69,12 @@
                 :bonusProductsInItem="bonusProductItem"
                 :bonusProductTypesInItem="bonusProductTypesInArea"
                 :modalId="'exampleModal_' + bonusProductItem.id"
+                @itemUsing = "itemUsingEventFormItem"
               />
             </div>
+          </div>
+          <div style="position: absolute; left: 50%">
+            <h4>{{ errormessageInArea }}</h4>
           </div>
         </div>
       </div>
@@ -72,53 +87,68 @@ import { defineProps, defineEmits, onMounted } from "vue";
 //cookie
 import { VueCookieNext as $cookie } from 'vue-cookie-next'
 
-let memberId = $cookie.getCookie("Id");
 let memberAvatarURL = $cookie.getCookie("avatarUrl");
+let BonusAvatarURL = $cookie.getCookie("aonusAvatarURL")
+let memberFrameURL = $cookie.getCookie("memberFrameURL")
 
 const props = defineProps({
   bonusProductsByMemberIdInArea: Object,
   bonusProductTypesInArea: Object,
+  errormessageInArea: String,
 });
 
-// 判斷是否使用頭像
-const isUsingAvatar = computed(() => {
-  //遍歷持有物品，找到頭像類型
-})
-
-
-// 判斷是否有使的外框
-const isUsingFrame = computed(() => {
-  // 遍歷持有物品，找到外框的類型
-  const frameProduct = props.bonusProductsByMemberIdInArea.find(product => {
-    return product.productTypeId === 4 && product.using === true;
-  });
-  // 找出符合類型且有被使用的物品，返回true；否則返回false
-  return !!frameProduct;
-});
-
-// 根据是否使用外框來決定外框路徑
-const frameImagePath = computed(() => {
-  // 遍歷持有物品，找找到外框的類型
-  const frameProduct = props.bonusProductsByMemberIdInArea.find(product => {
-    return product.productTypeId === 4 && product.using === true;
-  });
-
-  // 使用了返回使用路徑，沒使用則返回預設
-  return isUsingFrame.value ? `/images/Bonus/4/${frameProduct.name}.png` : '/public/images/Bonus/4/nullImg.png';
-});
+const emit = defineEmits(["data-from-bonus"],["itemUsing"]);
 
 onMounted(() =>
 {
-  // console.log(props.bonusProductsByMemberIdInArea);
-  // console.log(props.bonusProductTypesInArea);
-// console.log(cookiedetails)
+  console.log(props.bonusProductsByMemberIdInArea)
+  console.log(props.BonusAvatarURL)
 });
 
-
-const emits = defineEmits(["data-from-bonus"]);
-
 function handleSearch(keyword) {
-  // console.log("Search keyword",keyword);
-  emits("data-from-bonus", keyword);
+  emit("data-from-bonus", keyword);
 }
+async function itemUsingEventFormItem(id,typeId,using)
+{
+  emit("itemUsing",id,typeId,using);
+
+  // // 判斷是否使用頭像
+  // const isUsingAvatar = computed(() => {
+  //   // 遍歷持有物品，找到頭像類型
+  //   // 找出符合類型且有被使用的物品，返回true；否則返回false
+  //   const avatarProduct = props.bonusProductsByMemberIdInArea.find(product =>{
+  //   return product.productTypeId === 2 && product.using === true;
+  //   });
+  //   return !!avatarProduct;
+  // })
+  // // 設定頭像路徑
+  // const avatarImagePath = computed(() => {
+  //   // 遍歷持有物品，找找到頭像的類型
+  //   const avatarProduct = props.bonusProductsByMemberIdInArea.find(product => {
+  //     return product.productTypeId === 2 && product.using === true;
+  //     });
+  //   // 使用了返回使用路徑，沒使用則返回預設
+  //   return isUsingAvatar.value ? `/images/Bonus/2/${avatarProduct.name}.gif` : 'memberAvatarURL';
+  // });
+
+  // // 判斷是否有使的外框
+  // const isUsingFrame = computed(() => {
+  // // 遍歷持有物品，找到外框的類型
+  // // 找出符合類型且有被使用的物品，返回true；否則返回false
+  //   const frameProduct = props.bonusProductsByMemberIdInArea.find(product => {
+  //     return product.productTypeId === 4 && product.using === true;
+  //   });
+  // return !!frameProduct;
+  // });
+  // // 設定外框路徑
+  // const frameImagePath = computed(() => {
+  //   // 遍歷持有物品，找找到外框的類型
+  //   const frameProduct = props.bonusProductsByMemberIdInArea.find(product => {
+  //     return product.productTypeId === 4 && product.using === true;
+  //     });
+  //   // 使用了返回使用路徑，沒使用則返回預設
+  //   return isUsingFrame.value ? `/images/Bonus/4/${frameProduct.name}.png` : '/public/images/Bonus/4/nullImg.png';
+  // });
+}
+
 </script>

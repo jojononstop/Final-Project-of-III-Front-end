@@ -14,7 +14,7 @@
     </div>
 
     <!-- 類型篩選 -->
-    <div class="shop__widget">
+    <!-- <div class="shop__widget">
       <h4 class="shop__widget-title">
         <button
           class="accordion-button collapsed"
@@ -69,7 +69,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </aside>
 </template>
 
