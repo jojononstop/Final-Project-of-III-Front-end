@@ -181,6 +181,9 @@ const focusoutPassword = () => {
       isPasswordOK.value = !isPasswordOK.value;
 
     }
+    if(!isFirstRePassword.value){
+      focusoutRePassword();
+    }
 }
 
 //驗證重複密碼
