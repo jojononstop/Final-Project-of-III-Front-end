@@ -43,9 +43,10 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button v-if="bonusProductsInItem.using" type="button" class="btn btn-primary" @click="itemUsingEvent(bonusProductsInItem.id,false)">取消套用</button>
-            <button v-else type="button" class="btn btn-primary" @click="itemUsingEvent(bonusProductsInItem.id,true)">套用</button>
+            <button v-if="bonusProductsInItem.using" type="button" class="btn btn-primary" @click="itemUsingEvent(bonusProductsInItem.bonusId,bonusProductsInItem.productTypeId,false)">取消套用</button>
+            <button v-else type="button" class="btn btn-primary" @click="itemUsingEvent(bonusProductsInItem.bonusId,bonusProductsInItem.productTypeId,true)">套用</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+            <!-- <button type="button" class="btn" @click="testEvent(bonusProductsInItem)"></button> -->
           </div>
         </div>
       </div>
@@ -63,7 +64,6 @@ memberId = $cookie.getCookie("Id");
 let memberBonusPoint = ref('');
 memberBonusPoint = $cookie.getCookie("bouns");
 let isModalOpen= ref(false);
-let isApplyMode = ref(true);
 
 const props = defineProps({
   bonusProductsInItem: Object,
@@ -84,14 +84,20 @@ onMounted(()=>{
 function imgclickEvent(id)
 {
   openModal();
-  console.log(id);
+  // console.log(id);
 }
 //傳出狀態
-function itemUsingEvent(id,using)
+function itemUsingEvent(id,TypeId,using)
 {
-  itemUsing("itemUsing",id,using)
-  console.log("item層:"+id,using)
+  itemUsing("itemUsing",id,TypeId,using)
+  console.log("item層:"+id,TypeId,using)
 }
+
+// function testEvent(bonusProductsInItem)
+// {
+//   console.log(bonusProductsInItem)
+// }
+
 function getProductTypeName(productTypeId) 
 {
   //都有傳進來

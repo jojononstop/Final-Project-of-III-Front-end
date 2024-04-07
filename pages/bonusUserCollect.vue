@@ -9,10 +9,9 @@
     @data-from-bonus="handleDataFromBonus"
     @itemUsing = "itemUsingEventFormArea"
     ></bonusUserCollect-area>
-    
     <!-- @itmeUsing="itemUsingEvent" -->
   </div>
-</ClientOnly>
+  </ClientOnly>
 </template>
 
 <script setup>
@@ -23,19 +22,38 @@ import { VueCookieNext as $cookie } from 'vue-cookie-next'
 // 透過axios GET & POST請求
 import axios from "axios";
 
-async function itemUsingEventFormArea(id,using)
+async function itemUsingEventFormArea(id,typeId,using)
 {
   let memberId = $cookie.getCookie("Id");
 
-  if(memberId != undefined && id != undefined &&  using != undefined)
+  if(memberId != undefined && id != undefined && typeId !=undefined &&  using != undefined)
   { 
-    // Update MemberBonusItem Using - 切換使用狀態
-    const responseMemberProductItem = await axios.post(`https://localhost:7048/api/BonusProducts/update?memberId=${memberId}&bonusId=${id}&usingStatus=${using}`);
-    dbData_mamberProductItemStatus.value = responseMemberProductItem.data;
+    // Update MemberBonusItem Using - 切換使用狀態 const responseMemberProductItem 
+    await axios.post(`https://localhost:7048/api/BonusProducts/update?memberId=${memberId}&bonusId=${id}&typeid=${typeId}&usingStatus=${using}`)
+    .then(response => {
+      dbData_mamberProductItemStatus.value = response.data;
+      fetchMemberProduct(memberId)
+    })
+    .catch(error=>{
+      // ConsoleLogger("ItemStatue")
+    })
+    
+    // Get All BonusProduct By MenberId
+    // const responseByMenberId = await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/${memberId}`);
+    // dbData_bonusProductsByMemberId.value = responseByMenberId.data;
+    // console.log(dbData_bonusProductsByMemberId.value)
   }
-  // Get All BonusProduct By MenberId
-  const responseByMenberId = await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/${memberId}`);
-  dbData_bonusProductsByMemberId.value = responseByMenberId.data;
+}
+
+async function fetchMemberProduct(memberId){
+  await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/${memberId}`)
+        .then(response => {
+          dbData_bonusProductsByMemberId.value = response.data;
+          console.log(dbData_bonusProductsByMemberId.value)
+      })
+    .catch(error=>{
+        console.log("BymemberId error")
+    })
 }
 
 const dbData_bonusProductsByMemberId = ref(null);
@@ -92,6 +110,7 @@ async function handleDataFromBonus(keyword)
     // console.error("未正確找到紅利商品", error);
     const responseSearchName = await axios.get(`https://localhost:7048/api/BonusProducts/Name/${keyword}/MemberId/${memberId}`);
     dbData_bonusProductsByMemberId.value = responseSearchName.data;
+    
     console.error("未正確找到紅利商品");
   }
 }

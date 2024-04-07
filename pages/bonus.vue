@@ -7,6 +7,7 @@
     :bonusProductTypesInArea="dbData_bonusProductTypes"
     :bonusItemInArea="dbData_bonusProductsByMemberId"
     :errormessageInArea="errormessage"
+    :memberBonusInArea="dbData_cookeiBonus"
     @data-from-bonus="handleDataFromBonus"
     @byProduct="buyEvenFormArea"
     >
@@ -27,12 +28,17 @@ const dbData_bonusProducts = ref(null);
 const dbData_bonusProductTypes = ref(null);
 const dbData_bonusProductsByMemberId = ref(null);
 const dbData_addBonusItem = ref(null);
+const dbData_cookeiBonus = ref(null);
 
 let errormessage = ``;
+
 
 onMounted(async () => 
 {
   let memberId = $cookie.getCookie("Id");
+
+  dbData_cookeiBonus.value = $cookie.getCookie("bonus")
+  console.log(dbData_cookeiBonus.value)
   try 
   {
     // Get All BonusProduct
@@ -73,13 +79,16 @@ async function buyEvenFormArea(id,name,price)
   dbData_addBonusItem.value = responseAddBonusItem.data;
 
   memberBonus = memberBonus-price
-  memberBonus = setCookie("bonus");
+  $cookie.removeCookie("bonus")
+  $cookie.setCookie('bonus',memberBonus)
 
     if(memberId)
     {
       // Get All BonusProduct By MenberId
       const responseByMenberId = await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/${memberId}`);
       dbData_bonusProductsByMemberId.value = responseByMenberId.data;
+
+      dbData_cookeiBonus.value = $cookie.getCookie("bonus")
     }
 }
 

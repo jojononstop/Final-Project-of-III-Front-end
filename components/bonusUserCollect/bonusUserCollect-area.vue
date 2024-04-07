@@ -34,10 +34,11 @@
         <div class="col-xl-3 col-lg-4 col-md-11 order-2 order-lg-0">
           <!-- 使用這頭像 -->
           <!-- https://bootdey.com/img/Content/avatar/avatar2.png -->
+          <!-- http://localhost:3000/images/bonus/2/CatImage.gif -->
           <div class="my-outer-container-forBonus">
-            <img v-if="isUsingAvatar" :src="avatarImagePath" alt="使用頭像" class="my-image" />
+            <img v-if="isUsingAvatar" :src="`/public/images/bonus/${productType}/${name}.gif`" alt="使用頭像" class="my-image" />
             <img v-else :src="`${memberAvatarURL}`" alt="未使用頭像" class="my-image" />
-            <img v-if="isUsingFrame"  :src="frameImagePath" alt="使用外框" class="my-Frameimage">
+            <img v-if="isUsingFrame"  src="/public/images/bonus/2/CatImage.gif" alt="使用外框" class="my-Frameimage">
             <img v-else src="/public/images/Bonus/4/nullImg.png" alt="未使用外框" class="my-Frameimage" />
           </div>
 
@@ -85,6 +86,7 @@ import { VueCookieNext as $cookie } from 'vue-cookie-next'
 
 let memberId = $cookie.getCookie("Id");
 let memberAvatarURL = $cookie.getCookie("avatarUrl");
+let memberFrameURL = $cookie.getCookie()
 
 const props = defineProps({
   bonusProductsByMemberIdInArea: Object,
@@ -129,20 +131,21 @@ const props = defineProps({
 //   return isUsingFrame.value ? `/images/Bonus/4/${frameProduct.name}.png` : '/public/images/Bonus/4/nullImg.png';
 // });
 
+const emit = defineEmits(["data-from-bonus"],["itemUsing"]);
+
 onMounted(() =>
 {
-
+  
 });
-
-const emit = defineEmits(["data-from-bonus"],["itemUsing"]);
 
 function handleSearch(keyword) {
   emit("data-from-bonus", keyword);
 }
-function itemUsingEventFormItem(id,using)
+async function itemUsingEventFormItem(id,typeId,using)
 {
-  emit("itemUsing",id,using);
-  console.log("父物件層:"+id,using)
+  emit("itemUsing",id,typeId,using);
+  console.log("父物件層:"+id,typeId,using)
+
 }
 
 </script>
