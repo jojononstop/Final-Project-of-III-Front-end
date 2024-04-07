@@ -7,20 +7,21 @@
                         <swiper v-bind="slider_setting" :modules="[Navigation, Scrollbar]"
                             class="swiper-container gallery-active" :centeredSlides="true" :observer="true"
                             :observeParents="true">
-                            <swiper-slide v-for="(item, index) in discounts" :key="item.id">
+                            <swiper-slide v-for="(item, index) in games" :key="item.id">
                                 <div class="gallery__item">
                                     <div class="gallery__thumb">
                                         <a data-cursor="-theme" data-cursor-text="View"
                                             class="popup-image cursor-pointer" :title="item.discountName"
                                             @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
                                             <nuxt-link :to="`/discount/${item.id}`" :discountItem="item">
-                                                <img :src="item.image" alt="img" />
+                                                <img :src="`/images/games/cover/${item.developerId}/${item.id}/${item.cover}.jpg`"
+                                                    alt="img" />
                                             </nuxt-link>
                                         </a>
                                     </div>
                                     <div class="gallery__content">
-                                        <h2 class="text_blue">{{ item.discountName }}</h2>
-                                        <h3 class="text_green">最高-{{ item.percent }}%off</h3>
+                                        <h2 class="text_blue">{{ item.name }}</h2>
+                                        <h3 class="text_green">售價-{{ item.price }}</h3>
                                     </div>
                                 </div>
                             </swiper-slide>
@@ -43,11 +44,11 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Scrollbar } from "swiper/modules";
 import axios from "axios";
 
-let discounts = ref([]);
+let games = ref([]);
 
-let discount = axios.get("https://localhost:7048/api/Discount/GetDiscount").then((res) => {
+let game = axios.post("https://localhost:7048/api/Games/Commend?memberId=1").then((res) => {
     console.log(res.data);
-    discounts.value = res.data;
+    games.value = res.data;
 });
 
 

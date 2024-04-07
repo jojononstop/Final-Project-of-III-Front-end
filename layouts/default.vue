@@ -5,6 +5,8 @@
       <slot />
     </main>
     <footer-one></footer-one>
+    <ChatroomChatBot></ChatroomChatBot>
+
     <back-to-top></back-to-top>
   </div>
 </template>

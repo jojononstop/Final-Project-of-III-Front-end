@@ -25,6 +25,12 @@ type IMenuDataType = {
       id:2,
       title:'點數商店',
       link:'/bonus',
+<<<<<<< HEAD
+=======
+      sub_menu:[
+        {title:'bonusItem',link:'/'},
+      ]
+>>>>>>> origin/timtest
     },
     {
       id:3,

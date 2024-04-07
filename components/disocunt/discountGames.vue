@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="trendingNft__title">
-                            <h2 class="title">近期熱賣 <img src="/images/icons/fire.png" width="35" alt="icon" />
+                            <h2 class="title">活動優惠商品<i class="fa fa-gift"></i>
                             </h2>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                         <div class="trendingNft__item-top">
                             <h3 class="ellipsis">{{ item.name }}</h3>
                             <div class="trendingNft__item-wish">
-                                <nuxt-link to="/"><i class="far fa-heart"></i></nuxt-link>
+                                <nuxt-link to="/wishlist"><i class="far fa-heart"></i></nuxt-link>
                             </div>
                         </div>
                         <div class="trendingNft__item-image">
@@ -71,11 +71,15 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
 import axios from "axios";
 
-let gameinfo = ref([]);
+
+const props = defineProps({
+    discountId: String
+})
+
 let fireGameData = ref([]);
 
 let getGameInfo = () => {
-    axios.post("https://localhost:7048/api/Games/popular?begin=1&end=6").then((res) => {
+    axios.get(`https://localhost:7048/api/Games/discount/${props.discountId}`).then((res) => {
         fireGameData.value = res.data;
         console.log(fireGameData.value);
     });

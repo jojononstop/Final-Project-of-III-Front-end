@@ -1,6 +1,6 @@
 <template>
     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-        aria-controls="offcanvasScrolling" @click="getUserFriends();">好友列表</button>
+        aria-controls="offcanvasScrolling" @click="getUserFriends(); getFriendRequests();">好友列表</button>
 
     <div class="offcanvas offcanvas-start text-bg-dark" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
         id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -19,8 +19,12 @@
                 <div class="col-2"></div>
                 <div class="col-1 float-end">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#addnewfriend"><i
-                            class="fa fa-address-card"></i></button>
-
+                            class="fa fa-plus"></i></button>
+                    <span></span>
+                    <button v-if="friendRequests.length > 0" type="button" data-bs-toggle="modal"
+                        data-bs-target="#friendrequset">
+                        <span class="badge bg-danger">new</span> <!-- 顯示好友邀請數量 -->
+                    </button>
                 </div>
             </div>
             <div id="plist" class="people-list p-1">
@@ -40,7 +44,7 @@
                         </div>
                         <div class="small text-right row">
                             <div class="col-8">最後上線時間</div>
-                            <p>{{ friend.lastLoginTime }}</p>
+                            <p>{{ formattedLastLoginTime(friend.lastLoginTime) }}</p>
                         </div>
                     </li>
                 </ul>
@@ -48,6 +52,8 @@
         </div>
     </div>
     <chatroom-add-new-friend></chatroom-add-new-friend>
+    <chatroom-friendrequest :firnedRequsets="friendRequests"
+        @friendRequestAccepted="handleFriendRequestAccepted"></chatroom-friendrequest>
     <chatroom></chatroom>
 </template>
 
@@ -60,6 +66,7 @@ let friends = ref([]);
 const selectedFriend = ref([]);
 let avatarUrl = ref('');
 let userName = ref('');
+const friendRequests = ref([]); // 假設有 3 個好友邀請
 
 const connection = startConnection();
 avatarUrl.value = $cookie.getCookie('avatarUrl');
@@ -67,11 +74,28 @@ userName.value = $cookie.getCookie('name');
 let id;
 id = $cookie.getCookie('Id');
 
+async function getFriendRequests() {
+    await axios.get(`https://localhost:7048/Chat/GetFriendRequests?memberId=${id}`
+    ).then(res => {
+        friendRequests.value = res.data;
+    });
+}
+
+function handleFriendRequestAccepted() {
+    getFriendRequests();
+    getUserFriends();
+}
+
+const formattedLastLoginTime = (lastLoginTime) => {
+    const date = new Date(lastLoginTime);
+    return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)} ${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}:${('0' + date.getSeconds()).slice(-2)}`;
+};
+
+
 async function getUserFriends() {
     await axios.get(`https://localhost:7048/Chat/GetUserFriends?id=${id}`
     ).then(res => {
         friends.value = res.data;
-        console.log(res.data);
     });
 }
 
@@ -83,7 +107,11 @@ const selectFriend = (friend) => {
 provide('selectedFriend', selectedFriend);
 
 
+onMounted(() => {
 
+    setInterval(getFriendRequests, 2000); // 每5秒更新一次好友請求
+    setInterval(getUserFriends, 2000); // 每5秒更新一次在線人數
+});
 </script>
 
 <style scoped>

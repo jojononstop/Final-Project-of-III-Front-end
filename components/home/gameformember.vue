@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="trendingNft__title">
-                            <h2 class="title">近期熱賣 <img src="/images/icons/fire.png" width="35" alt="icon" />
+                            <h2 class="title">為您推薦 <i class="fas fa-thumbs-up"></i>
                             </h2>
                         </div>
                     </div>
@@ -28,13 +28,11 @@
                             </div>
                         </div>
                         <div class="trendingNft__item-image">
-                            <nuxt-link :to="`/game-details/${item.id}`">
-                                <img :src="`/images/games/cover/${item.developerId}/${item.id}/${item.cover}.jpg`"
-                                    alt="img" @mouseover="showInfo(item.id)" @mouseleave="hideInfo()" />
-                                <div v-if="activeIndex === item.id" class="info text-white">
-                                    點擊查看詳細資訊
-                                </div>
-                            </nuxt-link>
+                            <img :src="`/images/games/cover/${item.developerId}/${item.id}/${item.cover}.jpg`" alt="img"
+                                @mouseover="showInfo(item.id)" @mouseleave="hideInfo()" />
+                            <div v-if="activeIndex === item.id" class="info text-white">
+                                點擊查看詳細資訊
+                            </div>
                         </div>
                         <div class="trendingNft__item-bottom">
                             <div v-if="item.discountPrice != 0" class="trendingNft__item-price">
@@ -70,12 +68,15 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
 import axios from "axios";
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
 
-let gameinfo = ref([]);
+
 let fireGameData = ref([]);
 
 let getGameInfo = () => {
-    axios.post("https://localhost:7048/api/Games/popular?begin=1&end=6").then((res) => {
+    let Id;
+    Id = $cookie.getCookie('Id');
+    axios.get(`https://localhost:7048/api/Games/Commend?memberId=${Id}`).then((res) => {
         fireGameData.value = res.data;
         console.log(fireGameData.value);
     });

@@ -1,6 +1,7 @@
 <template>
     <h1></h1>
     <DisocuntDiscountEvent :discountId="route.params.id"></DisocuntDiscountEvent>
+    <DisocuntDiscountGames :discountId="route.params.id"></DisocuntDiscountGames>
 
 </template>
 
