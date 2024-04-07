@@ -52,12 +52,12 @@ const handleMouseOut = (index: number) => {
 };
 // service images
 const service_images = [
-  '/images/others/services_img01.jpg',
-  '/images/others/services_img02.jpg',
-  '/images/others/services_img03.jpg',
-  '/images/others/services_img04.jpg',
   '/images/個人照/陳冠廷.jpg',
-  '/images/others/services_img04.jpg',
+  '/images/個人照/陳冠廷.jpg',
+  '/images/個人照/陳冠廷.jpg',
+  '/images/個人照/陳冠廷.jpg',
+  '/images/個人照/陳冠廷.jpg',
+  '/images/個人照/徐宏勝.jpg',
 ];
 const service_items: {
   id: number;
