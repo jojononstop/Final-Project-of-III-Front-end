@@ -11,7 +11,8 @@
         </div>
         <div class="offcanvas-body">
             <div class="row">
-                <img :src="avatarUrl" height="100px" class="col-4">
+                <img v-if="avatarUrl != null" :src="avatarUrl" height="100px" class="col-4">
+                <img v-else src="/public/images/avatar/152.png" height="100px" class="col-4">
                 <div class="col-4">
                     <h5 class="p-1">{{ userName }}</h5>
                     <div class="status"> <i class="fa fa-circle online"></i> online </div>
@@ -34,7 +35,8 @@
                 <ul class="list-unstyled chat-list mt-2 mb-0">
                     <li class="clearfix" v-for="friend in friends" :key="friend.userId" data-bs-toggle="modal"
                         data-bs-target="#staticBackdrop" @click="selectFriend(friend)">
-                        <img :src="friend.avatarUrl" alt="avatar">
+                        <img v-if="friend.avatarUrl != null" :src="friend.avatarUrl" alt="avatar">
+                        <img v-else src="/public/images/avatar/152.png" alt="avatar">
                         <div class="about">
                             <div class="name">{{ friend.userName }}</div>
                             <div class="status" v-if="friend.connectionId != null"> <i class="fa fa-circle online"></i>

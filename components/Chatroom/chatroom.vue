@@ -13,7 +13,10 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img :src="friendInfo.value.avatarUrl" alt="avatar"
+                                        <img v-if="friendInfo.value.avatarUrl != null" :src="friendInfo.value.avatarUrl"
+                                            alt="avatar"
+                                            @load="getMessageHistory(IdFromCookie, friendInfo.value.userId);">
+                                        <img v-else src="/public/images/avatar/152.png" alt="avatar"
                                             @load="getMessageHistory(IdFromCookie, friendInfo.value.userId);">
                                     </a>
                                     <div class="chat-about">

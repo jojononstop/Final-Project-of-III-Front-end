@@ -21,8 +21,8 @@
                 </div>
                 <div class="col-xl-8">
                     <div class="about__three-images">
-                        <img src="/images/others/mask_img01.jpg" alt="img" class="left" />
-                        <img src="/images/others/mask_img02.jpg" alt="img" class="right" />
+                        <img src="/public/images/Home/Background/background4.jpg" alt="img" class="left" />
+                        <img src="/public/images/Home/Background/background6.jpg" alt="img" class="right" />
                         <div class="about__dots">
                             <svg-about-dots />
                         </div>

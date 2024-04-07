@@ -23,9 +23,6 @@
                     <div class="trendingNft__item">
                         <div class="trendingNft__item-top">
                             <h3 class="ellipsis">{{ item.name }}</h3>
-                            <div class="trendingNft__item-wish">
-                                <nuxt-link to="/"><i class="far fa-heart"></i></nuxt-link>
-                            </div>
                         </div>
                         <div class="trendingNft__item-image">
                             <nuxt-link :to="`/game-details/${item.id}`">
@@ -56,8 +53,8 @@
                                 <span class="bid">價格</span>
                                 <h6 class="eth">{{ item.price }}</h6>
                             </div>
-                            <nuxt-link to="/" class="bid-btn">直接購買 <i
-                                    class="fas fa-long-arrow-alt-right"></i></nuxt-link>
+                            <button class="bid-btn" @click="AddToCart(item.id)">加入購物車 <i
+                                    class="fas fa-long-arrow-alt-right"></i></button>
                         </div>
                     </div>
                 </SwiperSlide>
@@ -70,6 +67,8 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
 import axios from "axios";
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
+
 
 let gameinfo = ref([]);
 let fireGameData = ref([]);
@@ -84,6 +83,29 @@ let getGameInfo = () => {
 onMounted(() => {
     getGameInfo();
 });
+
+
+
+async function AddToCart(gameId) {
+    let id;
+    id = $cookie.getCookie('Id');
+    if (id === null) {
+        alert('你還尚未登入')
+        return;
+    }
+
+    let cartItem = {};
+    cartItem.gameId = gameId;
+    cartItem.memberId = id;
+    try {
+        await axios.post('https://localhost:7048/api/CartItems', cartItem)
+        alert('已加入購物車')
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
 
 const activeIndex = ref(null);
 
