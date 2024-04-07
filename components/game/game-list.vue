@@ -2,7 +2,9 @@
 
     <div class="row">
         <div class="col-4">
-            <p v-if="tagName != null">搜尋標籤: {{ tagName }}</p>
+            <p v-if="tagName != null" class="h2">搜尋標籤: {{ tagName }}</p>
+            <p v-if="popular != null" class="h2">搜尋: 優惠遊戲</p>
+            <p v-if="discount != null" class="h2">搜尋: 特價遊戲</p>
         </div>
         <div class="col-4"></div>
         <div class="col-4">
@@ -59,6 +61,8 @@ const props = defineProps({
     gameData: Object,
     allGame: Object,
     tagName: String,
+    popular: String,
+    discount: String,
 });
 
 const keyword = ref('');

@@ -227,7 +227,7 @@ const submitAttachedComment = (commentId) => {
                 console.error(error);
             });
 
-        alert(JSON.stringify(values, null, 2));
+
         resetForm()
     })();
 };

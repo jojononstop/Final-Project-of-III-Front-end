@@ -1,6 +1,6 @@
 <template>
     <div>
-        <iframe :src="iframeSrc" title="RGB智能客服" width="100%" style="height: 100%; min-height: 700px"
+        <iframe title="RGB智能客服" width="100%" style="height: 100%; min-height: 700px"
             frameborder="0"></iframe>
     </div>
 </template>

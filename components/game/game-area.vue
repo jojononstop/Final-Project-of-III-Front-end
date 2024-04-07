@@ -6,7 +6,7 @@
 
 
                 <div class="blog-post-wrapper">
-                    <game-list v-if="injectGames!= null" :gameData="injectGames" :tagName="tagName" :allGame="games"/>
+                    <game-list v-if="injectGames!= null" :gameData="injectGames" :tagName="tagName" :allGame="games" :popular="popular" :discount="discount"/>
                     <div class="pagination__wrap">
                         <!-- pagination start -->
                         <game-pagination :gamePage="gamePage"></game-pagination>
@@ -32,6 +32,8 @@
     let gamePage = ref(null);
     let page = ref(0);
     let currentQuery = ref(null);
+    let popular = ref(null);
+    let discount = ref(null);
 
     currentQuery.value = route.query.search;
 
@@ -51,7 +53,8 @@
     async function fetchGame(){
         tagName.value = null;
         games.value = null;
-        
+        popular.value = null;
+        discount.value = null;
         chuckGames.value = [];
         injectGames.value = null;
 
@@ -72,6 +75,7 @@
                 const response = await axios.post("https://localhost:7048/api/Games/popular?begin=1&end=100");
                 games.value = response.data;
                 countPages(games.value.length, 4)
+                popular.value = 1;
             }
 
             if (queryString[0] == "discount") {      
@@ -79,6 +83,7 @@
                 const response = await axios.get("https://localhost:7048/api/Games/alldiscount");
                 games.value = response.data;
                 countPages(games.value.length, 4)
+                discount.value = 1;
             }
 
         } else {
