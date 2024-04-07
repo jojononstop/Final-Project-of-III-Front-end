@@ -1,8 +1,18 @@
 <template>
+
     <section class="blog-area">
+        <client-only>
         <div style="width:100%;height:100%;display:flex;justify-content: center;">
-            <div  style="display: grid; justify-content: center;place-items: center; background-color:#171d24;width: 100%;" >
-                <div class="container" v-for="game in games" :key="game.id" style="width: 800px;margin-top: 5px;">
+            <div  style="display: flex; justify-content: center;place-items: center; background-color:#171d24;width: 100%;" >
+                <!-- 左側自訂分類 -->
+                <!-- <div  class="cbuttonlist" style="background-color: black;height:100%;margin-right: 30px;">
+                    <button @click="">全部遊戲</button>
+                </div> -->
+
+                <!--  -->
+                <div style="display: grid; justify-content: center;place-items: center;">
+                
+                 <div class="container" v-for="game in games" :key="game.id" style="width: 800px;margin-top: 5px;">
                     <div class="gamedisplay" >
                         <!-- 左側 -->
                         <div style="">
@@ -49,15 +59,17 @@
                         </div>
                     </div>
 
+                 </div>
                 </div>
-
 <!-- 圖片 -->
             <!-- <img :src="'images/games/cover/' + game.developerId + '/' + game.id + '/' + game.cover + '.jpg'" /> -->
 
 
             </div>
         </div>
+    </client-only>
     </section>
+
 </template>
 
 
@@ -70,7 +82,7 @@ import { useRoute } from 'vue-router';
 const router = useRoute();
 let games = ref(null);
 let isOpen = ref(false);
-const memberId = router.params.memberId;
+const memberId = $cookie.getCookie("accountId");
 onBeforeMount(async () => {
   definePageMeta({
     middleware: "nologin",

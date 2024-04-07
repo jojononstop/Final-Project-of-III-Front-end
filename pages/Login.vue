@@ -144,6 +144,7 @@ const login = () => {
       $cookie.setCookie('bonus', response.data[3]);
       $cookie.setCookie('name', response.data[4]);
       $cookie.setCookie('Id', response.data[5]);
+      $cookie.setCookie('jwt', response.data[6]);
       // const accountId=$cookie.getCookie('accountId');
       // authStore.setCookieData({ accountId})
 
@@ -221,6 +222,7 @@ const handleGoogleLogin = async () => {
         $cookie.setCookie('bonus', response.data[3]);
         $cookie.setCookie('name', response.data[4]);
         $cookie.setCookie('Id', response.data[5]);
+        $cookie.setCookie('jwt', response.data[6]);
         $cookie.setCookie('google', google);
 
 
