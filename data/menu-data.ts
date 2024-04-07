@@ -12,12 +12,14 @@ type IMenuDataType = {
 const menu_data:IMenuDataType[] = [
   {
     id:1,
-    title:'商店',
-    link:'/',
-    sub_menu:[
-      {title:'首頁',link:'/'},
-      {title:'所有遊戲',link:'/game'},
-    ]
+      title:'商店',
+      link:'/',
+      sub_menu:[
+        {title:'首頁',link:'/'},
+        {title:'暢銷遊戲',link:'/game?search=popular'},
+        {title:'優惠遊戲',link:'/game?search=discount'},
+        {title:'免費遊戲',link:'/game?search=tag_13'},
+      ]
   },
   {
     id:2,

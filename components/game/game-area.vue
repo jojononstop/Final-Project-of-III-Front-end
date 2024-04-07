@@ -54,7 +54,6 @@
         
         chuckGames.value = [];
         injectGames.value = null;
-        console.log(page.value)
 
         if (currentQuery.value != null) {
             const queryString = currentQuery.value.split('_');
@@ -75,14 +74,14 @@
                 countPages(games.value.length, 4)
             }
 
-            if (queryString[0] == "discount") {            
-                const response = await axios.post("https://localhost:7048/api/Games/alldiscount");
+            if (queryString[0] == "discount") {      
+                console.log(123)      
+                const response = await axios.get("https://localhost:7048/api/Games/alldiscount");
                 games.value = response.data;
                 countPages(games.value.length, 4)
             }
 
         } else {
-            console.log("all")
             const response = await axios.get("https://localhost:7048/api/Games");
             games.value = response.data;
             countPages(games.value.length, 4)

@@ -34,9 +34,9 @@
 
       </li>
 
-      <li>
+      <!-- <li>
       <span class="page-numbers current" @click="show">test</span>
-    </li>
+    </li> -->
 
     </ul>
   </div>
