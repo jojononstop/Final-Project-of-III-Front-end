@@ -1,8 +1,9 @@
 <template>
     <h1></h1>
-    <DisocuntDiscountEvent :discountId="route.params.id"></DisocuntDiscountEvent>
-    <DisocuntDiscountGames :discountId="route.params.id"></DisocuntDiscountGames>
-
+    <client-only>
+        <DisocuntDiscountEvent :discountId="route.params.id"></DisocuntDiscountEvent>
+        <DisocuntDiscountGames :discountId="route.params.id"></DisocuntDiscountGames>
+    </client-only>
 </template>
 
 <script setup>

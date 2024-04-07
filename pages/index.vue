@@ -7,25 +7,32 @@
     </div>
     <streamers-area></streamers-area>
 
+
+    <div v-if="isLogin == true">
+      <HomeGameformember></HomeGameformember>
+    </div>
     <HomeGameArea></HomeGameArea>
     <HomeGamenew></HomeGamenew>
 
-    <nft-item-area></nft-item-area>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import { VueCookieNext as $cookie } from 'vue-cookie-next';
+
 //import { useRouter } from 'vue-router';
 useSeoMeta({ title: "Home - MYKD" });
 
+const isLogin = ref(false);
 
-// // 在页面加载后执行刷新操作
-// onMounted(() => {
-//   refreshHeader();
-// });
-
-// const refreshHeader = () => {
-//   router.go(); 
-// };
+function checkLogin() {
+  let id;
+  id = $cookie.getCookie('Id');
+  if (id === null) {
+    isLogin.value = false;
+  } else {
+    isLogin.value = true;
+  }
+}
 
 </script>
