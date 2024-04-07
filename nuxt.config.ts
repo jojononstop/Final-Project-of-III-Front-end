@@ -18,7 +18,9 @@ export default defineNuxtConfig({
   // modules: ['@nuxt/ui'],npm
   modules: [
     '@pinia/nuxt',
+    "formidable",
   ],
+  
   css: [
     "bootstrap/scss/bootstrap.scss",
     "swiper/css/bundle",

@@ -51,7 +51,7 @@
 
              <span class="text-slate-500 group-hover:text-slate-600">使用 Google 進行登入</span>
           </button> -->
-      <LoginModal v-if="isActive" @closeModal="handleGoogleCloseLogin"/>
+      <LoginModal v-if="isActive" @closeModal="handleGoogleCloseLogin" />
       </div>
     </div>
     <!-- 一鍵登入 -->

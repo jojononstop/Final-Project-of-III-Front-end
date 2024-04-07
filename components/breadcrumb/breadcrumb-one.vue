@@ -9,7 +9,7 @@
                 <h2 class="title" v-if="notEdit && !isEdited">{{ title }}</h2>
                 <h2 class="title" v-if="notEdit && isEdited">{{ editTitle }}</h2>
                 <!-- title -->
-                <img v-if="notEdit" src="/images/icons/Edit_icon.png" @click="edit">
+                <img v-if="notEdit" src="/images/icons/Edit_icon.png" @click="edit()">
 
                 <div v-if="isEdit" style="display: flex;">
                   <div v-if="isEdit">
@@ -23,7 +23,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="list-style-type: none;">
                   <!-- <li class="breadcrumb-item">
@@ -36,6 +36,7 @@
                 </ol>
               </nav>
             </div>
+
           </div>
           <div
             class="col-xl-6 col-lg-5 position-relative d-none d-lg-block"
@@ -44,9 +45,9 @@
             <div class="breadcrumb__myimg;" style="background-color: red; width:100%">
               <div class="my-outer-container;" >
             
-                <img :src="brd_img" alt="img" class="my-image" style="width: 279px;height:279px"/>
-                <img :src="Frame_img" alt="img" class="my-Frameimage" style="width: 300px;height:300px"/>
-
+                <img :src="brd_img" alt="img" class="my-image" style="width: 279px;height:279px" @click="handleOpenModal()"/>
+                <img :src="Frame_img" alt="img" class="my-Frameimage" style="width: 300px;height:300px" @click="handleOpenModal()"/>
+                
               </div>
             </div>
 
@@ -65,9 +66,11 @@
 
           </div>
         </div>
+        
       </div>
     </div>
   </section>
+  <MemberMemberprofilemodal v-if="isActive" @closeModal="handleCloseModal"/>
 </template>
 
 <script setup lang="ts">
@@ -77,6 +80,8 @@ import axios from 'axios';
 import { VueCookieNext as $cookie } from 'vue-cookie-next';
 import { useNameStore } from '../../store/nameStore'
 
+
+const isActive = ref<boolean>(false);
 
 const props = defineProps<{
     bg?: string;
@@ -91,6 +96,14 @@ const nameStore = useNameStore()
 const setName = () => {
   nameStore.setName(postData.value.name)
 }
+
+const handleCloseModal = () => {
+  isActive.value = !isActive.value;
+};
+const handleOpenModal = () => {
+  isActive.value = !isActive.value;
+};
+
 
 // withDefaults(
 //    defineProps<{

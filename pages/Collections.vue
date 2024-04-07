@@ -1,7 +1,7 @@
 <template>
-
+<client-only>
     <section class="blog-area">
-        <client-only>
+        
         <div style="width:100%;height:100%;display:flex;justify-content: center;">
             <div  style="display: flex; justify-content: center;place-items: center; background-color:#171d24;width: 100%;" >
                 <!-- 左側自訂分類 -->
@@ -67,11 +67,10 @@
 
             </div>
         </div>
-    </client-only>
+
     </section>
-
+</client-only>
 </template>
-
 
 <script setup>
 
@@ -92,8 +91,17 @@ onBeforeMount(async () => {
   games.value = response.data;
   console.log( games.value[0].dlcs)
 
+  // 移动到 onBeforeMount 钩子中
+  const downloadButtons = document.querySelectorAll('.download');
+  downloadButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // 在这里添加处理点击事件的代码
+    });
+  });
 });
 </script>
+
+
 
 
 <style>
