@@ -4,10 +4,6 @@
     <div v-if="route.query.transactionId == undefined" class="cart-page">
       <h1>購物車</h1>
       <Cart />
-      <div class="total">
-        <p>總價:</p>
-        <!-- <button class="btn btn-primary" @click="getAmount">test</button> -->
-      </div>
       <Payment />
     </div>
     <OrdersOrder v-else></OrdersOrder>
@@ -27,6 +23,7 @@ const route = useRoute();
 // const total = computed(() => {
 //   return cartItems.value.reduce((acc, item) => acc + item.price * item.quantity, 0);
 // });
+
 
 // 結帳函數
 function checkout() {

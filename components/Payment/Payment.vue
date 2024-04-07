@@ -4,7 +4,7 @@
     <button class="checkout" @click="">test2</button> -->
     <!-- <button class="checkout" @click="getLinePayData">getLinePayData</button> -->
     <button class="checkout" @click="postLinePay">LinePay結帳</button>
-    <button class="checkout" @click="postEcPay">EcPay結帳</button>
+    <button class="checkout" @click="postEcPay">EcPay結帳</button> 
   </div>
 </template>
 
@@ -83,29 +83,66 @@ async function getLinePayData() {
 
 const postLinePay = async () => {
   try {
-    let cartItem = ref(null);
-
+    // 獲取支付數據
     const data = await getLinePayData();
-    console.log(data)
-    
+
+    // 請求 LinePay 創建支付
     const res = await axios.post('https://localhost:7048/api/LinePay/Create', data);
-    
-    cartItem.value = res.data;
 
-    console.log(cartItem.value.info.transactionId)
-    console.log(orderId)
-    console.log(amount)
-
-    // 檢查是否有 paymentUrl 屬性
+    // 檢查是否支付成功並獲取相關信息
     if (res.data.info && res.data.info.paymentUrl && res.data.info.paymentUrl.web) {
+      // 獲取支付成功後的訂單信息，例如 orderId
+      const orderId = res.data.orderId;
 
+      // 將購物車項目添加到訂單中
+      await addCartItemsToOrder(orderId);
+
+      // 清除購物車項目
+      await clearCartItems();
+
+      
+
+      // 將瀏覽器重定向到支付頁面
       const paymentUrl = res.data.info.paymentUrl.web;
-      window.location.href = paymentUrl; // 將瀏覽器重定向到 LinePay 支付頁面
+      window.location.href = paymentUrl;
     } else {
       console.error("無法找到 paymentUrl 屬性或 paymentUrl.web 屬性。");
     }
   } catch (error) {
     console.error('調用 LINE PAY API 時出錯：', error);
+  }
+};
+// 顯示支付成功提示
+// alert(`結帳成功！訂單編號：${orderId}`);
+// 添加購物車項目到訂單中
+const addCartItemsToOrder = async (orderId) => {
+  try {
+    // 獲取購物車項目
+    const id = $cookie.getCookie('Id');
+    const response = await axios.get(`https://localhost:7048/api/CartItems/${id}`);
+    const cartItems = response.data;
+
+    // 將每個購物車項目添加到訂單中
+    for (let item of cartItems) {
+      const postData = {
+        gameId: item.gameId,
+        memberId: item.memberId,
+        orderId: orderId // 使用支付成功後獲取的 orderId
+      };
+      await axios.post('https://localhost:7048/api/Order', postData);
+    }
+  } catch (error) {
+    console.error('將購物車項目添加到訂單時出錯：', error);
+  }
+};
+
+// 清除購物車項目
+const clearCartItems = async () => {
+  try {
+    const id = $cookie.getCookie('Id');
+    await axios.delete(`https://localhost:7048/api/CartItems/delete/${id}`);
+  } catch (error) {
+    console.error('清除購物車項目時出錯：', error);
   }
 };
 
@@ -132,14 +169,6 @@ const postEcPay = async () => {
     const res = await axios.get('https://localhost:7048/api/ECPayPayments/Index?TotalAmount=1&ItemName=1', ecPayData);
     cartItem.value = res.data;
     console.log(res)
-    // 檢查是否有 paymentUrl 屬性
-    if (res.data.info && res.data.info.paymentUrl && res.data.info.paymentUrl.web) {
-      const paymentUrl = res.data.info.paymentUrl.web;
-      console.log("Payment URL:", paymentUrl);
-      window.location.href = paymentUrl; // 將瀏覽器重定向到 EcPay結帳頁面
-    } else {
-      console.error("無法找到 paymentUrl 屬性或 paymentUrl.web 屬性。");
-    }
   } catch (error) {
     console.error('調用 ECPAY API 時出錯：', error);
   }
