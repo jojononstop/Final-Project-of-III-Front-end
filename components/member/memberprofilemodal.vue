@@ -40,18 +40,6 @@ const ok = () => {
   $cookie.setCookie("avatarUrl",imageUrl.value);
   console.log(imageUrl.value)
 
-axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${memberId}`, id)
-          .then(response => {
-
-          
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      
-    }
-
-
   emits('closeModal');
   location.reload();
 };
