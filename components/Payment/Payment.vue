@@ -2,7 +2,7 @@
   <div>
     <!-- <button class="checkout" @click="">test1</button>
     <button class="checkout" @click="">test2</button> -->
-    <!-- <button class="checkout" @click="getLinePayData">getLinePayData</button> -->
+    <button class="checkout" @click="getLinePayData">getLinePayData</button>
     <button class="checkout" @click="postLinePay">LinePay結帳</button>
     <button class="checkout" @click="postEcPay">EcPay結帳</button>
   </div>
@@ -25,13 +25,14 @@ async function getLinePayData() {
 
   let cartData = {};
   const response = await axios.get(`https://localhost:7048/api/CartItems/${id}`)
-  const response2 = await axios.get('https://localhost:7048/api/Order/GetLastOrderId')
+  // const response2 = await axios.get('https://localhost:7048/api/Order/GetLastOrderId')
   cartItems.value = response.data;
 
 
   cartData.amount = 0;
   cartData.currency = 'TWD';
-  orderId = response2.data + 1;
+  // orderId = parseInt(response2.data) + 1;
+  orderId = cartItems.value[0].id.toString();
   cartData.orderId = orderId;
   cartData.packages = [];
 
@@ -75,7 +76,7 @@ async function getLinePayData() {
 
   cartData.packages.push(packageData)
 
-  // console.log(cartData)
+  console.log(cartData)
   //  console.log(JSON.stringify(cartData))
 
   return cartData
@@ -146,39 +147,6 @@ const clearCartItems = async () => {
   }
 };
 
-async function getEcPayData() {
-  let id = $cookie.getCookie('Id')
-
-  let cartItems = ref(null);
-
-  let cartData = {};
-
-  const response = await axios.get(`https://localhost:7048/api/CartItems/${id}`)
-  const response2 = await axios.get('https://localhost:7048/api/Order/GetLastOrderId')
-
-  cartItems.value = response.data;
-
-
-  for (let item of cartItems.value) {
-    // 发送另一个axios请求
-    let gameResponse = await axios.get(`https://localhost:7048/api/Games/${item.gameId}`);
-    cartGames.value.push(gameResponse.data);
-    let game = gameResponse.data;
-
-
-
-    if (game.discountPrice != 0) {
-
-    } else {
-
-    }
-
-
-  }
-
-
-  return cartData
-}
 
 const postEcPay = async () => {
   try {

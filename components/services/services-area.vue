@@ -81,10 +81,10 @@ const service_items: {
       id: 2,
       icon: 'flaticon-diamond',
       title: '姚欽堂',
-      desc1: '紅利商店-紅利商品',
-      desc2: '收藏庫管理',
-      desc3: '動態變更使用者外框與頭像',
-      desc4: '紅利商店CRUD',
+      desc1: '紅利商店-紅利商品購買',
+      desc2: '紅利收藏庫-紅利商品的呈現',
+      desc3: '動態更換投像、頭像框',
+      desc4: '紅利清單動態生成&篩選',
     },
     {
       id: 3,
@@ -93,7 +93,7 @@ const service_items: {
       desc1: '登入系統:驗證密碼回傳jwt',
       desc2: 'Email驗證:註冊、免密碼登入',
       desc3: '第三方登入:Google帳號登入',
-      desc4: '4',
+      desc4: '',
     },
     {
       id: 4,
