@@ -76,10 +76,6 @@ onMounted(async () =>
 
     // console.log(dbData_bonusProductsByMemberId.value[0].id)
 
-    //Get All BonusProduct By MenberId
-    // const responseByMenberId = await axios.get(`https://localhost:7048/api/BonusProducts/MemberId/1`);
-    // dbData_bonusProductsByMemberId.value = responseByMenberId.data;
-
     //Get All BonusType
     const responseAllTypes = await axios.get("https://localhost:7048/api/BonusProducts/Type");
     dbData_bonusProductTypes.value = responseAllTypes.data;
@@ -87,8 +83,6 @@ onMounted(async () =>
     // // Get BonusProduct By TypeId
     // const responseTypes = await axios.get(`https://localhost:7048/api/BonusProducts/Type/${producttypeid}`);
     // bonusProducts.value = responseTypes.data;
-
-
   }
   catch (error) 
   {

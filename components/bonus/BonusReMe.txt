@@ -11,14 +11,15 @@
     [V] 使用哪一個BonusItem的邏輯判斷
     [V] 增加For BonusProductItem Dto
 
-[] 商品頁面
-    [] 側面欄位完成
+[V] 商品頁面
+    [V] 側面欄位完成
     [V]由sideber的search將輸入文字傳到主要area
         [V]大小寫防呆
 
     [V] 關鍵字篩選
         [V] Bonus.vue可以接到輸入文字
 
+    (廢棄)
     [] 類別篩選
         [] 動態生成
         [] 可以透過type篩選
@@ -33,8 +34,8 @@
     [V] 資料連接到模態框
     [V] 顯示餘額
     [V] 判斷是否是已有商品
-    [] 送至收藏庫 (set cookei)
-    [] 顯示
+    [V] 送至收藏庫 (set cookei)
+    [V] 顯示
 
     [X] BonusProduct輪播
     
@@ -42,14 +43,20 @@
 [V] 商品收藏庫
     [V] 讀取
     [V] 關鍵字搜尋?
-    [] 類別篩選
     [V] 將資料丟到父物件
+
+    (廢棄)
+    [] 類別篩選
+        [] 動態生成
+        [] 可以透過type篩選
+        [] 製作一個checkbox的sass樣式
+        [] mixin
     
 [V] 使用者更換紅利收藏庫的道具
     [V] 想出更換頭像的方法並實作
     [V] 使用哪一個BonusItem的邏輯判斷JS/修改Nuxt
 
-[V] 找出使用cookei無法渲染的原因
+[V] 找出使用cookie無法渲染的原因
     關鍵字：ClientOnly
     詳見：https://ithelp.ithome.com.tw/articles/10327918
 

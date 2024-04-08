@@ -135,8 +135,15 @@ const imgclickEvent = () =>
 
 function buyProductEvent(id,name,price)
 {
-  buyProduct("buyProduct",id,name,price)
-  // console.log("購買按鈕Item層:"+id,name,price)
+  if(memberId == null || memberId == undefined)
+  {
+    console.log("請先登入")
+    
+  }else
+  {
+    buyProduct("buyProduct",id,name,price)
+    // console.log("購買按鈕Item層:"+id,name,price)
+  }
 }
 
 function getProductTypeName(productTypeId) 
