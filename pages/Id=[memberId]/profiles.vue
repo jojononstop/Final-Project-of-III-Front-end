@@ -1,18 +1,11 @@
-
-
 <template>
   <div>
-  <!-- http://localhost:3000/images/Bonus/2/CatImage.gif -->
+    <!-- http://localhost:3000/images/Bonus/2/CatImage.gif -->
     <!-- breadcrumb area start -->
-    <breadcrumb-one
-      :title="nickName"
-      :subtitle="registrationDate"
-      bg="/images/bg/breadcrumb_bg01.jpg"
-      :brd_img="ava"
-      Frame_img="http://localhost:3000/images/Bonus/4/ApexFrame.png"
-      @changeName="changeName"></breadcrumb-one>
+    <breadcrumb-one :title="nickName" :subtitle="registrationDate" bg="/images/bg/breadcrumb_bg01.jpg" :brd_img="ava"
+      Frame_img="http://localhost:3000/images/Bonus/4/ApexFrame.png" @changeName="changeName"></breadcrumb-one>
     <!-- breadcrumb area end -->
-  
+
     <!-- team info area start -->
     <div class="container">
       <div class="row">
@@ -20,7 +13,7 @@
           <div class="team__info-wrap">
             <div style="width: 100%; height: 80px">
 
-              <div
+              <!-- <div
                 style="
                   display: flex;
                   justify-content: center;
@@ -32,7 +25,7 @@
               >
               
 
-              </div>
+              </div> -->
 
             </div>
           </div>
@@ -64,9 +57,9 @@ const postData = ref({
 });
 
 
-let registrationDate =ref("");
-let Frame_img =ref("");
-let ava ="";
+let registrationDate = ref("");
+let Frame_img = ref("");
+let ava = "";
 
 let nickName = ref("");
 let oldnickname = "";
@@ -76,7 +69,7 @@ onBeforeMount(() => {
 });
 
 const changeName = (data) => {
-  nickName =data;
+  nickName = data;
   console.log('收到子组件发送的数据:', data);
 };
 
@@ -101,10 +94,10 @@ async function fetchData() {
     console.log(response.data);
     oldnickname = response.data.nickName;
     nickName.value = response.data.nickName;
-    registrationDate.value = "於"+response.data.registrationDate+"創建";
+    registrationDate.value = "於" + response.data.registrationDate + "創建";
     postData.value.NickName = oldnickname;
     if ($cookie.getCookie("avatarUrl")) {
-    ava = $cookie.getCookie("avatarUrl");
+      ava = $cookie.getCookie("avatarUrl");
     }
     console.log(oldnickname);
 
