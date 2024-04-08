@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="trendingNft__title">
-                            <h2 class="title">推薦遊戲 <i class="fas fa-thumbs-up"></i>
+                            <h2 class="title">推薦新品 <i class="fas fa-thumbs-up"></i>
                             </h2>
                         </div>
                     </div>

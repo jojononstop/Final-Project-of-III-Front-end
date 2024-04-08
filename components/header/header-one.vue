@@ -89,7 +89,7 @@
                       <nuxt-link to="">
                         <div style="height: 30px; width:30px" class="my-outer-container">
                           <img :src="ava" alt="Member Avatar" class="my-image">
-                          <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage" />
+                          <!-- <img src="/public/images/Bonus/4/ApexFrame.png" alt="Image 2" class="my-Frameimage" /> -->
                         </div>
                       </nuxt-link>
                     </li>

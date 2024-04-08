@@ -13,17 +13,18 @@
 
                 <div v-if="isEdit" style="display: flex;">
                   <div v-if="isEdit">
-                    <input type="text" placeholder="暱稱" v-model="postData.name" v-show="isEdit" class="textinput" style="display: inline-block;" autocomplete="off" @blur="focusoutname();validatebutton()"/>
+                    <input type="text" placeholder="暱稱" v-model="postData.name" v-show="isEdit" class="textinput"
+                      style="display: inline-block;" autocomplete="off" @blur="focusoutname(); validatebutton()" />
                     <p v-if="isNicknameOK" class="dangertext">暱稱已存在</p>
                     <p v-if="isNicknameEmpty" class="dangertext">暱稱不得為空</p>
                   </div>
-                  <div >
+                  <div>
                     <button class="button" style="margin: 5px; background-color: gray;" @click="cancel">取消</button>
                     <button :disabled="isButtonDisabled" class="button" style="margin: 5px;" @click="submit">完成</button>
                   </div>
                 </div>
               </div>
-              
+
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="list-style-type: none;">
                   <!-- <li class="breadcrumb-item">
@@ -38,16 +39,15 @@
             </div>
 
           </div>
-          <div
-            class="col-xl-6 col-lg-5 position-relative d-none d-lg-block"
-          >
-          <!-- breadcrumb__img -->
+          <div class="col-xl-6 col-lg-5 position-relative d-none d-lg-block">
+            <!-- breadcrumb__img -->
             <div class="breadcrumb__myimg;" style="background-color: red; width:100%">
-              <div class="my-outer-container;" >
-            
-                <img :src="brd_img" alt="img" class="my-image" style="width: 279px;height:279px" @click="handleOpenModal()"/>
-                <img :src="Frame_img" alt="img" class="my-Frameimage" style="width: 300px;height:300px" @click="handleOpenModal()"/>
-                
+              <div class="my-outer-container;">
+
+                <img :src="brd_img" alt="img" class="my-image" style="width: 279px;height:279px"
+                  @click="handleOpenModal()" />
+                <!-- <img :src="Frame_img" alt="img" class="my-Frameimage" style="width: 300px;height:300px" @click="handleOpenModal()"/> -->
+
               </div>
             </div>
 
@@ -66,11 +66,11 @@
 
           </div>
         </div>
-        
+
       </div>
     </div>
   </section>
-  <MemberMemberprofilemodal v-if="isActive" @closeModal="handleCloseModal"/>
+  <MemberMemberprofilemodal v-if="isActive" @closeModal="handleCloseModal" />
 </template>
 
 <script setup lang="ts">
@@ -84,12 +84,12 @@ import { useNameStore } from '../../store/nameStore'
 const isActive = ref<boolean>(false);
 
 const props = defineProps<{
-    bg?: string;
-    brd_img?: string;
-    Frame_img?: string;
-    title: string;
-    subtitle: string;
-  }>()
+  bg?: string;
+  brd_img?: string;
+  Frame_img?: string;
+  title: string;
+  subtitle: string;
+}>()
 
 const nameStore = useNameStore()
 
@@ -134,14 +134,14 @@ const isNicknameEmpty = ref<boolean>(false);
 const isButtonDisabled = ref<boolean>(true);
 
 const postData = ref({
-    id:"",
-    name:'',
-  });
+  id: "",
+  name: '',
+});
 
 const emits = defineEmits(['changeName']);
 
 onBeforeMount(() => {
-  
+
 });
 
 //修改
@@ -153,31 +153,31 @@ const edit = () => {
 };
 
 //取消
-const cancel =() => {
+const cancel = () => {
   notEdit.value = !notEdit.value;
   isEdit.value = !isEdit.value;
-  postData.value.name ="";
-  
+  postData.value.name = "";
+
   isButtonDisabled.value = true;
 }
 
 
 //送出
-const submit =() => {
+const submit = () => {
   notEdit.value = !notEdit.value;
   isEdit.value = !isEdit.value;
   postData.value.id = router.params.memberId;
   console.log(postData.value.id)
   isEdited.value = true;
-  editTitle.value=postData.value.name
-  axios.put(`https://localhost:7048/api/Members/${id}?nickName=${postData.value.name}`,postData.value.name)
-  .then(response => {
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-  $cookie.setCookie('name',postData.value.name);
+  editTitle.value = postData.value.name
+  axios.put(`https://localhost:7048/api/Members/${id}?nickName=${postData.value.name}`, postData.value.name)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  $cookie.setCookie('name', postData.value.name);
   isButtonDisabled.value = true;
   setName();
   location.reload();
@@ -187,44 +187,42 @@ const submit =() => {
 //暱稱驗證
 const focusoutname = () => {
 
-isNicknameEmpty.value = false;
-isNicknameOK.value = false;
+  isNicknameEmpty.value = false;
+  isNicknameOK.value = false;
 
-if(postData.value.name=="")
-{
-  isNicknameEmpty.value = !isNicknameEmpty.value;
+  if (postData.value.name == "") {
+    isNicknameEmpty.value = !isNicknameEmpty.value;
 
-}
-else{
-  axios.post(`https://localhost:7048/api/Members/TestMemberName?name=${postData.value.name}`, postData.value.name)
-       .then(response => {
-        state =response.data
-        if(state==false)
-        {
-           isNicknameOK.value = !isNicknameOK.value;
+  }
+  else {
+    axios.post(`https://localhost:7048/api/Members/TestMemberName?name=${postData.value.name}`, postData.value.name)
+      .then(response => {
+        state = response.data
+        if (state == false) {
+          isNicknameOK.value = !isNicknameOK.value;
 
         }
-        if(isNicknameOK.value==false&&
-          isNicknameEmpty.value==false){
+        if (isNicknameOK.value == false &&
+          isNicknameEmpty.value == false) {
           isButtonDisabled.value = false
         }
-        else{
+        else {
           isButtonDisabled.value = true
         }
-          })
-       .catch(error => {
-          console.log(error);
-        });
- }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 }
 
 //驗證按鈕
-const validatebutton =() => {
-  if(isNicknameOK.value==false&&
-  isNicknameEmpty.value==false){
+const validatebutton = () => {
+  if (isNicknameOK.value == false &&
+    isNicknameEmpty.value == false) {
     isButtonDisabled.value = false
   }
-  else{
+  else {
     isButtonDisabled.value = true
   }
 }
@@ -236,6 +234,7 @@ const validatebutton =() => {
 
 <style lang="scss">
 @import "@/assets/css/my-style.css";
+
 .my-outer-container {
   position: relative;
   width: 50px;
@@ -247,43 +246,54 @@ const validatebutton =() => {
 
 .my-image {
   position: absolute;
-  top: 50%; /* 依附於父物件的垂直中心點 */
-  left: 50%; /* 依附於父物件的水平中心點 */
-  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  top: 50%;
+  /* 依附於父物件的垂直中心點 */
+  left: 50%;
+  /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%);
+  /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
   width: 93%;
   height: auto;
 }
+
 .my-Frameimage {
   position: absolute;
-  top: 50%; /* 依附於父物件的垂直中心點 */
-  left: 50%; /* 依附於父物件的水平中心點 */
-  transform: translate(-50%, -50%); /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
+  top: 50%;
+  /* 依附於父物件的垂直中心點 */
+  left: 50%;
+  /* 依附於父物件的水平中心點 */
+  transform: translate(-50%, -50%);
+  /* 把圖從第1象限調整至第3象限調整中心點(應該?) */
   width: 100%;
   height: auto;
 }
 </style>
 
 <style>
-.textinput{
+.textinput {
   background: #54575a;
   border: 1px solid #26292c;
   border-radius: 5px 5px 5px 5px;
-  color:white;
-  overflow: hidden; /* 隱藏超出範圍的內容 */
+  color: white;
+  overflow: hidden;
+  /* 隱藏超出範圍的內容 */
 }
+
 .dangertext {
   color: red;
   text-align: center;
   /* font-size: 14px; */
   /* margin-right: 10px; */
-  margin:0px;
+  margin: 0px;
 }
-.button{
+
+.button {
   background-color: #0EFC8C;
-  color:#324052;
+  color: #324052;
 }
-.button:disabled{
+
+.button:disabled {
   background-color: #54575a;
-  color:#4AC877;
+  color: #4AC877;
 }
 </style>

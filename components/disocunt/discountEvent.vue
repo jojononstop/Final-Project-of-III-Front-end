@@ -21,7 +21,7 @@
                     <h3>{{ discount.endTime }} 結束</h3>
                     <br>
                     <h2 class="text_blue">活動最高折扣</h2>
-                    <h2 class=" text-right">-{{ discount.percent }}<i class="fa fa-percent"></i></h2>
+                    <h2 class=" text-right">-{{ trueDiscountPercent }}<i class="fa fa-percent"></i></h2>
                 </div>
                 <div>
 
@@ -42,6 +42,7 @@
 import axios from 'axios';
 
 let discount = ref([]);
+let trueDiscountPercent = ref('');
 
 const props = defineProps({
     discountId: String
@@ -51,6 +52,7 @@ let dis = axios.get(`https://localhost:7048/api/Discount/GetDiscountItem?id=${pr
     .then((response) => {
         discount.value = response.data;
         console.log(discount.value);
+        trueDiscountPercent.value = 100 - discount.value.percent
     })
     .catch((error) => {
         console.log(error);

@@ -76,7 +76,7 @@ let fireGameData = ref([]);
 let getGameInfo = () => {
     let Id;
     Id = $cookie.getCookie('Id');
-    axios.get(`https://localhost:7048/api/Games/Commend?memberId=${Id}`).then((res) => {
+    axios.post(`https://localhost:7048/api/Games/Commend?memberId=${Id}`).then((res) => {
         fireGameData.value = res.data;
         console.log(fireGameData.value);
     });

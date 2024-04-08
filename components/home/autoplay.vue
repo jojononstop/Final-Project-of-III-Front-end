@@ -20,7 +20,7 @@
                                     </div>
                                     <div class="gallery__content">
                                         <h2 class="text_blue">{{ item.discountName }}</h2>
-                                        <h3 class="text_green">最高-{{ item.percent }}%off</h3>
+                                        <h3 class="text_green">最高-{{ discountPercent(item.percent) }}%off</h3>
                                     </div>
                                 </div>
                             </swiper-slide>
@@ -50,6 +50,9 @@ let discount = axios.get("https://localhost:7048/api/Discount/GetDiscount").then
     discounts.value = res.data;
 });
 
+function discountPercent(percent) {
+    return 100 - percent;
+}
 
 
 
