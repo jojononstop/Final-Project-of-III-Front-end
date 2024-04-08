@@ -58,15 +58,17 @@
                     </div>
                     <div v-if="memberId && releaseDate < currentDate">
 
-                        <div v-if="memberComment == undefined" class="comment-respond mb-3">
+                        <div v-if="memberComment.length > 0" class="comment-respond mb-3">
+                            <h1 class="fw-title">你的評分與評價</h1>
+                            <game-detail-memberComment :gameId="gameId" />
+                        </div>
+
+                        <div v-else class="comment-respond mb-3">
                             <h1 class="fw-title">留下評分與評價</h1>
                             <game-detail-comment-form :gameId="gameId" @refreshComment="loadComment" />
                         </div>
 
-                        <div v-else class="comment-respond mb-3">
-                            <h1 class="fw-title">你的評分與評價</h1>
-                            <game-detail-memberComment :gameId="gameId" />
-                        </div>
+
 
                     </div>
                     <div v-if="releaseDate < currentDate" class="comments-wrap">
@@ -97,15 +99,15 @@ const releaseDate = new Date(props.gameData.releaseDate);
 
 let id = $cookie.getCookie("accountId");
 let memberId;
-if(id != undefined){
+if (id != undefined) {
 
     axios.post(`https://localhost:7048/api/Members/MemberId?protectId=${id}`, id)
-    .then(response => {
-        memberId = response.data
-    })
-    .catch(error => {
-        console.log(error);
-    });
+        .then(response => {
+            memberId = response.data
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }
 
 let games = ref(null);
@@ -113,6 +115,7 @@ let developerName = ref(null);
 const gameId = props.gameData.id;
 
 let memberComment = ref(null);
+let memberCommentLength = ref(0);
 onMounted(async () => {
     try {
         const response1 = await axios.get(`https://localhost:7048/api/Games/dlc/${props.gameData.id}`);
@@ -121,6 +124,8 @@ onMounted(async () => {
         developerName.value = response2.data;
         const response = await axios.get(`https://localhost:7048/api/Comments/${gameId}`);
         memberComment.value = response.data.filter(comment => comment.memberId === memberId)
+        memberCommentLength.value = memberComment.value.length
+        console.log(memberCommentLength.value)
 
     } catch (error) {
         console.log(error);

@@ -4,7 +4,7 @@
     <button class="checkout" @click="">test2</button> -->
     <!-- <button class="checkout" @click="getLinePayData">getLinePayData</button> -->
     <button class="checkout" @click="postLinePay">LinePay結帳</button>
-    <button class="checkout" @click="postEcPay">EcPay結帳</button> 
+    <button class="checkout" @click="postEcPay">EcPay結帳</button>
   </div>
 </template>
 
@@ -20,18 +20,18 @@ let cartGames = ref([]);
 
 async function getLinePayData() {
   let id = $cookie.getCookie('Id')
-  
+
   let cartItems = ref(null);
 
   let cartData = {};
-
   const response = await axios.get(`https://localhost:7048/api/CartItems/${id}`)
- 
+  const response2 = await axios.get('https://localhost:7048/api/Order/GetLastOrderId')
   cartItems.value = response.data;
+
 
   cartData.amount = 0;
   cartData.currency = 'TWD';
-  orderId = cartItems.value[0].id.toString();
+  orderId = response2.data + 1;
   cartData.orderId = orderId;
   cartData.packages = [];
 
@@ -42,40 +42,40 @@ async function getLinePayData() {
   packageData.name = "test";
   packageData.products = [];
 
-  for (let item of cartItems.value) { 
+  for (let item of cartItems.value) {
     // 发送另一个axios请求
     let gameResponse = await axios.get(`https://localhost:7048/api/Games/${item.gameId}`);
     cartGames.value.push(gameResponse.data);
     let game = gameResponse.data;
-    
+
     let cartGame = {};
     cartGame.name = game.name;
     cartGame.quantity = 1;
-    
-    if(game.discountPrice != 0){
+
+    if (game.discountPrice != 0) {
       amount += game.discountPrice;
       cartData.amount += game.discountPrice;
       packageData.amount += game.discountPrice;
       cartGame.price = game.discountPrice;
-    }else{
+    } else {
       amount += game.price;
       cartData.amount += game.price;
       packageData.amount += game.price;
       cartGame.price = game.price;
     }
-    
+
     packageData.products.push(cartGame)
   }
-  
+
   cartData.redirectUrls = {
-    "confirmUrl":`http://localhost:3000/checkout/cart`,//付款完成之後就會跳轉至confirmUrl
-    "cancelUrl":"https://localhost:7048/api/LinePay/Cancel"
+    "confirmUrl": `http://localhost:3000/checkout/cart`,//付款完成之後就會跳轉至confirmUrl
+    "cancelUrl": "https://localhost:7048/api/LinePay/Cancel"
   }
   // axios.post('https://localhost:7048/api/Order',)
-  
+
   cartData.packages.push(packageData)
 
-  // console.log(amount)
+  // console.log(cartData)
   //  console.log(JSON.stringify(cartData))
 
   return cartData
@@ -100,7 +100,7 @@ const postLinePay = async () => {
       // 清除購物車項目
       await clearCartItems();
 
-      
+
 
       // 將瀏覽器重定向到支付頁面
       const paymentUrl = res.data.info.paymentUrl.web;
@@ -146,6 +146,40 @@ const clearCartItems = async () => {
   }
 };
 
+async function getEcPayData() {
+  let id = $cookie.getCookie('Id')
+
+  let cartItems = ref(null);
+
+  let cartData = {};
+
+  const response = await axios.get(`https://localhost:7048/api/CartItems/${id}`)
+  const response2 = await axios.get('https://localhost:7048/api/Order/GetLastOrderId')
+
+  cartItems.value = response.data;
+
+
+  for (let item of cartItems.value) {
+    // 发送另一个axios请求
+    let gameResponse = await axios.get(`https://localhost:7048/api/Games/${item.gameId}`);
+    cartGames.value.push(gameResponse.data);
+    let game = gameResponse.data;
+
+
+
+    if (game.discountPrice != 0) {
+
+    } else {
+
+    }
+
+
+  }
+
+
+  return cartData
+}
+
 const postEcPay = async () => {
   try {
     const ecPayData = {
@@ -166,9 +200,10 @@ const postEcPay = async () => {
       "CheckMacValue": "54FD269B4C4F7C335054DD79B409A7C43B18830AF95D417003BB33928AB2000F"
     };
 
-    const res = await axios.get('https://localhost:7048/api/ECPayPayments/Index?TotalAmount=1&ItemName=1', ecPayData);
-    cartItem.value = res.data;
-    console.log(res)
+    const res = await axios.get('https://localhost:7048/api/ECPayPayments/Index?TotalAmount=1&ItemName=1');
+
+    const cartItem = res.data;
+    console.log(res.data)
   } catch (error) {
     console.error('調用 ECPAY API 時出錯：', error);
   }

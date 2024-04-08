@@ -28,11 +28,13 @@
                             </div>
                         </div>
                         <div class="trendingNft__item-image">
-                            <img :src="`/images/games/cover/${item.developerId}/${item.id}/${item.cover}.jpg`" alt="img"
-                                @mouseover="showInfo(item.id)" @mouseleave="hideInfo()" />
-                            <div v-if="activeIndex === item.id" class="info text-white">
-                                點擊查看詳細資訊
-                            </div>
+                            <nuxt-link :to="`/game-details/${item.id}`">
+                                <img :src="`/images/games/cover/${item.developerId}/${item.id}/${item.cover}.jpg`"
+                                    alt="img" @mouseover="showInfo(item.id)" @mouseleave="hideInfo()" />
+                                <div v-if="activeIndex === item.id" class="info text-white">
+                                    點擊查看詳細資訊
+                                </div>
+                            </nuxt-link>
                         </div>
                         <div class="trendingNft__item-bottom">
                             <div v-if="item.discountPrice != 0" class="trendingNft__item-price">
@@ -54,8 +56,8 @@
                                 <span class="bid">價格</span>
                                 <h6 class="eth">{{ item.price }}</h6>
                             </div>
-                            <nuxt-link to="/" class="bid-btn">直接購買 <i
-                                    class="fas fa-long-arrow-alt-right"></i></nuxt-link>
+                            <button class="bid-btn" @click="AddToCart(item.id)">加入購物車 <i
+                                    class="fas fa-long-arrow-alt-right"></i></button>
                         </div>
                     </div>
                 </SwiperSlide>
@@ -85,6 +87,25 @@ let getGameInfo = () => {
 onMounted(() => {
     getGameInfo();
 });
+
+async function AddToCart(gameId) {
+    let id;
+    id = $cookie.getCookie('Id');
+    if (id === null) {
+        alert('你還尚未登入')
+        return;
+    }
+
+    let cartItem = {};
+    cartItem.gameId = gameId;
+    cartItem.memberId = id;
+    try {
+        await axios.post('https://localhost:7048/api/CartItems', cartItem)
+        alert('已加入購物車')
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 const activeIndex = ref(null);
 
