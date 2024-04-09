@@ -40,18 +40,18 @@ const ok = () => {
   $cookie.setCookie("avatarUrl",imageUrl.value);
   console.log(imageUrl.value)
 
-  // axios.post(`https://localhost:7048/api/Members/ava${memberId}?avaurl=${imageUrl.value}`, imageUrl.value)
-  //         .then(response => {
-  //           console.log(`https://localhost:7048/api/Members/ava${memberId}?avaurl=${imageUrl.value}`);
-  //           console.log(response.data);
-  //         })
-  //         .catch(error => {
-  //           console.log(error);
-  //         });
+  axios.put(`https://localhost:7048/api/Members/ava${memberId}?ava=${imageUrl.value}`, imageUrl.value)
+          .then(response => {
+            console.log(`https://localhost:7048/api/Members/ava${memberId}?ava=${imageUrl.value}`);
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
 
 
   emits('closeModal');
-  location.reload();
+  // location.reload();
 };
 
 const uploadImage = async (event) => {
