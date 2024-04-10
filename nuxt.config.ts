@@ -36,10 +36,13 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       // '這邊放上你的 Google Client ID'
-      googleClientId: process.env.GOOGLE_CLIENT_ID
+      googleClientId: process.env.GOOGLE_CLIENT_ID,
+      imgurclientId: process.env.imgur_clientId,
+      githubtoken: process.env.githubaccesstoken
     },
     //'這邊放上你的 Google Client Secret'
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET
+
   },
 })
 
