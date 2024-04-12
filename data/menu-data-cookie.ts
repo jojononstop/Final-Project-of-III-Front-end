@@ -44,12 +44,8 @@ type IMenuDataType = {
     },
     {
       id:5,
-      title:'個人資料',
-      link:'#',
-      sub_menu:[
-        {title:'物品庫',link:'/'},
-        {title:'願望清單',link:'/wishList'}
-      ]
+      title:'願望清單',
+      link:'/wishList',
     },
     {
       id:5,

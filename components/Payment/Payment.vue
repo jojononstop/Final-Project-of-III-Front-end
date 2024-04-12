@@ -2,7 +2,7 @@
   <div>
     <!-- <button class="checkout" @click="">test1</button>
     <button class="checkout" @click="">test2</button> -->
-    <button class="checkout" @click="getLinePayData">getLinePayData</button>
+    <!-- <button class="checkout" @click="getLinePayData">getLinePayData</button> -->
     <button class="checkout" @click="postLinePay">LinePay結帳</button>
     <button class="checkout" @click="postEcPay">EcPay結帳</button>
   </div>
