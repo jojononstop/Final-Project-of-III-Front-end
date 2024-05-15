@@ -1,3 +1,6 @@
+#在專題前端中實作的功能:
+結帳系統 - 串接LinePay API
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
