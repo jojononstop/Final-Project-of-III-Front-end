@@ -5,6 +5,6 @@
 **使用技術**  
 以VUE為架構，運用HTML、CSS、Bootstrap、Javascript等優化使用者介面。  
   
-**負責實作**
+**負責實作**  
 結帳系統 - 串接LinePay API  
 訂單系統- 訂單查詢  
